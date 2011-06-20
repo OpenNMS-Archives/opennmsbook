@@ -15,8 +15,8 @@
 	</array>
 	<key>binderSplitFrames</key>
 	<array>
-		<string>{{0, 0}, {238, 550}}</string>
-		<string>{{239, 0}, {661, 550}}</string>
+		<string>{{0, 0}, {238, 670}}</string>
+		<string>{{239, 0}, {1027, 670}}</string>
 	</array>
 	<key>binderState</key>
 	<array>
@@ -155,7 +155,9 @@
 		</array>
 	</dict>
 	<key>mainDocumentEditor.selectedItemIDs</key>
-	<array/>
+	<array>
+		<integer>4</integer>
+	</array>
 	<key>mainDocumentEditor.textEditorState</key>
 	<dict>
 		<key>hasMultiplePages</key>
@@ -166,7 +168,7 @@
 		<false/>
 	</dict>
 	<key>mainWindowFrame</key>
-	<string>1 206 900 572 0 0 1280 778 </string>
+	<string>12 151 1266 692 0 0 1440 878 </string>
 	<key>supportingDocumentEditor.selectedItemIDs</key>
 	<array/>
 	<key>supportingDocumentViewIsCurrent</key>

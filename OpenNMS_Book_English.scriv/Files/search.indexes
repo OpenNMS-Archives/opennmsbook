@@ -19,6 +19,7 @@ The second part of the book, much larger, will go into the details of installing
         </Document>
         <Document ID="4">
             <Title>User</Title>
+            <Synopsis>Information for guys in a NOC</Synopsis>
         </Document>
         <Document ID="5">
             <Title>Administrator</Title>
