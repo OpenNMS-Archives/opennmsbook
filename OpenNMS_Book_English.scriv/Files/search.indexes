@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchIndexes Version="1.0">
+    <Documents>
+        <Document ID="3">
+            <Title>Introduction</Title>
+            <Text>OpenNMS stands for “Open Network Management System”. It’s “Open” both because the Software itself is licensed as “Open Source” under the GNU Public License. 
+A Network as understood by OpenNMS is a number of somehow reachable network elements, called nodes.
+It’s fair to put in the first bracket at this point already: OpenNMS can in fact manage more than nodes. You can, for example, manage applications. Or whole networks. But as the starting point for the software was the management of network elements, it’s called “Network Management System” (rather than “anything you can somehow reach and get to tell something about itself Management System (aycsragttsaiMS)).
+When it comes to “Management” we have to clarify straight from the beginning that management is done by people with brains. The role of OpenNMS is to provide information about managed nodes. It does so by receiving information from nodes and by reaching out to them to collect information. Once the information is available to OpenNMS it can apply rules and visualize this information. 
+OpenNMS is organized around “events”. You will encounter these events as Notifications and Alarms in the WebUI (and if you are one of the lucky administrators, by means of personal communication). Besides those visible events, OpenNMS uses events to organize itself: Everything is an event. The different components of OpenNMS, the Daemons, are connected to an event bus. They use this bus to communicate between each other. You can listen in to their conversations if you look into the log of the EventD, the Event Daemon.
+All these elements together are “the system”, which is why we call OpenNMS OpenNM-System and not OpenNM-Application.
+This book is intended both for Users and Administrators of OpenNMS. Users will find everything they need to know to work with the WebUI in the first part of the book. 
+The second part of the book, much larger, will go into the details of installing, setting up and integrating OpenNMS in enterprise environments.
+</Text>
+        </Document>
+        <Document ID="6">
+            <Title>Accessing the WebUi</Title>
+        </Document>
+        <Document ID="4">
+            <Title>User</Title>
+        </Document>
+        <Document ID="5">
+            <Title>Administrator</Title>
+        </Document>
+    </Documents>
+</SearchIndexes>
