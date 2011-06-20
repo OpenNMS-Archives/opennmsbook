@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SCRSelectedCompileOptionsInfoSaveName</key>
+	<dict>
+		<key>Tag</key>
+		<integer>1</integer>
+		<key>Title</key>
+		<string>Original</string>
+	</dict>
 	<key>binderSelection</key>
 	<array>
 		<integer>0</integer>
@@ -147,8 +154,8 @@
 			</dict>
 		</array>
 	</dict>
-	<key>mainDocumentEditor.selectedRanges</key>
-	<string>{1005, 0}</string>
+	<key>mainDocumentEditor.selectedItemIDs</key>
+	<array/>
 	<key>mainDocumentEditor.textEditorState</key>
 	<dict>
 		<key>hasMultiplePages</key>
@@ -159,7 +166,7 @@
 		<false/>
 	</dict>
 	<key>mainWindowFrame</key>
-	<string>0 206 900 572 0 0 1280 778 </string>
+	<string>1 206 900 572 0 0 1280 778 </string>
 	<key>supportingDocumentEditor.selectedItemIDs</key>
 	<array/>
 	<key>supportingDocumentViewIsCurrent</key>

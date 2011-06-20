@@ -3,6 +3,7 @@
     <Documents>
         <Document ID="3">
             <Title>Introduction</Title>
+            <Synopsis>General introduction</Synopsis>
             <Text>OpenNMS stands for “Open Network Management System”. It’s “Open” both because the Software itself is licensed as “Open Source” under the GNU Public License. 
 A Network as understood by OpenNMS is a number of somehow reachable network elements, called nodes.
 It’s fair to put in the first bracket at this point already: OpenNMS can in fact manage more than nodes. You can, for example, manage applications. Or whole networks. But as the starting point for the software was the management of network elements, it’s called “Network Management System” (rather than “anything you can somehow reach and get to tell something about itself Management System (aycsragttsaiMS)).
