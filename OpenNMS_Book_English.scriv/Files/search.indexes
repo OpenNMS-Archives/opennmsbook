@@ -10,7 +10,7 @@ It’s fair to put in the first bracket at this point already: OpenNMS can in fa
 When it comes to “Management” we have to clarify straight from the beginning that management is done by people with brains. The role of OpenNMS is to provide information about managed nodes. It does so by receiving information from nodes and by reaching out to them to collect information. Once the information is available to OpenNMS it can apply rules and visualize this information. 
 OpenNMS is organized around “events”. You will encounter these events as Notifications and Alarms in the WebUI (and if you are one of the lucky administrators, by means of personal communication). Besides those visible events, OpenNMS uses events to organize itself: Everything is an event. The different components of OpenNMS, the Daemons, are connected to an event bus. They use this bus to communicate between each other. You can listen in to their conversations if you look into the log of the EventD, the Event Daemon.
 All these elements together are “the system”, which is why we call OpenNMS OpenNM-System and not OpenNM-Application.
-This book is intended both for Users and Administrators of OpenNMS. Users will find everything they need to know to work with the WebUI in the first part of the book. 
+This book is intended both for Users and Administrators of OpenNMS. Users will find everything they need to know to work with the Web User Interface in the first part of the book. 
 The second part of the book, much larger, will go into the details of installing, setting up and integrating OpenNMS in enterprise environments.
 </Text>
         </Document>
@@ -20,6 +20,23 @@ The second part of the book, much larger, will go into the details of installing
         <Document ID="4">
             <Title>User</Title>
             <Synopsis>Information for guys in a NOC</Synopsis>
+        </Document>
+        <Document ID="7">
+            <Title>Howto</Title>
+            <Text>The OpenNMS Book in English is located in GIT:
+ssh://$USER@opennms.git.sourceforge.net/gitroot/opennms/opennmsbook
+If you clone this directory you will find 
+
+OpenNMS_Book_English.scriv
+
+Which contains the book. The directory structure underneath is managed by a tool called Scrivener. 
+You do not need Scrivener to help writing the book! All the text content is located in
+./OpenNMS_Book_English.scriv/Files/Docs
+Each Chapter is stored as an individual .rtf in this folder.
+The text format is RTF, which means that you can edit text in any RTF-capable editor.
+If you have text in another format, or if you have text of which you don’t know where to put, please save it in the ./inbound/ folder.
+There will be a recent pdf as well for your convenience (which shows the current status of the book).
+</Text>
         </Document>
         <Document ID="5">
             <Title>Administrator</Title>
