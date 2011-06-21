@@ -7,14 +7,24 @@
                 <IncludeInCompile>Yes</IncludeInCompile>
             </MetaData>
             <Children>
-                <BinderItem ID="3" Type="Text" Created="2011-06-09 09:44:27 -0500" Modified="2011-06-20 15:11:30 -0500">
+                <BinderItem ID="7" Type="Text" Created="2011-06-20 21:11:28 -0500" Modified="2011-06-20 21:19:23 -0500">
+                    <Title>Howto</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>186,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="3" Type="Text" Created="2011-06-09 09:44:27 -0500" Modified="2011-06-20 21:20:43 -0500">
                     <Title>Introduction</Title>
                     <MetaData>
                         <IncludeInCompile>Yes</IncludeInCompile>
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
                     <TextSettings>
-                        <TextSelection>1125,0</TextSelection>
+                        <TextSelection>1878,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
                 <BinderItem ID="4" Type="Folder" Created="2011-06-09 09:44:56 -0500" Modified="2011-06-20 14:59:10 -0500">
@@ -47,16 +57,6 @@
                     </MetaData>
                     <TextSettings>
                         <TextSelection>0,0</TextSelection>
-                    </TextSettings>
-                </BinderItem>
-                <BinderItem ID="7" Type="Text" Created="2011-06-20 21:11:28 -0500" Modified="2011-06-20 21:19:23 -0500">
-                    <Title>Howto</Title>
-                    <MetaData>
-                        <IncludeInCompile>Yes</IncludeInCompile>
-                        <NotesTextSelection>0,0</NotesTextSelection>
-                    </MetaData>
-                    <TextSettings>
-                        <TextSelection>474,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
             </Children>
@@ -106,7 +106,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2011-06-09 09:44:27 -0500" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetDaily="No" DeterminedFromDeadline="No">0</SessionTarget>
-        <PreviousSession Words="133" Characters="798" Date="2011-06-20 21:19:27 -0500"></PreviousSession>
+        <PreviousSession Words="110" Characters="653" Date="2011-06-20 21:21:27 -0500"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="595.200012,841.799988" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
