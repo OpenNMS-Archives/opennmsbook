@@ -13,6 +13,9 @@ All these elements together are “the system”, which is why we call OpenNMS O
 This book is intended both for Users and Administrators of OpenNMS. Users will find everything they need to know to work with the Web User Interface in the first part of the book. 
 </Text>
         </Document>
+        <Document ID="8">
+            <Title>Introduction</Title>
+        </Document>
         <Document ID="6">
             <Title>Accessing the WebUi</Title>
         </Document>
