@@ -1,0 +1,62 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+\deftab720
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\fs24 \cf0 Event parameters are used in the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Event_configuration"}}{\fldrslt \cf2 \ul \ulc2 event-configuration.xml}} and {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Notification_configuration&action=edit&redlink=1"}}{\fldrslt \cf2 \ul \ulc2 notifications.xml}} files. The parameters are parsed as tokens delimitted with percent ('%') signs. This is the currrent list of valid paramenters:\
+Someone should better define these\'a0;-)\
+You can edit 
+\f1 $OPENNMS_HOME/etc/log4j.properties
+\f0  and set the logging level for the eventd to DEBUG. Then check the 
+\f1 eventd.log
+\f0  and you will see the parameters and their values for each incoming event.\
+\
+\pard\pardeftab720\ql\qnatural
+\cf0 \'a0%eventid%\'a0\
+The Event ID xml tag\
+\'a0%uei%\'a0\
+The {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/UEI"}}{\fldrslt \cf2 \ul \ulc2 UEI}} xml tag\
+\'a0%source%\'a0\
+The event source xml tag\
+\'a0%time%\'a0\
+The event time\
+\'a0%dpname%\'a0\
+The event {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Dpname"}}{\fldrslt \cf2 \ul \ulc2 dpname}}\
+\'a0%nodeid%\'a0\
+The event nodeid\
+\'a0%nodelabel%\'a0\
+The nodelabel\
+\'a0%host%\'a0\
+The host\
+\'a0%interface%\'a0\
+The interface\
+\'a0%interfaceresolve%\'a0\
+Reverse DNS lookup of the interface\
+\'a0%ifalias%\'a0\
+SNMP {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/IfAlias"}}{\fldrslt \cf2 \ul \ulc2 ifAlias}}\
+\'a0%id%\'a0\
+SNMP ID\
+\'a0%snmp%\'a0\
+SNMP\
+\'a0%idtext%\'a0\
+SNMP ID Text\
+\'a0%version%\'a0\
+SNMP version\
+\'a0%specific%\'a0\
+SNMP specific ID\
+\'a0%generic%\'a0\
+SNMP generic ID\
+\'a0%community%\'a0\
+SNMP community string\
+\'a0%snmphost%\'a0\
+SNMP host\
+\'a0%service%\'a0\
+OpenNMS service\
+\'a0%severity%\'a0\
+OpenNMS {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Severity"}}{\fldrslt \cf2 \ul \ulc2 severity}}\
+\'a0%operinstruct%\'a0\
+Event defined operator instructions\
+\'a0%mouseovertext%\'a0\
+Event defined mouse over text\
+}

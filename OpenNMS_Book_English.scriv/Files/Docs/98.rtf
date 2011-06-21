@@ -1,0 +1,155 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;\red0\green0\blue0;\red109\green109\blue109;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid2\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid3\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid301\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid302\'02\'01.;}{\levelnumbers\'01;}\fi-360\li1440\lin1440 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\deftab720
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\fs24 \cf0 Did you mean {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Remote_Monitoring"}}{\fldrslt \cf2 \ul \ulc2 Remote Monitoring}}?\
+Create a process that can be installed  a remote machine, perhaps with access to a network that the main OpenNMS instance cannot reach, but with the goal to achieve visibility of a service defined in OpenNMS from the user's perspective. It will be able to perform all of the monitoring checks that the current service monitor does (ICMP, HTTP, etc.) and send events such as nodeDown or nodeLostService back to the main OpenNMS instance.\
+It will not do any discovery on its own, rather, it will take direction from the main OpenNMS instance as to what to monitor.\
+This Milestone is dependent on the first sub-task of the Correlation milestone.\
+Distributed polling is an enhancement that is part of a custom development project. In order to distribute the poller code the correlation logic currently contained in the OpenNMS Poller daemon will be removed and will become a seperate service allowing different correlation services to be added. For example, topology based correlation logic from the Italian Adventures branch in CVS and business logic correlation using a rules engine such as Drools.\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth6340\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 Contents\
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+
+\b0\fs24 \cf0 [{\field{\*\fldinst{HYPERLINK "javascript:toggleToc()"}}{\fldrslt \cf2 \ul \ulc2 hide}}]\
+\pard\intbl\itap1\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Distributed_Monitor#Sub_Tasks"}}{\fldrslt 1\ul  \ulnone Sub Tasks}}\cf0 \
+\ls1\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Distributed_Monitor#OpenNMS_Remote_Monitoring_Use_Case"}}{\fldrslt 2\ul  \ulnone OpenNMS Remote Monitoring Use Case}}\cf0 \
+\pard\intbl\itap1\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls1\ilvl1\cf2 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Distributed_Monitor#Definitions:"}}{\fldrslt 2.1\ul  \ulnone Definitions:}}\cf0 \
+\ls1\ilvl1\cf2 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Distributed_Monitor#Use_Case"}}{\fldrslt 2.2\ul  \ulnone Use Case}}\cf0 \
+\pard\intbl\itap1\tx1660\tx2160\pardeftab720\li2160\fi-2160\ql\qnatural
+\ls1\ilvl2\cf2 {\listtext	
+\f1 \uc0\u9642 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Distributed_Monitor#Detailed_Configuration_Explanation:"}}{\fldrslt 2.2.1\ul  \ulnone Detailed Configuration Explanation:}}\cf0 \
+\ls1\ilvl2\cf2 {\listtext	
+\f1 \uc0\u9642 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Distributed_Monitor#Detailed_Operational_Explanation:"}}{\fldrslt 2.2.2\ul  \ulnone Detailed Operational Explanation:}}\cf0 \cell \lastrow\row
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Monitor&action=edit&section=1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Sub Tasks\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}Build standalone asynchronous poller\
+{\listtext	\'95	}Build Web Start framework for on demand distribution of poller\
+{\listtext	\'95	}Enhance object model to allow multipoint service monitoring\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Monitor&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] OpenNMS Remote Monitoring Use Case\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Monitor&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Definitions:\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS-MOM\
+For lack of a better term, this is the central OpenNMS system running all the OpenNMS daemons and manages communication with the OpenNMS-DMs.\
+OpenNMS-DP\
+A light weight polling process that communicates with the OpenNMS-MOM. An OpenNMS-DP can operate in the role of a distributed polling or a distributed monitoring application.\
+Remote Polling\
+An OpenNMS polling process that discovers, schedules, monitors, and correlates services reporting discovery of new entities and correlated status messages to the OpenNMS-MOM. (This project has not been scoped)\
+Remote Monitoring\
+An OpenNMS polling process that simply receives a polling schedule from the OpenNMS-MOM and monitors a list of services that have been identified by the OpenNMS administrator for distributed monitoring. Each poll status is reported back to the OpenNMS-MOM and aggregated such that the distributed pollers are monitoring the same application from multiple perspectives.\
+OpenNMS Entity\
+An abstraction in the OpenNMS object model from which persisted objects are extended and can be represented with status and/or performance metrics (i.e. network service, interface, node, virtual node, application, etc.)\
+Polling configuration\
+An extremely flexible XML based configuration that defines for an OpenNMS poller the services to be monitored on OpenNMS Entities, the schedule, a downtime polling model, and the tunable parameters for each service monitor.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Monitor&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Use Case\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Typically, resources on the network are monitored by a network management system from a central location. Often times, these resources are accessible via multiple paths on a network and perhaps over various WAN and VPN technologies where outages and performance degradation may occur and not observed by a central NMS; sitting perhaps in the same location as the resources it\'92s monitoring. These resources need to be monitored from multiple remote locations so that their status can be seen from the prospective of the users accessing these resources.\
+The status and performance measurements (i.e. latency) of these services can be monitored from multiple locations and can be viewed at the OpenNMS-MOM, collectively.\
+An OpenNMS administrator defines an entity (an Application Entity for example) in the OpenNMS WebUI that is composed of services to be monitored by one or more distributed pollers. (Note: The situation could be that those services are only reachable by distributed pollers and not by the OpenNMS-MOM\'92s central polling services)\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Monitor&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Detailed Configuration Explanation:\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 The OpenNMS administrator recognizes the requirement to monitor an application from multiple locations.\
+Steps:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0\cf0 {\listtext	1.	}The OpenNMS-MOM administrator creates a new OpenNMS Application entity that will be used to aggregate the status of services provided by that application and monitored remotely by an OpenNMS-DP.\
+{\listtext	2.	}The OpenNMS-MOM administrator defines remote polling locations.\
+{\listtext	3.	}The OpenNMS-MOM administrator creates or modifies a polling configuration for remote polling location that will be used to monitor services defined for the Application entity created in step 1.\
+{\listtext	4.	}A system administrator installs the distributed polling code on one or more remote systems in the required locations. They modify the distributed monitoring properties file, on each instance, to define the remote location (using the location name provided by the OpenNMS-MOM administrator from step 2) and the IP address of the OpenNMS-MOM.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Monitor&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Detailed Operational Explanation:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0
+\b0 \cf0 {\listtext	1.	}Following the configuration steps above, the remote system administrator starts the OpenNMS-DP and verifies its connection to the OpenNMS-MOM by either a) looking at the poller.log file or via the optional OpenNMS-DP GUI.\
+{\listtext	2.	}The OpenNMS-MOM receives the initial communication from the OpenNMS-DP and registers it as active.\
+{\listtext	3.	}The OpenNMS-MOM sends the OpenNMS-DP the polling configuration defined by the OpenNMS-MOM administrator and the OpenNMS-DP begins monitoring services and reporting poll status information.\
+{\listtext	4.	}An aggregated status view of each of the OpenNMS Entities being remotely monitored can be seen in the OpenNMS WebUI.\
+{\listtext	5.	}The status of monitors themselves is represented in the OpenNMS WebUI as determined by successful communication and execution of the remote polling schedule. Alarms and notifications are initiated when failures occur. Distributed pollers can be configured to cease all monitoring activity when communication with OpenNMS-MOM is lost (the lysine contingency).\
+{\listtext	6.	}Distributed monitors have a separate thread that continuously checks for updates to the remote location\'92s polling configuration and immediately adapts the new configuration.\
+{\listtext	7.	}Poll status messages reported to the OpenNMS-MOM contain:\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls4\ilvl1\cf0 {\listtext	1.	}status of services\
+{\listtext	2.	}latency of services\
+{\listtext	3.	}with some monitors (such as HTTP) bandwidth utilization. Bandwidth utilization is calculated by requesting a static HTML page and determining the size and the time required to make the transfer.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0\cf0 {\listtext	8.	}List of Distributable Monitors\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls4\ilvl1\cf0 {\listtext	1.	}CitrixMonitor\
+{\listtext	2.	}DnsMonitor\
+{\listtext	3.	}DominoIIOPMonitor\
+{\listtext	4.	}FtpMonitor\
+{\listtext	5.	}HttpMonitor\
+{\listtext	6.	}HttpsMonitor\
+{\listtext	7.	}ImapMonitor\
+{\listtext	8.	}JDBCMonitor\
+{\listtext	9.	}JMXMonitor\
+{\listtext	10.	}LdapMonitor\
+{\listtext	11.	}LoopMonitor\
+{\listtext	12.	}NrpeMonitor\
+{\listtext	13.	}NsclientMonitor\
+{\listtext	14.	}NtpMonitor\
+{\listtext	15.	}PageSequenceMonitor\
+{\listtext	16.	}Pop3Monitor\
+{\listtext	17.	}RadiusAuthMonitor\
+{\listtext	18.	}SmtpMonitor\
+{\listtext	19.	}SshMonitor\
+{\listtext	20.	}TcpMonitor\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0\cf0 {\listtext	9.	}list of monitors in 1.3.7\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls4\ilvl1\cf2 {\listtext	1.	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/AvailabilityMonitor"}}{\fldrslt \ul AvailabilityMonitor}}\cf0 \
+{\listtext	2.	}CitrixMonitor\
+{\listtext	3.	}DnsMonitor\
+{\listtext	4.	}DominoIIOPMonitor\
+{\listtext	5.	}FtpMonitor\
+{\listtext	6.	}HttpMonitor\
+{\listtext	7.	}HttpsMonitor\
+{\listtext	8.	}ImapMonitor\
+{\listtext	9.	}JDBCMonitor\
+{\listtext	10.	}JMXMonitor\
+{\listtext	11.	}LdapMonitor\
+{\listtext	12.	}LoopMonitor\
+{\listtext	13.	}NrpeMonitor\
+{\listtext	14.	}NsclientMonitor\
+{\listtext	15.	}NtpMonitor\
+{\listtext	16.	}PageSequenceMonitor\
+{\listtext	17.	}Pop3Monitor\
+{\listtext	18.	}RadiusAuthMonitor\
+{\listtext	19.	}SmtpMonitor\
+{\listtext	20.	}SshMonitor\
+{\listtext	21.	}TcpMonitor\
+}

@@ -1,0 +1,25 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Controlling daemons\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Category:Daemons&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Startup and Shutdown\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The daemons are controlled at startup and shutdown of the main OpenNMS JVM by the service-configuration.xml configuration file (this also controls how status information, if any, is gathered for the daemons).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Category:Daemons&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Remote control with JMX\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The daemons can also be controlled remotely with JMX once the main OpenNMS JVM is running. This is used by the opennms.sh startup/shutdown script to tell OpenNMS to begin shutting down and to get status information. It can also be used to restart individual services after making a configuration change. Here is an example of restarting the RTC daemon (based on a post by {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/User:Tarus"}}{\fldrslt \cf2 \ul \ulc2 User:Tarus}} to the discuss list on 2006-01-05):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0   wget --proxy=off -O /dev/null "http://manager:manager@localhost:8181/invoke?objectname=OpenNMS%3AName%3DRtcd&operation=stop"\
+  wget --proxy=off -O /dev/null "http://manager:manager@localhost:8181/invoke?objectname=OpenNMS%3AName%3DRtcd&operation=init"\
+  wget --proxy=off -O /dev/null "http://manager:manager@localhost:8181/invoke?objectname=OpenNMS%3AName%3DRtcd&operation=start"\
+}

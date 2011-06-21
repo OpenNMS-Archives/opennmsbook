@@ -1,0 +1,1130 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 LucidaGrande;
+\f3\fmodern\fcharset0 Courier-Oblique;\f4\fmodern\fcharset0 Courier-Bold;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid102\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Introduction\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Purpose\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This How-To is one in a series designed to serve as a reference for getting started with OpenNMS. Eventually, these documents will cover everything necessary to get OpenNMS installed and running in your environment.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Copyright\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Content is available under a {\field{\*\fldinst{HYPERLINK "http://creativecommons.org/licenses/by-nc-sa/2.5/"}}{\fldrslt \cf2 \ul \ulc2 Creative Commons Attribution-NonCommercial-ShareAlike2.5 License}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Corrections and Omissions\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Please submit any corrections and omissions to the author.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS is an enterprise-grade network management platform developed under the open-source model. Unlike traditional network management products which are very focused on network elements such as interfaces on switches and routers, OpenNMS focuses on the services network resources provide: web pages, database access, DNS, DHCP, etc. (although information on network elements is also available).\
+Since the majority of network services are provided using the TCP/IP protocol, OpenNMS is very IP-centric. The basic monitored "element" is called an "interface", and an interface is uniquely identified by an IP address. Services are mapped to interfaces, and if a number of interfaces are discovered to be on the same device (either via SNMP or SMB) then they may be grouped together as a "node".\
+Discovery in OpenNMS consists of two parts: discovering an IP address to monitor and then discovering the services supported by that IP address. The first part is much simpler than the second.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Discovery\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Discovery User Interface\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The most straight forward way of initiating Discovery is through the web interface. Navigate to Admin > Configure Discovery.\
+There you are presented with 2 options.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	1.	}Specifics - which allows you to enter IP addresses of known individual interfaces.\
+{\listtext	2.	}Include URLs - which allows you to specify a file containing IP addresses to be included in discovery.\
+{\listtext	3.	}Include Ranges - which instructs OpenNMS to scan a range of IP addresses for active interfaces.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Nodes will appear in the Node List as they are discovered.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Discovery Configuration File\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Discovery in OpenNMS is controlled by the 
+\f1 discovery-configuration.xml
+\f0  file (located in the 
+\f1 /opt/OpenNMS/etc
+\f0  directory.\
+Let's look at that file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <discovery-configuration threads="1" packets-per-second="1"\
+                         initial-sleep-time="300000"\
+                         restart-sleep-time="86400000"\
+                         retries="3" timeout="800">\
+\
+  <include-range retries="2" timeout="3000">\
+    <begin>192.168.0.1</begin>\
+    <end>192.168.0.254</end>\
+  </include-range>\
+\
+  <include-url>file:/opt/OpenNMS/etc/include</include-url>\
+</discovery-configuration>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Now, all this file controls is a process that will send an ICMP "ping" to a particular set of IP addresses. If there is a response within the timeout, a "new suspect" event is generated. Otherwise, the IP address is ignored.\
+The global discovery attributes are:\
+\pard\pardeftab720\ql\qnatural
+\cf0 threads\'a0\
+This is the number of threads that will be used for discovery. By default this is set to 1.\
+packets-per-second\'a0\
+This is the number of ICMP packets that will be generated each second. The default is 1. Note that there is a relationship between the packets-per-second and the number of threads. If your network has an average latency of 500ms, then setting packets-per-second to 2 would double the speed at which NewSuspect messages were created. But if there is only one thread available, setting this number to 3 would have little effect - the single thread would be processing as many packets as it could as fast as it could.\
+initial-sleep-time\'a0\
+This is the time, in milliseconds, before the discovery process will commence after OpenNMS is started (by default 5 minutes). This delay is put in place to allow the product to fully start before generating new events.\
+restart-sleep-time\'a0\
+Once the discovery process has completed, this is the time, in milliseconds, before it will start again. By default, the process will repeat 24 hours after the last discovery run has completed.\
+timeout\'a0\
+this is the amount of time, in milliseconds, that the discovery process will wait for a response from a given IP address before deciding that there is nothing there. This can be overridden later in the file.\
+retries\'a0\
+this is the number of attempts that will be made to query a given IP address before deciding that there is nothing there. This can be overridden later in the file.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Once the defaults are in place (defaults meaning the global values that will be used if they are not overridden in the tags below), the only thing left to tell the discovery process is which IP addresses to try. This is controlled by four different tags:\
+\pard\pardeftab720\ql\qnatural
+\cf0 specific\'a0\
+specify a IP address to be discovered. Multiple specific tags can be used.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <specific>ip-address</specific>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Where 
+\i ip-address
+\i0  is the address you want discovered. 
+\b Note
+\b0  the lack of spaces between the tags.\
+\pard\pardeftab720\ql\qnatural
+\cf0 include-range\'a0\
+Specify a range of IP addresses to be discovered. Multiple include-range tags can be used.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <include-range>\
+  <begin>start-ip-address</begin>\
+  <end>end-ip-address</end>\
+</include-range>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Where 
+\i start-ip-address
+\i0  is the beginning of a range to be scanned and 
+\i end-ip-address
+\i0  is the end of that range.\
+\pard\pardeftab720\ql\qnatural
+\cf0 exclude-range\'a0\
+Specify a range of IP address to be excluded from discovery.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <exclude-range>\
+  <begin>start-ip-address</begin>\
+  <end>end-ip-address</end>\
+</exclude-range>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Where 
+\i start-ip-address
+\i0  is the beginning of a range to be excluded and 
+\i end-ip-address
+\i0  is the end of that range. Note that the exclude-range tag will only override addresses in an include-range. It will not override specific IP addresses or addresses included in a file. There is no "specific" version of the exclude tag - if you want to exclude a specific IP address use an exclude-range where the beginning and ending IP addresses are the same.\
+\pard\pardeftab720\ql\qnatural
+\cf0 include-url\'a0\
+Specify a file containing IP addresses to be included in discovery.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <include-url>file:filename</include-url>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Where 
+\i filename
+\i0  is the full path to a text file listing IP addresses, one to a line. Comments can be imbedded in this file. Any line that begins with a "#" character will be ignored, as will the remainder of any line that includes a space followed by "#".\
+All tags are optional and unbounded (you can have as many as you wish).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Another Way to Discover Interfaces\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Now that the discovery configuration file has been explained, there are two short-comings that need to be pointed out. First, any changes to this file, like most of the configuration files within OpenNMS, requires that OpenNMS be restarted. Second, what if you want to discover a service, such as a web server, on a device you cannot ping?\
+Remember that all the discover process does is generate a newSuspect event. Included in the 
+\f1 /opt/OpenNMS/bin
+\f0  directory is a Perl script called 
+\f1 send-event.pl
+\f0 . You can use this script to generate an internal NewSuspect event - bypassing the discovery process altogether. Combined with a script, you could generate any number of NewSuspect events (just make sure that the IP address really does have some services that can be monitored by OpenNMS. Otherwise, you will have an interface in the system with no services associated with it).\
+The format of the 
+\f1 send-event.pl
+\f0  is as follows:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 /opt/opennms/bin/send-event.pl --interface ip-address uei.opennms.org/internal/discovery/newSuspect\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f2 \cf0 \uc0\u8232 
+\f0 Replace 
+\f3\i ip-address
+\f0\i0  with the address you want discovered.\
+For csv with FQDN as hosts location\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 cat fqdnlist.csv | awk -F "," '\{print "host " $1\}' | sh |awk '\{print "./send-event.pl --interface " $4 " uei.opennms.org/internal/discovery/newSuspect"\}'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 For csv file with IP for host location\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 cat ipaddresss.csv |gawk -F "," '\{print "host " $1 \}' |sh |gawk '\{print "./send-event.pl --interface " $1 " uei.opennms.org/internal/discovery/newSuspect"\}'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 note: use same format as exported assets.\
+Depending on what Perl modules you have installed, you may get an error running this script (such as a complaint about Getopt::Mixed). To automatically add the necessary modules, try:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 perl -MCPAN -e 'install mod_name'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Replace 
+\i mod_name
+\i0  with the name of the missing module.\
+Or, if you hate use CPAN (there is some problems, the CPAN can cose to lib's), you can just use rpm pakage\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 wget ftp://ftp.debian.nl/disk1/redhat-contrib/libc5/i386/Getopt-Mixed.pm-1.008-4.i386.rpm\
+\
+rpm -Uv Getopt-Mixed.pm-1.008-4.i386.rpm \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 (END)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Logs\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 You can watch the discovery process by examining the 
+\f1 discovery.log
+\f0  file in the 
+\f1 /opt/opennms/logs/daemon
+\f0  directory.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Capabilities\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Okay, if the discovery process just generates NewSuspect events, what does all the work? This would be the capabilities daemon, capsd. capsd is responsible for discovering all the services to be monitored, such as httpd, DNS, etc., as well as if any collectors are present (at the time this is only SNMP).\
+The capsd process is controlled by the 
+\f1 capsd-configuration.xml
+\f0  file. This file consists of some basic parameters and a collection of "protocols" to be tested. If the protocol is not in the file, then OpenNMS will not discover it.\
+On a restart of OpenNMS it schedules the scans based on the last capsd scan timestamps in the DB and the configured rescan interval.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Process Parameters for capsd\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The first few lines of the 
+\f1 capsd-configuration.xml
+\f0  file control how capsd will behave.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <capsd-configuration rescan-frequency="86400000"\
+                     initial-sleep-time="300000"\
+                     management-policy="managed"\
+                     max-suspect-thread-pool-size="6"\
+                     max-rescan-thread-pool-size="3"\
+                     abort-protocol-scans-if-no-route="false">\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0
+\f0 \cf0 {\listtext	\'95	}rescan-frequency\'a0
+\f2 \uc0\u8232 
+\f0 capsd will continue to check each interface to see if new services have been added. The frequency of these rescans is controlled by this parameter. The default value is 24 hours in milliseconds. 
+\f2 \uc0\u8232 
+\f0 initial-sleep-time\'a0
+\f2 \uc0\u8232 
+\f0 like the discovery process, capsd will sleep for a certain amount of time after OpenNMS starts. The default value is 5 minutes in milliseconds. 
+\f2 \uc0\u8232 
+\f0 management-policy\'a0
+\f2 \uc0\u8232 
+\f0 this parameter controls the default behavior of capsd. If it is set to "managed", then all IP addresses in NewSuspect events will be scanned, unless included in an "unmanaged" range defined at the end of this file. If this parameter is set to "unmanaged", then all NewSuspect events will be ignored unless the IP address in the event is expressly included in a "managed" range (also defined at the end of this file). 
+\f2 \uc0\u8232 
+\f0 max-suspect-thread-pool-size\'a0
+\f2 \uc0\u8232 
+\f0 This value determines how many threads will be created to perform capability scans on IP addresses supplied by NewSuspect events. Increasing this value will make the initial discovery move more quickly at the cost of more system resources. 
+\f2 \uc0\u8232 
+\f0 max-rescan-thread-pool-size\'a0
+\f2 \uc0\u8232 
+\f0 This value determines how many threads will be created to perform capability scans on interfaces that have already been discovered. Rescans are either automatically scheduled (see 
+\f1 rescan-frequency
+\f0 ) or generated ad hoc through the Web UI. 
+\f2 \uc0\u8232 
+\f0 abort-protocol-scans-if-no-route\'a0
+\f2 \uc0\u8232 
+\f0 This is an extremely important parameter for modifying the behavior of capsd. When attempting to connect to a specific port to test for a service, it is possible to receive a "no route to host" exception. In theory, this is because the host is not reachable, but in practice any number of things, such as firewalls, can cause this error. If this parameter is set to "false", these "no route to host" messages are ignored. But if it is set to "true", then capsd will stop checking for additional services. This can greatly improve the speed of discovery if the capsd file has been "tuned" (discussed below). 
+\f2 \uc0\u8232 \u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Protocols 
+\f2 \uc0\u8232 
+\f0\b0\fs24 OpenNMS tests the existence of a particular network service through the use of "protocols". At the most basic, this could be a connection to a TCP port to test for a particular banner, but there are also special classes for a variety of other protocols. The current protocols supported out of the box are: \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls2\ilvl1\cf0 {\listtext	
+\f2 \uc0\u9702 
+\f0 	}Citrix\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}DHCP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}DNS\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}Domino IIOP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}FTP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}General Purpose (script based)\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}HTTP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}HTTPS\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}ICMP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}IMAP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}JBOSS\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}JDBC\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}JDBC Stored Procedure\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}JSR160\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}K5\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}LDAP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}Microsoft Exchange\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}MX4J\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}Notes HTTP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}NSClient (Nagios Agent)\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}NRPE (Nagios Remote Plugin Executor)\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}NTP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}POP3\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}Radius\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}SMB\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}SMTP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}SNMP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}SSH\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}TCP\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}Windows Services (SNMP-based)\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	\'95	}When a newSuspect event is received by capsd and the management policy for the IP address in that event is "managed," the capsd process will work its way through this file testing one protocol after another, in the order they are listed in this file. The first protocol to be tested is ICMP: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="ICMP"\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.IcmpPlugin"\
+{\listtext	\'95	}                 scan="on">\
+{\listtext	\'95	}  <property key="timeout" value="2000"/>\
+{\listtext	\'95	}  <property key="retry" value="2"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 Each protocol starts with a 
+\f1 protocol-plugin
+\f0  tag. This tag has four attributes: 
+\f2 \uc0\u8232 
+\f0 protocol\'a0
+\f2 \uc0\u8232 
+\f0 This is the name of the protocol. 
+\f2 \uc0\u8232 
+\f0 class-name\'a0
+\f2 \uc0\u8232 
+\f0 This defines the protocol class that will be used to test for the service. 
+\f2 \uc0\u8232 
+\f0 scan\'a0
+\f2 \uc0\u8232 
+\f0 Capsd scans can be turned "on" or "off" per protocol with this attribute. 
+\f2 \uc0\u8232 
+\f0 user-defined\'a0
+\f2 \uc0\u8232 
+\f0 In versions prior to something like 1.6.9 and 1.7.9 there has been a tag 
+\f1 user-defined="value"
+\f0  (see example below) which could have had the values true or false. This tag obviously was never used in the code and has now been removed. 
+\f2 \uc0\u8232 \u8232 
+\f0 In addition, each 
+\f1 protocol-plugin
+\f0  can have a number of properties defined by a 
+\f1 key
+\f0  and a 
+\f1 value
+\f0 . The possible properties for each protocol will be discussed in the next section, although almost all include a timeout value and the number of times to try to make a connection. 
+\f2 \uc0\u8232 
+\f0 There is a little-known feature available in capsd. This is the ability to configure each protocol based on IP addresses. This is through the 
+\f1 protocol-configuration
+\f0  tag. The best way to describe this is through an example. Let's take the ICMP configuration from above and modify it: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="ICMP"\
+{\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.IcmpPlugin"\
+{\listtext	\'95	}                 scan="on" user-defined="false">\
+{\listtext	\'95	}  <protocol-configuration scan="on" user-defined="false">\
+{\listtext	\'95	}    <range begin="192.168.10.0" end="192.168.10.254"/>\
+{\listtext	\'95	}    <property key="timeout" value="4000"/>\
+{\listtext	\'95	}    <property key="retry" value="3"/>\
+{\listtext	\'95	}  </protocol-configuration>\
+{\listtext	\'95	}\
+{\listtext	\'95	}  <protocol-configuration scan="off" user-defined="false">\
+{\listtext	\'95	}    <range begin="192.168.20.0" end="192.168.20.254"/>\
+{\listtext	\'95	}  </protocol-configuration>\
+{\listtext	\'95	}\
+{\listtext	\'95	}  <protocol-configuration scan="enable" user-defined="false">\
+{\listtext	\'95	}    <specific>192.168.30.1</specific>\
+{\listtext	\'95	}  </protocol-configuration>\
+{\listtext	\'95	}\
+{\listtext	\'95	}  <property key="timeout" value="2000"/>\
+{\listtext	\'95	}  <property key="retry" value="2"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 There are three 
+\f1 protocol-configuration
+\f0  tags that have been added. Suppose you have one subnet that is over a slow link and it may take a little longer for an ICMP request to be returned. In the first example, the 192.168.10.0 subnet is allowed a 4 second response instead of the default of 2, and three retries. 
+\f2 \uc0\u8232 
+\f0 Suppose you have another segment that you just don't want to scan for ICMP. In the second example, scan is set to "off", and that range will not be tested for ICMP. 
+\f2 \uc0\u8232 
+\f0 Finally, the third example demonstrates setting scan to "enable", which forces the protocol to be associated with the device without testing for it. This is useful if you know the protocol is going to exist on a device, but for some reason it has not been added yet or it is down. Note that "enable" only works for protocol-configuration tags and not the main plugin tag. 
+\f2 \uc0\u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Plugin Properties 
+\f2 \uc0\u8232 
+\f0\b0\fs24 The following table shows all of the 
+\f1 property
+\f0  tags that are available for each protocol plugin. The default values are the ones hard-coded into the plugin itself, not the defaults in the configuration file. 
+\f2 \uc0\u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Citrix 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "1494". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. The default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. The default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] DHCP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "67". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "3000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "3". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=17"}}{\fldrslt \cf2 \ul \ulc2 edit}}] DNS 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "53". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "3000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "3". 
+\f2 \uc0\u8232 
+\f0 lookup\'a0
+\f2 \uc0\u8232 
+\f0 The default host name to attempt to resolve. Default is "localhost". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=18"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Domino IIOP 
+\f2 \uc0\u8232 
+\f0\b0 ports\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "63148". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 
+\f0 IOR port\'a0
+\f2 \uc0\u8232 
+\f0 Port to look for the IOR via HTTP. Default is "80". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=19"}}{\fldrslt \cf2 \ul \ulc2 edit}}] FTP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "21". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=20"}}{\fldrslt \cf2 \ul \ulc2 edit}}] HTTP 
+\f2 \uc0\u8232 
+\f0\b0 ports\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to (can be more than one, separated by a comma). Default is "80,8080,8000". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 
+\f0 max-ret-code (1.3.2 and later)\'a0
+\f2 \uc0\u8232 
+\f0 The highest numerical HTTP response code that will be taken to indicate success. Default is 399 if a URL is specified, 600 if not. 
+\f2 \uc0\u8232 
+\f0 check-return-code (1.3.2 and later)\'a0
+\f2 \uc0\u8232 
+\f0 Boolean indicating whether or not to check the HTTP response code for success/failure. Default is "true". Note that illegal return codes (99 <= code >= 600, per {\field{\*\fldinst{HYPERLINK "http://www.ietf.org/rfc/rfc1945.txt"}}{\fldrslt \cf2 \ul \ulc2 RFC1945}}) still indicate failure. 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=21"}}{\fldrslt \cf2 \ul \ulc2 edit}}] HTTPS 
+\f2 \uc0\u8232 
+\f0\b0 ports\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to (can be more than one, separated by a comma). Default is "443". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "30000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "1". 
+\f2 \uc0\u8232 
+\f0 max-ret-code (1.3.2 and later)\'a0
+\f2 \uc0\u8232 
+\f0 The highest numerical HTTP response code that will be taken to indicate success. Default is 399 if a URL is specified, 600 if not. 
+\f2 \uc0\u8232 
+\f0 check-return-code (1.3.2 and later)\'a0
+\f2 \uc0\u8232 
+\f0 Boolean indicating whether or not to check the HTTP response code for success/failure. Default is "true". Note that illegal return codes (99 <= code >= 600, per {\field{\*\fldinst{HYPERLINK "http://www.ietf.org/rfc/rfc1945.txt"}}{\fldrslt \cf2 \ul \ulc2 RFC1945}}) still indicate failure. 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=22"}}{\fldrslt \cf2 \ul \ulc2 edit}}] ICMP 
+\f2 \uc0\u8232 
+\f0\b0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "800". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "2". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=23"}}{\fldrslt \cf2 \ul \ulc2 edit}}] IMAP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "143". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=24"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JBOSS
+\f2 \uc0\u8232 
+\f0\b0 factory\'a0
+\f2 \uc0\u8232 
+\f0 The method of connecting to JMX. Default is "RMI". The other acceptable value is "HTTP". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "3000". 
+\f2 \uc0\u8232 
+\f0 version\'a0
+\f2 \uc0\u8232 
+\f0 The version of JBOSS being detected. Default is "4". 
+\f2 \uc0\u8232 
+\f0 port\'a0
+\f2 \uc0\u8232 
+\f0 The TCP port to use for the connection. Default is "1099". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=25"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JDBC
+\f2 \uc0\u8232 
+\f0\b0 Unlike nearly all the other plugins, the JDBC plugin is *highly* unlikely to work with the default configuration values. You will have to configure user. password, url and driver to match your database before this will work. 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 
+\f0 user\'a0
+\f2 \uc0\u8232 
+\f0 The username with which to authenticate to the database. Default is "sa" 
+\f2 \uc0\u8232 
+\f0 password\'a0
+\f2 \uc0\u8232 
+\f0 The password corresponding to the username. Default is blank 
+\f2 \uc0\u8232 
+\f0 url\'a0
+\f2 \uc0\u8232 
+\f0 The url of the database (JDBC url foramt). Default is "jdbc:sybase:Tds:OPENNMS_JDBC_HOSTNAME/tempdb" 
+\f2 \uc0\u8232 
+\f0 driver\'a0
+\f2 \uc0\u8232 
+\f0 The JDBC driver class to create the connection from. Default is "com.sybase.jdbc2.jdbc.SybDriver" 
+\f2 \uc0\u8232 
+\f0 host\'a0
+\f2 \uc0\u8232 
+\f0 The host the database lives on. Default is "OPENNMS_JDBC_HOSTNAME" 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=26"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JDBC Stored Procedure
+\f2 \uc0\u8232 
+\f0\b0 Configuration is as for the JDBC plugin, except there is an additional parameter to define the stored procedure to run. Caveats regarding configuration of the JDBC plugin apply here also. The additional parameter: 
+\f2 \uc0\u8232 
+\f0 stored-procedure\'a0
+\f2 \uc0\u8232 
+\f0 The name of the stored procedure to run after connecting to the database. Default is "isRunning". The stored procedure must have a single output parameter of type java.sql.Types.BIT. The actual return value is discarded 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=27"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JSR160
+\f2 \uc0\u8232 
+\f0\b0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=28"}}{\fldrslt \cf2 \ul \ulc2 edit}}] LDAP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The TCP port on which to look for the LDAP service. Default is "389". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=29"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Microsoft Exchange 
+\f2 \uc0\u8232 
+\f0\b0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0" 
+\f2 \uc0\u8232 
+\f0 pop3 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to look for the POP3 protocol. Default is "110". 
+\f2 \uc0\u8232 
+\f0 imap port\'a0
+\f2 \uc0\u8232 
+\f0 The port to look for the IMAP protocol. Default is "143". 
+\f2 \uc0\u8232 
+\f0 mapi port\'a0
+\f2 \uc0\u8232 
+\f0 The port to look for the MAPI protocol. This port/service is used by Exchange for doing RPC over HTTP. Default is "593". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=30"}}{\fldrslt \cf2 \ul \ulc2 edit}}] MX4J
+\f2 \uc0\u8232 
+\f0\b0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=31"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Notes HTTP
+\f2 \uc0\u8232 
+\f0\b0 ports\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to (can be more than one, separated by a comma). Looks for the string "Notes" in the banner. Default is "80,8080,8000". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=32"}}{\fldrslt \cf2 \ul \ulc2 edit}}] NRPE
+\f2 \uc0\u8232 
+\f0\b0 command\'a0
+\f2 \uc0\u8232 
+\f0 The command to send to the NRPE agent. Default is the NRPE Hello command ("_NRPE_CHECK") 
+\f2 \uc0\u8232 
+\f0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port the NRPE agent is listening on. Default is "5666" 
+\f2 \uc0\u8232 
+\f0 padding\'a0
+\f2 \uc0\u8232 
+\f0 The padding to use in the packet. Default is 2 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retry\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 
+\f0 usessl (available from OpenNMS 1.3.10)
+\f2 \uc0\u8232 
+\f0 Whether to use NRPE over SSL. Default is "false". Set to "true" to enable. 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=33"}}{\fldrslt \cf2 \ul \ulc2 edit}}] NSClient
+\f2 \uc0\u8232 
+\f0\b0 command\'a0
+\f2 \uc0\u8232 
+\f0 The command to send to the NSClient agent. Default is the client version check ("1"). 
+\f2 \uc0\u8232 
+\f0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port on which the agent is listening. Default is "1248" 
+\f2 \uc0\u8232 
+\f0 parameter\'a0
+\f2 \uc0\u8232 
+\f0 A parameter to send along with the command. Default is null 
+\f2 \uc0\u8232 
+\f0 criticalPercent\'a0
+\f2 \uc0\u8232 
+\f0 If the command sent returns a value which can be compared, this value is the comparison value for a critical level. Default is "0" 
+\f2 \uc0\u8232 
+\f0 warningPercent\'a0
+\f2 \uc0\u8232 
+\f0 If the command sent returns a value which can be compared, this value is the comparison value for a warning level. Default is "0" 
+\f2 \uc0\u8232 
+\f0 password\'a0
+\f2 \uc0\u8232 
+\f0 The password needed to connect to the agent. Default is "None" 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retry\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=34"}}{\fldrslt \cf2 \ul \ulc2 edit}}] NTP
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "123". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "3000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "3". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=35"}}{\fldrslt \cf2 \ul \ulc2 edit}}] POP3 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "110". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=36"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Radius
+\f2 \uc0\u8232 
+\f0\b0 authport\'a0
+\f2 \uc0\u8232 
+\f0 The port the radius daemon uses for authentication. Default is 1812 
+\f2 \uc0\u8232 
+\f0 acctport\'a0
+\f2 \uc0\u8232 
+\f0 The port the radius daemon uses for accounting. Default is 1813 
+\f2 \uc0\u8232 
+\f0 authtype\'a0
+\f2 \uc0\u8232 
+\f0 The type of authentication the radius daemon requires. Default is "pap" 
+\f2 \uc0\u8232 
+\f0 user\'a0
+\f2 \uc0\u8232 
+\f0 A username that can be used to test authentication. Default is "OpenNMS" 
+\f2 \uc0\u8232 
+\f0 password\'a0
+\f2 \uc0\u8232 
+\f0 A corresponding password that can be used to test authentication. Default is "OpenNMS" 
+\f2 \uc0\u8232 
+\f0 secret\'a0
+\f2 \uc0\u8232 
+\f0 The shared secret with the radius daemon. Default is "secret" 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=37"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SMB 
+\f2 \uc0\u8232 
+\f0\b0 No properties for SMB plugin. 
+\f2 \uc0\u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=38"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SMTP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "25". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=39"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SNMP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is "161". 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is null. 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is null. 
+\f2 \uc0\u8232 
+\f0 force version\'a0
+\f2 \uc0\u8232 
+\f0 The protocol version (SNMPv1 or SNMPv2) to use to check for the service. Default is null. 
+\f2 \uc0\u8232 
+\f0 vbname\'a0
+\f2 \uc0\u8232 
+\f0 The OID to query. Default is ".1.3.6.1.2.1.1.2" (this is SNMPv2-MIB::sysObjectID.0). 
+\f2 \uc0\u8232 
+\f0 vbvalue\'a0
+\f2 \uc0\u8232 
+\f0 The (optional) value to check for if the OID returns one. Default is null. 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=40"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SSH
+\f2 \uc0\u8232 
+\f0\b0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 
+\f0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port the ssh daemon is listening on. Default is "22". 
+\f2 \uc0\u8232 
+\f0 match\'a0
+\f2 \uc0\u8232 
+\f0 A regular expression to check for in the response from the SSH server. Default is null 
+\f2 \uc0\u8232 
+\f0 banner\'a0
+\f2 \uc0\u8232 
+\f0 If match is not defined, another regular expression to check for in the response. Default is null 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=41"}}{\fldrslt \cf2 \ul \ulc2 edit}}] TCP 
+\f2 \uc0\u8232 
+\f0\b0 port\'a0
+\f2 \uc0\u8232 
+\f0 The port to connect to. Default is null. 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The time in milliseconds to wait for a response. Default is "5000". 
+\f2 \uc0\u8232 
+\f0 retries\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts made to detect the service. Default is "0". 
+\f2 \uc0\u8232 
+\f0 banner\'a0
+\f2 \uc0\u8232 
+\f0 Check the "banner" string against the string that is returned if the connection is successful. Default is null. 
+\f2 \uc0\u8232 \u8232 
+\f0\b [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=42"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Windows Services (Win32ServicePlugin) 
+\f2 \uc0\u8232 
+\f0\b0 service-name\'a0
+\f2 \uc0\u8232 
+\f0 The name of the Windows service you are interested in, e.g. "Task Scheduler". Default is "Server". 
+\f2 \uc0\u8232 \u8232 
+\f0 This plugin extends the SnmpPlugin and therefore also accepts all of its properties. 
+\f2 \uc0\u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=43"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Mapping Protocol Plugins to Services 
+\f2 \uc0\u8232 
+\f0\b0\fs24 Note that the protocol plugins represent the code that is used to determine if a particular service exists. It is not the service itself. The 
+\f1 capsd-configuration.xml
+\f0  file is where the services are actually defined. 
+\f2 \uc0\u8232 
+\f0 For example, look at the HTTP service: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="HTTP"\
+{\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.HttpPlugin"\
+{\listtext	\'95	}                 scan="on" user-defined="false">\
+{\listtext	\'95	}  <property key="ports" value="80"/>\
+{\listtext	\'95	}  <property key="timeout" value="3000"/>\
+{\listtext	\'95	}  <property key="retry" value="2"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 This service will use the HTTP plugin to check for a service on port 80 and create a service called "HTTP". With a simple change of port number, you can create a new service: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="HTTP-8080"\
+{\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.HttpPlugin"\
+{\listtext	\'95	}                 scan="on" user-defined="false">\
+{\listtext	\'95	}  <property key="ports" value="8080"/>\
+{\listtext	\'95	}  <property key="timeout" value="3000"/>\
+{\listtext	\'95	}  <property key="retry" value="2"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 Same protocol plugin, but a completely different service as far as OpenNMS is concerned. In some cases, mainly with HTTP, you can check multiple ports. If you do this, then the service will be considered to exist if a valid response is received on 
+\i any or all
+\i0  of the ports tested. 
+\f2 \uc0\u8232 
+\f0 One of the more powerful plugins is the TCP plugin. Here it is used to test for the existence of secure shell: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="SSH"\
+{\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.TcpPlugin"\
+{\listtext	\'95	}                 scan="on" user-defined="false">\
+{\listtext	\'95	}  <property key="banner" value="SSH"/>\
+{\listtext	\'95	}  <property key="port" value="22"/>\
+{\listtext	\'95	}  <property key="timeout" value="3000"/>\
+{\listtext	\'95	}  <property key="retry" value="3"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 This will connect to port 22 and look for the string "SSH" to be returned. By using this banner check you could create different services for different version of software, such as Oracle7 versus Oracle8, as long as the information was included in the banner (to check the banner, you can use 
+\f1 telnet 
+\f3\i ip-address port
+\f0\i0 ). Currently, the match is strictly a substring search. In future versions regular expression may be allowed. 
+\f2 \uc0\u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=44"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Server Message Block (SMB) 
+\f2 \uc0\u8232 
+\f0\b0\fs24 SMB is used by Windows servers to share files, similar to NFS. OpenNMS does not poll either SMB or NFS, but it can use some of the information provided by SMB to name nodes and group interfaces into nodes. If SMB is discovered on a device, it will be noted on the node page. You can allow OpenNMS to "log in" to an SMB share using the following tag: 
+\f2 \uc0\u8232 
+\f1 <smb-config>\
+{\listtext	\'95	}  <smb-auth user="guest" password="guest" type="domain">WORKGROUP</smb-auth>\
+{\listtext	\'95	}</smb-config>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 Here you can enter in a valid username, password and domain for OpenNMS to use when trying to connect to an interface. 
+\f2 \uc0\u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=45"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Management Policies 
+\f2 \uc0\u8232 
+\f0\b0\fs24 As mentioned in the beginning of this section, the default management policy is "managed", which means that capsd will attempt a services scan on all interfaces in newSuspect events. This can be overridden with the 
+\f1 ip-management
+\f0  tag. From the default 
+\b capsd-configuration.xml
+\b0  configuration file: 
+\f2 \uc0\u8232 
+\f1 <ip-management policy="managed">\
+{\listtext	\'95	}  <range begin="192.168.0.0" end="192.168.0.255"/>\
+{\listtext	\'95	}  <include-url>file:/opt/OpenNMS/etc/include</include-url>\
+{\listtext	\'95	}</ip-management>\
+{\listtext	\'95	}\
+{\listtext	\'95	}<ip-management policy="unmanaged">\
+{\listtext	\'95	}  <specific>0.0.0.0</specific>\
+{\listtext	\'95	}  <range begin="127.0.0.0" end="127.255.255.255"/>\
+{\listtext	\'95	}</ip-management>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 This tag has a 
+\f1 policy
+\f0  attribute which can be either 
+\f1 managed
+\f0  or 
+\f1 unmanaged
+\f0 . Then you can define ranges, specific IP addresses and files as needed. Note that the "managed" example is used specifically as an example: since the default policy is "managed" it is not needed. 
+\f2 \uc0\u8232 
+\f0\b\fs36 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=46"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SNMP 
+\f2 \uc0\u8232 
+\f0\b0\fs24 The SNMP protocol is a special case. While most of the other services will eventually be polled, the SNMP service is used to 
+\i collect
+\i0  data. Let's look at its definition in the configuration file: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="SNMP"\
+{\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.SnmpPlugin"\
+{\listtext	\'95	}                 scan="on" user-defined="false">\
+{\listtext	\'95	}  <property key="force version" value="SNMPv1"/>\
+{\listtext	\'95	}  <property key="timeout" value="2000"/>\
+{\listtext	\'95	}  <property key="retry" value="3"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 Note the 
+\f1 force version
+\f0  property. Since SNMP version 2 agents will respond to SNMP version 1 requests, this test will find both agents. 
+\b This property has nothing to do with how the data will be collected
+\b0 . The SNMP collector automatically checks for SNMPv2 and will use GET-BULK commands to retrieve the data (unless overridden in the 
+\f1 snmp-config.xml
+\f0  file). But if you wanted to manage a service called "SNMPv2" you could create one with: 
+\f2 \uc0\u8232 
+\f1 <protocol-plugin protocol="SNMPv2"\
+{\listtext	\'95	}                 class-name="org.opennms.netmgt.capsd.plugins.SnmpPlugin"\
+{\listtext	\'95	}                 scan="on" user-defined="false">\
+{\listtext	\'95	}  <property key="force version" value="SNMPv2"/>\
+{\listtext	\'95	}  <property key="timeout" value="2000"/>\
+{\listtext	\'95	}  <property key="retry" value="3"/>\
+{\listtext	\'95	}</protocol-plugin>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 Note that the "SNMPv2" that existed in early 0.9 is no longer checked by default. 
+\f2 \uc0\u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=47"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The 
+\f4 snmp-config.xml
+\f0  File 
+\f2 \uc0\u8232 
+\f0\b0\fs24 The parameters used to connect with SNMP agents are defined in the 
+\f1 snmp-config.xml
+\f0  file. Here is an example: 
+\f2 \uc0\u8232 
+\f1 <snmp-config retry="3" timeout="800"\
+{\listtext	\'95	}             read-community="public" write-community="private">\
+{\listtext	\'95	}  <definition version="v2c">\
+{\listtext	\'95	}    <specific>192.168.0.5</specific>\
+{\listtext	\'95	}  </definition>\
+{\listtext	\'95	}\
+{\listtext	\'95	}  <definition retry="4" timeout="2000">\
+{\listtext	\'95	}    <range begin="192.168.1.1" end="192.168.1.254"/>\
+{\listtext	\'95	}    <range begin="192.168.3.1" end="192.168.3.254"/>\
+{\listtext	\'95	}  </definition>\
+{\listtext	\'95	}\
+{\listtext	\'95	}  <definition read-community="bubba" write-community="zeke">\
+{\listtext	\'95	}    <range begin="192.168.2.1" end="192.168.2.254"/>\
+{\listtext	\'95	}  </definition>\
+{\listtext	\'95	}\
+{\listtext	\'95	}  <definition port="1161">\
+{\listtext	\'95	}    <specific>192.168.5.50</specific>\
+{\listtext	\'95	}  </definition>\
+{\listtext	\'95	}</snmp-config>\
+{\listtext	\'95	}\uc0\u8232 
+\f0 The attributes for the 
+\f1 snmp-config
+\f0  tag are as follows: 
+\f2 \uc0\u8232 
+\f0 retry\'a0
+\f2 \uc0\u8232 
+\f0 The number of attempts that will be made to connect to the SNMP agent. 
+\f2 \uc0\u8232 
+\f0 timeout\'a0
+\f2 \uc0\u8232 
+\f0 The amount of time, in milliseconds, that OpenNMS will wait for a response from the agent. 
+\f2 \uc0\u8232 
+\f0 read-community\'a0
+\f2 \uc0\u8232 
+\f0 The default "read" community string for SNMP queries. 
+\f2 \uc0\u8232 
+\f0 write-community\'a0
+\f2 \uc0\u8232 
+\f0 The default "write" community string for SNMP queries. Note that this is for future development - OpenNMS does not perform SNMP "sets" at the moment. 
+\f2 \uc0\u8232 \u8232 
+\f0 All of the global parameters can be overridden with 
+\f1 definition
+\f0  tags. These new SNMP definitions can apply to ranges or specific IP addresses. In addition, there are two other attributes available: 
+\f2 \uc0\u8232 
+\f0 port\'a0
+\f2 \uc0\u8232 
+\f0 This overrides the default port of 161. 
+\f2 \uc0\u8232 
+\f0 version\'a0
+\f2 \uc0\u8232 
+\f0 Here you can force either SNMP version 1 "v1" or version 2c "v2c". 
+\f2 \uc0\u8232 \u8232 
+\f0\b\fs28 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=48"}}{\fldrslt \cf2 \ul \ulc2 edit}}] capsd and SNMP 
+\f2 \uc0\u8232 
+\f0\b0\fs24 When testing SNMP, capsd makes an attempt to receive the sysObjectID for the device using the community string and port defined in 
+\f1 snmp-config.xml
+\f0 . If this succeeds, the SNMP protocol is marked as "true" for this IP address. Note that it takes the first valid match in snmp-config.xml for that IP address, something to look for if the address is included in multiple ranges. 
+\f2 \uc0\u8232 
+\f0 Once all of the protocols have been tested, if SNMP is true for this IP address, more tests are performed by capsd. 
+\f2 \uc0\u8232 
+\f0 First, \strike \strikec0 three threads are generated\strike0\striked0  three SNMP requests are made to collect the data from the system tree, the ipAddrTable and ifTable. 
+\f2 \uc0\u8232 
+\f0 If, for some reason, the ipAddrTable or ifTable are unavailable, the process stops (but the SNMP system data may show up on the node page - this happens a lot with UC-Davis SNMP agents where only the system tree is available to a query using the "public" community string). 
+\f2 \uc0\u8232 
+\f0 Second, all of the sub-target IP addresses in the ipAddrTable are run through the capsd capabilities scan. Note that this is regardless of how management is configured in the configuration file. This only happens on the initial scan and on forced rescans. On normal rescans (by default, every 24 hours), IP addresses that are "unmanaged" in capsd are not polled. 
+\f2 \uc0\u8232 
+\f0 Third, every IP address in the ipAddrTable that supports SNMP is tested to see if it maps to a valid ifIndex in the ifTable. If this is true, the IP address is marked as a secondary SNMP interface and is a contender for becoming the primary SNMP interface. 
+\f2 \uc0\u8232 
+\f0 Finally, all secondary SNMP interfaces are tested to see if they match a valid package in the 
+\f1 collectd-configuration
+\f0  file. If more than one valid IP address meets all three criteria (supports SNMP, has a valid ifIndex and is included in a collection package), then the lowest IP address is marked as primary. All SNMP data collection is performed via the primary SNMP interface. 
+\f2 \uc0\u8232 
+\f0 (Note: in the future we will have the ability to change to a secondary SNMP interface should the primary become unavailable). 
+\f2 \uc0\u8232 
+\f0 When the capsd testing process is complete, events are generated, including NodeGainedService events. 
+\f2 \uc0\u8232 
+\f0 SNMP data collection is covered in another How-To ({\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Data_Collection_Configuration_How-To"}}{\fldrslt \cf2 \ul \ulc2 Data Collection Configuration How-To}}). 
+\f2 \uc0\u8232 
+\f0\b\fs36 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Discovery&action=edit&section=49"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Conclusion 
+\f2 \uc0\u8232 
+\f0\b0\fs24 It is hoped that this How-To has proved useful. Please direct corrections and comments to the author.\
+}

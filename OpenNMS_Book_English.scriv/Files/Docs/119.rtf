@@ -1,0 +1,188 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 LucidaGrande;\f2\fmodern\fcharset0 Courier;
+}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;\red0\green0\blue0;\red109\green109\blue109;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid2\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\deftab720
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\fs24 \cf0 This page is designed to keep various tips and tricks for running a secure OpenNMS installation. Since OpenNMS theorically has views into your entire network, keeping that information safe is very important.\
+For a fairly exhaustive list of TCP and UDP ports and ICMP datagram types that OpenNMS uses, see {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Firewall_Policy_and_OpenNMS"}}{\fldrslt \cf2 \ul \ulc2 Firewall Policy and OpenNMS}}.\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth3020\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 Contents\
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+
+\b0\fs24 \cf0 [{\field{\*\fldinst{HYPERLINK "javascript:toggleToc()"}}{\fldrslt \cf2 \ul \ulc2 hide}}]\
+\pard\intbl\itap1\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Security_Considerations#Tomcat_Ports"}}{\fldrslt 1\ul  \ulnone Tomcat Ports}}\cf0 \
+\pard\intbl\itap1\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls1\ilvl1\cf2 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Security_Considerations#ajp13_8009"}}{\fldrslt 1.1\ul  \ulnone ajp13 8009}}\cf0 \
+\ls1\ilvl1\cf2 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Security_Considerations#http_8080"}}{\fldrslt 1.2\ul  \ulnone http 8080}}\cf0 \
+\pard\intbl\itap1\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Security_Considerations#The_RTC_User"}}{\fldrslt 2\ul  \ulnone The RTC User}}\cf0 \cell \lastrow\row
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Security_Considerations&action=edit&section=1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Tomcat Ports\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 By default, in its 5.5 incarnation (as used by OpenNMS 1.3.2), a standard tomcat from tomcat.apache.org will start listeners on port 8080 (http connector), 8009 (ajp13 connector) and 8005 (shutdown service). The shutdown service binds directly to the loopback address, so we can effectively ignore this.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Security_Considerations&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] ajp13 8009\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The ajp connector is only required if you intend to connect to tomcat via ajp13 from apache using mod_jk, mod_jk2 or mod_proxy. Most installations will be happy to turn this off by commenting it out. The configuration directives are found in $TOMCAT_HOME/conf/server.xml thus:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0        <Connector port="8009"\
+              enableLookups="false" redirectPort="8443" protocol="AJP/1.3" />    \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 You will need comment these out in the usual way and restart tomcat for this to take effect.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Security_Considerations&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] http 8080\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In order to restrict access to tomcat's applications, you can use it's [{\field{\*\fldinst{HYPERLINK "http://tomcat.apache.org/tomcat-5.5-doc/config/valve.html%7C"}}{\fldrslt \cf2 \ul \ulc2 remote address filter}}]. For simplicity's sake, it's probably best to configure this at the highest (Engine) level within tomcat's configuration heriarchy, for example, just under the default Engine configuration:\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0    <Engine name="Catalina" defaultHost="localhost">\
+\
+   <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="192.168.1., 192.168.2." /> \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 \
+\
+\
+\
+\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Security_Considerations&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The RTC User\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS employs a 
+\b Real-Time Console
+\b0  that allows the opennms daemon to communicate network status updates with the front-end servlet engine in near-real-time. Since all of the servlets are protected by a realm module, the opennms daemon must authenticate to the servlets. A special user, 
+\b rtc
+\b0  was created for this purpose. In the default configuration, though, it is insecure.\
+By default, all OpenNMS users are part of the 
+\b OpenNMS User
+\b0  role. This includes the 
+\b rtc
+\b0  users. Since the default password for the 
+\b rtc
+\b0  user is simply 
+\b rtc
+\b0 , this means anyone who knows this information and has the ability to contact your OpenNMS installation can log in with this user and view your OpenNMS installation. The information contained in your OpenNMS installation is likely not public knowledge and should not be viewable by non-staff. Now, in all fairness, your OpenNMS installation should be protected from the Internet at large if at all possible, but you may have need for it to face the Internet, or you may have internal users who can get to your installation but should not be able to log in.\
+Lucky for us, changing the password, and even the username, for the 
+\b rtc
+\b0  user is an easy task. The first place to change this information for versions 
+\b 1.3.6
+\b0  and older is the 
+\b web.xml
+\b0  deployer file. Find the 
+\b RTC Subscription parameters
+\b0  section in the 
+\b web.xml
+\b0  file and change it to be the following:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0   <!-- RTC Subscription parameters -->  \
+  <context-param>\
+    <param-name>opennms.rtc-client.http-post.username</param-name>\
+    <param-value>RTCUSER</param-value>\
+    <description>The username the RTC uses when authenticating itself in an HTTP POST.</de  </context-param>\
+  <context-param>\
+    <param-name>opennms.rtc-client.http-post.password</param-name>\
+    <param-value>RTCPASSWORD</param-value>\
+    <description>The password the RTC uses when authenticating itself in an HTTP POST.</de  </context-param>\
+  <context-param>\
+    <param-name>opennms.rtc-client.http-post.base-url</param-name>\
+    <param-value>http://localhost:8080/opennms/rtc/post</param-value>\
+    <description>\
+      The base of a URL that RTC clients use when creating a RTC subscription URL. \
+      IMPORTANT: This URL must NOT contain a slash at the end.       \
+    </description>\
+  </context-param>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Set the 
+\b RTCUSER
+\b0  to your 
+\b rtc
+\b0  user's username. Next, set the 
+\b RTCPASSWORD
+\b0  to your chosen password.\
+For versions 
+\b 1.3.7
+\b0  and newer, change the 
+\b rtc
+\b0  username and password in the file 
+\b WEB-INF/configuration.properties
+\b0  if you use Tomcat, or in the file 
+\b etc/opennms.properties
+\b0  if you use jetty.\
+If you change the 
+\b rtc
+\b0  username, you 
+\b must
+\b0  make sure the new username is a member of the 
+\b OpenNMS RTC Daemon
+\b0  role in the 
+\b etc/magic-users.properties
+\b0  file. Find the lines\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 role.rtc.name=OpenNMS RTC Daemon\
+role.rtc.users=RTCUSER, admin\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 and change 
+\b RTCUSER
+\b0  to your new 
+\b rtc
+\b0  user name.\
+If you're using {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/LDAP_Authentication"}}{\fldrslt \cf2 \ul \ulc2 LDAP Authentication}}, then you're done. Just make sure the password for the 
+\b rtc
+\b0  user in your LDAP directory matches what you set above. If you're using the default OpenNMS realm module, you need tt make some additional changes to the 
+\b magic-users.properties
+\b0  file in the OpenNMS configuration directory (
+\b /opt/OpenNMS/etc
+\b0  in the Linux RPMs).\
+If you changed the 
+\b rtc
+\b0  username as described above, you need to change it in the 
+\b magic-users.properties
+\b0  file as well. In addition, you'll need to change the 
+\b rtc
+\b0  password in this file. Find the lines below and make the appropriate changes:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 users=RTCUSER,otherusers\
+\
+user.RTCUSER.username=RTCUSER\
+user.RTCUSER.password=RTCPASSWORD\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Change all instances of 
+\b RTCUSER
+\b0  to your new 
+\b rtc
+\b0  user name you set above, and change the 
+\b RTCPASSWORD
+\b0  to the same password you set above.\
+That's it. Restart OpenNMS and Tomcat (if you're using it), and you're done.\
+}

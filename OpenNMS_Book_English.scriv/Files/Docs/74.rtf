@@ -1,0 +1,339 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 LucidaGrande;
+}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid102\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}
+{\list\listtemplateid7\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid601\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid7}
+{\list\listtemplateid8\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid701\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid8}
+{\list\listtemplateid9\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid801\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid9}
+{\list\listtemplateid10\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid901\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid10}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}{\listoverride\listid7\listoverridecount0\ls7}{\listoverride\listid8\listoverridecount0\ls8}{\listoverride\listid9\listoverridecount0\ls9}{\listoverride\listid10\listoverridecount0\ls10}}
+\deftab720
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 ntroduction\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If users will be accessing the OpenNMS web UI across untrusted networks, it is desirable to protect web sessions using HTTPS. This article explains how to configure OpenNMS' built-in Jetty web server to support HTTPS with no dependencies on external software.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] For the Impatient\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\fs24 \cf0 These instructions are 
+\i not
+\i0  appropriate for production environments
+\b0 \
+If you want only to see that this feature works, and are not yet concerned with configuring HTTPS for the web UI in a production environment, complete the following steps. You will end up with an HTTPS-enabled version of the OpenNMS web UI that presents a completely bogus SSL certificate.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}Stop OpenNMS\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 OPENNMS_HOME/bin/opennms stop\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0
+\f0 \cf0 {\listtext	\'95	}Set an HTTPS port in the top-level OpenNMS properties file\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls2\ilvl1\cf0 {\listtext	
+\f2 \uc0\u9702 
+\f0 	}Open OPENNMS_HOME/etc/opennms.properties in your favorite editor\
+{\listtext	
+\f2 \uc0\u9702 
+\f0 	}Uncomment the following line:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.netmgt.jetty.https-port = 8443\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0
+\f0 \cf0 {\listtext	\'95	}Start OpenNMS\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 OPENNMS_HOME/bin/opennms start\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0
+\f0 \cf0 {\listtext	\'95	}In your web browser, visit the following URL: {\field{\*\fldinst{HYPERLINK "https://127.0.0.1:8443/opennms/"}}{\fldrslt \cf2 \ul \ulc2 https://127.0.0.1:8443/opennms/}}. Your browser will warn you that the server's certificate cannot be verified because it is expired and is issued by an untrusted authority. If you opt to continue anyway, you will be presented with the OpenNMS login page.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] For the Patient\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The following instructions explain how to set up Jetty as a standalone HTTPS server so that it is suitable for use in production environments. You will end up with an HTTPS-enabled version of the OpenNMS web UI that presents an SSL certificate customized for your environment. The path of this section branches to allow you to choose whether to obtain an SSL certificate signed by a trusted certifying authority or to make do with a self-signed SSL certificate.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Create a new Java keystore\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Using the 
+\i keytool
+\i0  utility that ships with Sun's Java distributions, create a new keystore and populate it with a new key. For the first question ("What is your first and last name"), enter the fully-qualified domain name by which people will be accessing your OpenNMS server's web UI. 
+\i Choose this name correctly, as you will have to start over if you ever need to change it.
+\i0  Answer the remaining questions according to the specifics of your organization and locality.\
+Be sure to specify an appropriate number of days for the 
+\i validity
+\i0  parameter. After this number of days elapses, the key you are generating will expire and you may no longer be able to use it to create new certificates. The example below specifies 731 days, which will make the key valid for two years (accounting for a possible leap year).\
+It is important that you choose good passwords for the keystore and for the key itself. These passwords may be the same or different to each other. Using different and strong passwords here protects your server's private key in the event the keystore file falls into the wrong hands. You should take precautions to keep this from happening, including setting filesystem user and group permissions so that unauthorized individuals with accounts on the OpenNMS server will not have read (or write) access to the keystore.\
+By default, keytool will create DSA keys. There are reports that Jetty does not work well with DSA keys. The solution is to use an RSA key by adding\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 -keyalg RSA\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 to the command below.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $ keytool -genkey -validity 731 -keystore /tmp/propercert/proper.keystore \
+Enter keystore password:  aGoodStrongKeystorePassword\
+What is your first and last name?\
+  [Unknown]:  opennms.example.org\
+What is the name of your organizational unit?\
+  [Unknown]:  Network Management Division\
+What is the name of your organization?\
+  [Unknown]:  The Example Organization\
+What is the name of your City or Locality?\
+  [Unknown]:  Marina del Rey\
+What is the name of your State or Province?\
+  [Unknown]:  California\
+What is the two-letter country code for this unit?\
+  [Unknown]:  US\
+Is CN=opennms.example.org, OU=Network Management Division, O=The Example Organization, L=Marina del Rey, ST=California, C=US correct?\
+  [no]:  yes\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Option A: Certificate signed by a trusted CA\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Generate a certificate signing request (or CSR) from the key that you created above. The command to do this is straightforward. The filename you specify for the 
+\i file
+\i0  parameter will contain the CSR after the command completes.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $ keytool -certreq -keystore /tmp/propercert/proper.keystore -file /tmp/propercert/proper.csr\
+Enter keystore password:  aGoodStrongKeystorePassword\
+Enter key password for <mykey>anotherGoodStrongPassword\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The CSR output file is a text file whose contents will look similar to the following:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 -----BEGIN NEW CERTIFICATE REQUEST-----\
+MIICjjCCAkwCAQAwgYkxCzAJBgNVBAYTAlVTMRcwFQYDVQQIEw5Ob3J0aCBDYXJvbGluYTESMBAG\
+A1UEBxMJUGl0dHNib3JvMSAwHgYDVQQKExdUaGUgT3Blbk5NUyBHcm91cCwgSW5jLjEQMA4GA1UE\
+CxMHVW5rbm93bjEZMBcGA1UEAxMQZGVtby5vcGVubm1zLm9yZzCCAbcwggEsBgcqhkjOOAQBMIIB\
+HwKBgQD9f1OBHXUSKVLfSpwu7OTn9hG3UjzvRADDHj+AtlEmaUVdQCJR+1k9jVj6v8X1ujD2y5tV\
+bNeBO4AdNG/yZmC3a5lQpaSfn+gEexAiwk+7qdf+t8Yb+DtX58aophUPBPuD9tPFHsMCNVQTWhaR\
+MvZ1864rYdcq7/IiAxmd0UgBxwIVAJdgUI8VIwvMspK5gqLrhAvwWBz1AoGBAPfhoIXWmz3ey7yr\
+XDa4V7l5lK+7+jrqgvlXTAs9B4JnUVlXjrrUWU/mcQcQgYC0SRZxI+hMKBYTt88JMozIpuE8FnqL\
+VHyNKOCjrh4rs6Z1kW6jfwv6ITVi8ftiegEkO8yk8b6oUZCJqIPf4VrlnwaSi2ZegHtVJWQBTDv+\
+z0kqA4GEAAKBgHQVrC0ysQbtmvu3Btjsz1n+6MJIm6mB0Y28fzKFC/azpMB+hultKdUFsnnb13BN\
+fnfuUoULeLTu/cGvAsqFtCpJuAmcAzXxmTp0BTYj4o8jJYi0dLIKnox3Shy4VTr+qJlzn9Y1auWy\
+rpwdD03e6Kq32rKpgU5fwC53L0J8dI6yoAAwCwYHKoZIzjgEAwUAAy8AMCwCFFtHtT6XNS8A/0Xu\
+OfVnTnL+zrTPAhR7QgO0Y3Sd0u39l3uOvhX3G5//zw==\
+-----END NEW CERTIFICATE REQUEST-----\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 There is no particular need to protect the CSR, as it contains no data that would aid an attacker.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Submit the CSR to the trusted CA\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Send the certificate signing request (CSR) that you just generated to a certificate authority (CA) that you trust. This could be a commercial CA whose signatures most or all modern browsers will honor (for discussion, see this {\field{\*\fldinst{HYPERLINK "http://en.wikipedia.org/wiki/Certificate_authority"}}{\fldrslt \cf2 \ul \ulc2 Wikipedia article}}) or a CA that is internal to your organization and whose public key is installed into all browsers on your organization's computers. The specifics of this step are entirely outside the scope of this article.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Import the signed certificate\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 After you submit the certificate signing request to the CA, and fulfill the CA's requirements for validating your identity and trustworthiness, the CA will send you a certificate file that bears the CA's signature.\
+The signed certificate consists of the public half of the key that you generated in the first step plus a signature performed using the CA's private key. Therefore, the signed certificate (like the CSR) contains no information that will aid an attacker if it is disclosed.\
+In order for your OpenNMS server to use the signed certificate, you must import the signed certificate into the keystore that you created in the first step.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $ keytool -import -keystore /tmp/propercert/proper.keystore -file /path/to/signed-cert.txt \
+Enter keystore password:  aGoodStrongKeystorePassword\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\b \cf0 Note:
+\b0  This requires that your keystore already trust the CA that has signed your certificate. If you see the error "keytool error: java.lang.Exception: Public keys in reply and keystore don't match", this indicates that you need to import your certificate authority's CA certificate first:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $ keytool -import -trustcacerts -alias <my-CA-root> -keystore /tmp/propercert/proper.keystore -file /path/to/CA-cert.txt\
+Enter keystore password:  aGoodStrongKeystorePassword\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Now retry the import of the server cert.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Option B: Self-signed certificate\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you are content with a self-signed certificate, you need to perform just one step to add a signature to your new SSL certificate.\
+As in the key generation process above, be sure that you specify an appropriate number of days for the 
+\i validity
+\i0  parameter.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $ keytool -selfcert -validity 721 -keystore /tmp/propercert/proper.keystore \
+Enter keystore password:  aGoodStrongKeystorePassword\
+Enter key password for <mykey>anotherGoodStrongPassword\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Copy the keystore into place\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Now that the keystore you created contains your server's signed SSL certificate, you must copy the keystore to a place where OpenNMS can find it. In the real world, you might want to place the keystore in a different location, perhaps one that is not included in your nightly backups (unless you trust your backup operator completely). In extreme cases it might be desirable to put the keystore on a filesystem that is unmounted except when starting or restarting OpenNMS. For the purposes of this article, we will assume that you copied the keystore to 
+\i /opt/opennms/etc/jetty.keystore
+\i0 .\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configure the Jetty HTTPS parameters in OpenNMS\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In your favorite editor, open the file 
+\i OPENNMS_HOME/etc/opennms.properties
+\i0 .\
+Uncomment (or add if not present) the line that sets the property 
+\i org.opennms.netmgt.jetty.https-keystore
+\i0 , and change the value of this property to the location of the keystore that now contains your server's signed SSL certificate:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.netmgt.jetty.https-keystore = /opt/opennms/etc/jetty.keystore\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Uncomment (or add if not present) the lines that set the properties 
+\i org.opennms.netmgt.jetty.https-keystorepassword
+\i0  and 
+\i org.opennms.netmgt.jetty.https-keypassword
+\i0 , and change the values of each property to match the password you used for the keystore and the key itself in the first step:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.netmgt.jetty.https-keystorepassword = aGoodStrongKeystorePassword\
+org.opennms.netmgt.jetty.https-keypassword = anotherGoodStrongPassword\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Uncomment (or add if not present) the line that sets the property 
+\i org.opennms.netmgt.jetty.https-port
+\i0 , and optionally change the value to suit your needs:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.netmgt.jetty.https-port = 8443\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Restrict access to the plain-HTTP listener\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Although the steps you have completed so far have configured OpenNMS to start a Jetty HTTPS listener on port 8443, they have 
+\i not
+\i0  disabled the plain HTTP listener that is present by default on port 890. This listener must be present so that the OpenNMS real-time console can update the availability statistics shown in the web UI. Since you have done all the work to enable HTTPS, you probably do not want users using HTTP, so you will need to restrict access to the plain-HTTP listener.\
+There are two ways to accomplish this task. The first is to tell the plain-HTTP listener to bind only to an interface that is not accessible from any untrusted networks. In a setup where the OpenNMS web UI runs on the same server as the other OpenNMS daemons, it makes sense to use the loopback interface for this purpose. You can restrict the plain-HTTP listener to bind only to the 
+\i localhost
+\i0  interface (which always has the IP address 127.0.0.1) by uncommenting the line that sets the property 
+\i org.opennms.netmgt.jetty.host
+\i0 :\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.netmgt.jetty.host = 127.0.0.1\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The second way to restrict access to the plain-HTTP listener is to use firewall rules. These rules may be local to the OpenNMS web UI server (e.g.iptables on Linux or ipf on Solaris) or they may be configured in a discrete firewall external that stands between the OpenNMS web UI server and the rest of the network. Configuring these rules is beyond the scope of this article.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Restrict access to the HTTPS listener\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Although HTTPS is considered secure, there are valid reasons to restrict the interfaces on which the OpenNMS Jetty HTTPS listener is reachable. Currently it is possible to bind the HTTPS listener to all interfaces (the default) or to a single interface. To bind the HTTPS listener to a single interface, uncomment the line that sets the property 
+\i org.opennms.netmgt.jetty.https-host
+\i0 :\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.netmgt.jetty.https-host = 10.11.12.13\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Using a Pre-existing Private Key and Certificate\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Many users may already have deployed significant amounts of SSL private keys and certs throughout their networks. In many cases, the system on which ONMS is running may already have a private key and certificate. Consequently, it would be a shame to manage yet another set of keys and certs. Unfortunately, the 
+\i keytool
+\i0  utility does not make it easy to import an existing private key and cert into a Java keystore. Thankfully, {\field{\*\fldinst{HYPERLINK "http://www.agentbob.info/agentbob/79-AB.html?branch=1&language=1"}}{\fldrslt \cf2 \ul \ulc2 this}} web page summarizes how to do just that.\
+We summarize here just in case this web page goes away. We assume the private key is in 
+\i key.pem
+\i0  and the cert is in 
+\i cert.pem
+\i0  (both are in PEM format).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Convert the key and cert from PEM format to DER format using openssl command\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Use openssl to convert from PEM to DER format.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 openssl pkcs8 -topk8 -nocrypt -in key.pem -inform PEM -out key.der -outform DER\
+openssl x509 -in cert.pem -inform PEM -out cert.der -outform DER\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Put key and cert into a new Java Keystore\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Use the {\field{\*\fldinst{HYPERLINK "http://www.agentbob.info/agentbob/80/version/default/part/AttachmentData/data/ImportKey.java"}}{\fldrslt \cf2 \ul \ulc2 ImportKey.java}} class to take the key and cert and place it in a newly constructed JKS keystore. I modified the ImportKey java source to use the keystore password 
+\i changeit
+\i0  and to use the key alias 
+\i importkey
+\i0  and to save the resulting keystore in the file 
+\i jetty.keystore
+\i0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 java ImportKey key.der cert.der\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Standalone_HTTPS_with_Jetty&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Howto: Create and use a certificate signed by the CAcert community\
+\pard\pardeftab720\sa240\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://www.cacert.org/"}}{\fldrslt 
+\b0\fs24 \cf2 \ul \ulc2 CAcert}}
+\b0\fs24  is a community that offers "free trust" - free signed certificates. If you are interested in using them, read their website. This howto assumes that you already have an account at CAcert and that you use the Debian package of OpenNMS (or: the path to they keystore is like it is in the debian package).\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls5\ilvl0\cf0 {\listtext	\'95	}Create a fresh keypair in a fresh keystore\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f1 \cf0 keytool -keyalg RSA -genkey -validity 731 -keystore /usr/share/opennms/etc/jetty.keystore
+\f0 \
+Note: Use your FQDN when you are asked for first and last name!\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls6\ilvl0\cf0 {\listtext	\'95	}Create a certificate signing request (CSR)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f1 \cf0 keytool -certreq -keystore /usr/share/opennms/etc/jetty.keystore -file /tmp/opennms.services.net-lab.net.csr
+\f0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls7\ilvl0\cf0 {\listtext	\'95	}Let a cacert CA sign the CSR\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Copy and paste /tmp/opennms.services.net-lab.net.csr into cacert's web UI and save the resulting (signed) certificate into a new file /tmp/opennms.services.net-lab.net.cert\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls8\ilvl0\cf0 {\listtext	\'95	}Import cacert.org root certificate and class3 certficate into your keystore:\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f1 \cf0 wget --no-check-certificate -q -O - {\field{\*\fldinst{HYPERLINK "https://www.cacert.org/certs/root.crt"}}{\fldrslt \cf2 \ul \ulc2 https://www.cacert.org/certs/root.crt}} | keytool -import -noprompt -alias cacertroot -trustcacerts -storepass ***yourpass*** -keystore /usr/share/opennms/etc/jetty.keystore
+\f0 \
+
+\f1 wget --no-check-certificate -q -O - {\field{\*\fldinst{HYPERLINK "https://www.cacert.org/certs/class3.crt"}}{\fldrslt \cf2 \ul \ulc2 https://www.cacert.org/certs/class3.crt}} | keytool -import -noprompt -alias cacertclass3 -trustcacerts -storepass ***yourpass*** -keystore /usr/share/opennms/etc/jetty.keystore
+\f0 \
+Note: You have to import the CAcert root certificate once into your browser, in order to make your browser trust the CAcert certficates (Some Linux distris already did that, see {\field{\*\fldinst{HYPERLINK "http://wiki.cacert.org/wiki/InclusionStatus"}}{\fldrslt \cf2 \ul \ulc2 InclusionStatus}} )\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls9\ilvl0\cf0 {\listtext	\'95	}Import your cert into the keystore\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f1 \cf0 keytool -import -noprompt -storepass valvoja -keystore /usr/share/opennms/etc/jetty.keystore -file /tmp/opennms.services.net-lab.net.cert
+\f0 \
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Template:New_Feature_In&action=edit&section=T-1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Version History/Availability\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls10\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}This feature was added in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.10"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.10}}\
+}

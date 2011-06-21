@@ -1,0 +1,311 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Purpose\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The SNMP monitor enables the OpenNMS poller to request the value of an arbitrary MIB object from an SNMP agent, compare the retrieved value against a flexible set of rules, and based on the evaluation declare a service to be up or down.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuration Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In order to use the SNMP monitor to check out values for particular SNMP OIDs, you'll need to first configure 
+\f1 capsd-configuration.xml
+\f0  to discover the service, or use the model importer or provisioning groups to provision the service on one or more of a node's interfaces. You'll then configure the poller to monitor the service.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuration Examples\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Provisioning via Capsd\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The default usage of the SNMP plugin in 
+\i capsd-configuration.xml
+\i0  looks like this:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0         <protocol-plugin protocol="SNMP" class-name="org.opennms.netmgt.capsd.plugins.SnmpPlugin" scan="on" user-defined="false">\
+                <property key="timeout" value="2000"/>\
+                <property key="retry" value="2"/>\
+        </protocol-plugin>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Custom Example: Logged In Users\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Suppose you wanted to make sure at least one user was logged into a system at a time. You could use 
+\f1 hrSystemNumUsers
+\f0  (.1.3.6.1.2.1.25.1.5.0) to test this:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0         <protocol-plugin protocol="NumUsers" class-name="org.opennms.netmgt.capsd.plugins.SnmpPlugin" scan="on" user-defined="false">\
+                <property key="timeout" value="2000"/>\
+                <property key="retry" value="2"/>\
+		<property key="vbname" value=".1.3.6.1.2.1.25.1.5.0"/>\
+        </protocol-plugin>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This plugin will test if the object exists, and if so it will assign the NumUsers service to the IP address. You can also test for a specific value (
+\f1 vbvalue
+\f0 ). This would be useful if there is an OID that indicates if a service is active, such as 
+\f1 ipForwarding
+\f0  that indicates a device is a Router:\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Custom Example: IP Forwarding Enabled\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0 \cf0         <protocol-plugin protocol="Router" class-name="org.opennms.netmgt.capsd.plugins.SnmpPlugin" scan="on" user-defined="false">\
+                <property key="vbname" value=".1.3.6.1.2.1.4.1.0"/>\
+                <property key="vbvalue" value="1"/>\
+                <property key="timeout" value="2000"/>\
+                <property key="retry" value="2"/>\
+        </protocol-plugin>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuring Service Monitoring\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Once the service has been {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Monitor#Provisioning_via_Capsd"}}{\fldrslt \cf2 \ul \ulc2 provisioned}}, a monitor can be added to 
+\f1 poller-configuration.xml
+\f0 . Again, the default service definition for this monitor looks like this (note that it's turned off by default, which is why the SNMP service shows as 
+\b Not Monitored
+\b0  in the node details):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0                 <service name="SNMP" interval="300000" user-defined="false" status="off">\
+                        <parameter key="retry" value="2"/>\
+                        <parameter key="timeout" value="3000"/>\
+                        <parameter key="port" value="161"/>\
+                        <parameter key="oid" value=".1.3.6.1.2.1.1.2.0"/>\
+                </service>\
+...\
+        <monitor service="SNMP"         class-name="org.opennms.netmgt.poller.monitors.SnmpMonitor"/>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Do Not Forget The Monitor Definition!\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Note well the presence of the 
+\i <monitor>
+\i0  element near the bottom of the file. Each 
+\i <service>
+\i0  must have a corresponding 
+\i <monitor>
+\i0  so that the poller will know what poller monitor class to use to monitor that service.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Custom Example: Users Logged In\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 For the 
+\f1 NumUsers
+\f0  service to see if at least one person is logged in:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0                 <service name="NumUsers" interval="300000" user-defined="false" status="on">\
+                        <parameter key="retry" value="2"/>\
+                        <parameter key="timeout" value="3000"/>\
+                        <parameter key="port" value="161"/>\
+                        <parameter key="oid" value=".1.3.6.1.2.1.25.1.5.0"/>\
+                        <parameter key="operator" value="&gt;="/>\
+                        <parameter key="operand" value="1"/>\
+                </service>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Note that there are two parameters that allow you to customize the comparison performed on the value returned from the SNMP agent: 
+\i operator
+\i0  and 
+\i operand
+\i0 . The 
+\i operator
+\i0  can be one of:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}Less than: "<" (you will need to use an entity &lt;)\
+{\listtext	\'95	}Greater than: ">" (&gt;)\
+{\listtext	\'95	}Less than or equals: "<=" (&lt;)\
+{\listtext	\'95	}Greater than or equals: ">=" (&gt;=)\
+{\listtext	\'95	}Equals: "="\
+{\listtext	\'95	}Does not equal: "!="\
+{\listtext	\'95	}Matches regular expression: "~"\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The last value is used when the OID returns a string.\
+Be sure to add a corresponding monitor line at the bottom of the 
+\f1 poller-configuration.xml
+\f0  file when adding new monitors:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0         <monitor service="NumUsers"         class-name="org.opennms.netmgt.poller.monitors.SnmpMonitor"/>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Get Fuzzy: The 
+\i walk
+\i0  parameter\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you don't know the exact object identifier for the MIB object whose value you wish to compare against your criteria, you can add the 
+\i walk
+\i0  parameter to your service definition with a value of 
+\i true
+\i0 . This setting causes the monitor to send a GETNEXT request instead of a directed GET request to the SNMP agent. For example, you could use this setting to check whether a device supports any objects in the ASTERISK-MIB:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <service name="Asterisk_MIB" interval="300000" user-defined="false" status="on">\
+ <parameter key="oid" value=".1.3.6.1.4.1.22736.1" />\
+ <parameter key="walk" value="true" />\
+</service>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Using the 
+\i match-all
+\i0  parameter\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you want to verify that every row of a conceptual MIB table has a value in a given column that matches your criteria, you can use the 
+\i walk
+\i0  parameter (described above) along with the 
+\i match-all
+\i0  parameter set to a value of 
+\i true
+\i0 . For example, you could use this setting to check that every IP route in a node's routing table is statically configured (
+\b ipRouteProto
+\b0  has a value of 
+\b local(2)
+\b0 ):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <service name="All_Static_Routes" interval="300000" user-defined="false" status="on">\
+ <parameter key="oid" value=".1.3.6.1.2.1.4.21.1.9" />\
+ <parameter key="operator" value="=" />\
+ <parameter key="operand" value="2" />\
+ <parameter key="walk" value="true" />\
+ <parameter key="match-all" value="true" />\
+</service>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The default behavior for match-all is 
+\i true
+\i0 . If you would like see if minimum one entry exist, set match-all to 
+\i false
+\i0 . The first match with your operand set the monitor to 
+\i Up
+\i0 .\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Matching a Bounded Number of Rows\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 As a special case of checking the same column for many rows of a conceptual MIB table, you can set the value of the 
+\i match-all
+\i0  parameter to 
+\i count
+\i0  and add a 
+\i minimum
+\i0  and/or 
+\i maximum
+\i0  parameter to bound the number of rows that must meet the specified criteria. Extending the static routes example above, you could require that at least three but fewer than ten static routes exist in a node's IP routing table:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <service name="All_Static_Routes" interval="300000" user-defined="false" status="on">\
+ <parameter key="oid" value=".1.3.6.1.2.1.4.21.1.9" />\
+ <parameter key="operator" value="=" />\
+ <parameter key="operand" value="2" />\
+ <parameter key="walk" value="true" />\
+ <parameter key="match-all" value="count" />\
+ <parameter key="minimum" value="3" />\
+ <parameter key="maximum" value="10" />\
+</service>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Monitor&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Customizing Reason Codes\
+\pard\pardeftab720\ql\qnatural
+
+\i \cf0 Note: this feature is available in stable releases 1.6.3 and later, development releases 1.7.1 and later
+\i0\b0 \
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 When the SNMP monitor detects that a service is down according to the configured criteria, it tries to create a human-readable reason code. The default reason codes are quite generic, as this monitor can be used to check the status of an endless variety of values. You can specify a template to be used when creating the reason code by adding a 
+\b reason-template
+\b0  parameter to your service definition. This feature can make the reason codes for outages more immediately understandable in the context in which you're using the SNMP monitor. For our logged in users example, we might use a reason code template like this one:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <parameter key="reason-template" value="Users logged in must be $\{operator\} $\{operand\} but actual value was $\{observedValue\}" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Assuming the example service definition above were in effect, but the monitor found that hrSystemNumUsers had a value of zero, the resulting reason code would read:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 Users logged in must be >= 1 but actual value was 0\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The following tokens, if present in the form 
+\i $\{foo\}
+\i0  in the reason code template, will be expanded to the values configured for the corresponding parameters in the service definition:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0
+\i \cf0 {\listtext	\'95	}oid
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}operator
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}operand
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}walk
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}matchAll
+\i0  (actual parameter key is 
+\i match-all
+\i0 , camel case conversion is XML convention)\
+\ls2\ilvl0
+\i {\listtext	\'95	}minimum
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}maximum
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}timeout
+\i0 \
+\ls2\ilvl0
+\i {\listtext	\'95	}retry
+\i0  (
+\i retries
+\i0  is a synonym)\
+\ls2\ilvl0
+\i {\listtext	\'95	}port
+\i0 \
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The following additional tokens, if present, will be expanded to their runtime values:\
+\pard\pardeftab720\ql\qnatural
+
+\i \cf0 ipaddr
+\i0 \'a0\
+The IP address of the interface on which the service is being polled\
+
+\i observedValue
+\i0 \'a0\
+The actual value (as a string) returned by the underlying SNMP operation. Note that this token usually does not make sense to use if the "walk" param is set to "true" or if the "match-all" param is set to "count".\
+
+\i matchCount
+\i0 \'a0\
+The number of matching rows found. Set only if the "match-all" param is set to "count".\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Template:New_Feature_In&action=edit&section=T-1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Version History/Availability\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}This feature was added in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.1.5"}}{\fldrslt \cf2 \ul \ulc2 version 1.1.5}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.0"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.0}}\
+}

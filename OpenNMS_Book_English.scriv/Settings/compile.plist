@@ -214,7 +214,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFolderAndTextCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileFolderAndTextSectionSeparatorKey</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>SCRCompileFolderCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileFolderFormattingLevelsKey</key>
@@ -802,7 +802,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 		</dict>
 	</array>
 	<key>SCRCompileFolderSectionSeparatorKey</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>SCRCompileFootnotesFontKey</key>
 	<data>
 	BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaSiEBVs0
@@ -816,7 +816,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFootnotesStyleKey</key>
 	<integer>0</integer>
 	<key>SCRCompileFormatKey</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>SCRCompileGroupFootnotesBeforePageBreakTypeKey</key>
 	<integer>1</integer>
 	<key>SCRCompileGroupFootnotesBeforePageBreaksKey</key>
@@ -999,7 +999,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileTextAndFolderCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileTextAndFolderSectionSeparatorKey</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>SCRCompileTextContainerFormattingLevelsKey</key>
 	<array>
 		<dict>
@@ -2171,7 +2171,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 		</dict>
 	</array>
 	<key>SCRCompileTextSectionSeparatorKey</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>SCRCompileUpdateScrivenerLinksWithPrefixAndSuffixKey</key>
 	<true/>
 	<key>SCRCompileUseHyphenationKey</key>

@@ -1,0 +1,412 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Introduction\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Syslog messages and SNMP Traps, unfortunately, can get rather noisy when things go wrong. It is the nature of these monitoring protocols to provide system administrators with as much information as possible as quickly as possible. Thus, sending notifications on each, while effective, will often create a sea of angry on call staff! What follows in this document is a simple way (workflow) of turning a slew of Syslog messages into:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}one alarm\
+{\listtext	\'95	}one notification\
+{\listtext	\'95	}a trouble ticket with alarm data for the follow-up\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Syslogd_Automations&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Building Alarms\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Alarms are based on one criteria in the event.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <alarm-data reduction-key="%uei%:%dpname%:%nodeid%" alarm-type="1"  />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 You need to add this to the events that you want to build alarms from. You can easily do this with a search / replace in your favorite editor.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Syslogd_Automations&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Defining the Automation\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0\fs24 \cf0 <VacuumdConfiguration period="86400000" >\
+  <statement>\
+    <!-- this deletes all the nodes that have been marked as deleted - it relies on cascading deletes -->\
+    DELETE FROM node WHERE node.nodeType = 'D';\
+  </statement>\
+   \
+  <statement>\
+    <!-- this deletes all the interfaces that have been marked as deleted - it relies on cascading deletes -->\
+    DELETE FROM ipInterface WHERE ipInterface.isManaged = 'D';\
+  </statement>\
+   \
+  <statement>\
+    <!-- this deletes all the services that have been marked as deleted - it relies on cascading deletes -->\
+    DELETE FROM ifServices WHERE ifServices.status = 'D';\
+  </statement>\
+   \
+  <statement>\
+    <!-- this deletes any events that are not associated with outages - Thanks to Chris Fedde for this -->\
+    DELETE FROM events WHERE NOT EXISTS \
+      (SELECT svclosteventid FROM outages WHERE svclosteventid = events.eventid  \
+    UNION \
+      SELECT svcregainedeventid FROM outages WHERE svcregainedeventid = events.eventid \
+    UNION \
+      SELECT eventid FROM notifications WHERE eventid = events.eventid) \
+    AND eventtime < now() - interval '2 weeks';\
+  </statement>\
+    \
+  <automations>\
+    <automation name="cosmicClear" interval="30000" trigger-name="selectResolvers" action-name="clearProblems" active="true" />\
+    <automation name="cleanUp" interval="30000" action-name="deletePastClearedAlarms" active="true" />\
+    <automation name="cleanUpAcks" interval="30000" action-name="deleteAckedAlarms" active="true" />\
+    <automation name="cleanUpSyslog" interval="30000" action-name="deleteNonInterestingSyslogAlarms" active="true" />\
+    <automation name="cleanUpUnknown" interval="30000" action-name="deleteUnknownSyslogAlarms" active="true" />\
+    <automation name="GC" interval="300000" action-name="garbageCollect" active="true" />\
+    <automation name="unclear" interval="30000" trigger-name="selectClearedAlarms" action-name="resetSeverity" active="true" />\
+    <automation name="escalation" interval="30000" trigger-name="selectSuspectAlarms" action-name="escalateAlarm" action-event="eventEscalated" active="false" />\
+    <automation name="criticalSyslogMessages" interval="30000" trigger-name="selectSyslogMessages" action-name="doNothing" action-event="syslogCritical" active="true" />\
+    <automation name="criticallog4jMessages" interval="30000" trigger-name="selectlog4jMessages" action-name="doNothing" action-event="log4jCritical" active="true" />\
+    <automation name="purgeStatisticsReports" interval="3600000" action-name="deletePurgeableStatisticsReports" active="true" />\
+  </automations>\
+  \
+  <triggers>\
+\
+\
+	<trigger name="selectlog4jMessages" operator=">=" row-count="1" >\
+\
+		<statement>\
+                select a.alarmid as _id,\
+                 a.eventuei as _eventuei,\
+                 a.nodeid as _nodeid,\
+                 a.ipaddr as _ipaddr,\
+                 a.serviceid as _serviceid,\
+                 s.servicename as _servicename,\
+                 a.severity as _sev,\
+                 a.logmsg as _logmsg,\
+                 now() as _ts\
+                FROM alarms a\
+                 LEFT OUTER JOIN service s\
+              ON s.serviceid = a.serviceid\
+                   WHERE alarmType = 1\
+             AND alarmacktime IS NULL\
+             AND firstautomationtime is NULL\
+             AND logmsg like '%log4j:%'\
+	</statement>\
+	</trigger>\
+\
+	<trigger name="selectSyslogMessages" operator=">=" row-count="1" >\
+\
+	<statement>\
+		select a.alarmid as _id,\
+                 a.eventuei as _eventuei,\
+                 a.nodeid as _nodeid,\
+                 a.ipaddr as _ipaddr,\
+                 a.serviceid as _serviceid,\
+                 s.servicename as _servicename,\
+                 a.severity as _sev,\
+                 a.logmsg as _logmsg,\
+                 now() as _ts\
+                FROM alarms a\
+                 LEFT OUTER JOIN service s\
+              ON s.serviceid = a.serviceid\
+                   WHERE alarmType = 1\
+             AND alarmacktime IS NULL\
+             AND firstautomationtime is NULL \
+	     AND logmsg not like '%snort:%'\
+	     AND logmsg not like '%portscan%'\
+	     AND logmsg not like '%pam_ldap%'\
+	     AND logmsg not like '%Authentication failure%'\
+	     AND logmsg not like '%password authentication failed for user%'\
+	     AND logmsg not like '%AF_INET%\
+             AND eventuei <> 'uei.opennms.org/syslogd/alarmCreated'\
+             AND eventuei not like 'uei.opennms.org/syslogd/unknown%'\
+             AND eventuei not like 'uei.opennms.org/syslogd/unknown%'\
+             AND (eventuei like 'uei.opennms.org/syslogd/%/Emergency'\
+             OR  eventuei like 'uei.opennms.org/syslogd/%/Alert'\
+             OR  eventuei like 'uei.opennms.org/syslogd/%/Error'\
+             OR  eventuei like 'uei.opennms.org/syslogd/%/Critical');\
+	</statement>\
+	</trigger>\
+  \
+    <trigger name="selectSuspectAlarms" operator=">=" row-count="1" >\
+      <statement>\
+          SELECT a.alarmid as _alarmid, \
+                 a.eventuei as _eventuei, \
+                 a.nodeid as _nodeid, \
+                 a.ipaddr as _ipaddr, \
+                 a.serviceid as _serviceid,\
+                 s.servicename as _servicename,\
+                 now() as _ts\
+            FROM alarms a\
+ LEFT OUTER JOIN service s\
+              ON s.serviceid = a.serviceid\
+           WHERE alarmType = 1\
+             AND severity > 3\
+             AND severity < 7\
+             AND alarmacktime IS NULL\
+             AND COALESCE(lastautomationtime, lasteventtime) < now() - interval '60 minutes'\
+      </statement>\
+    </trigger>\
+  \
+    <trigger name="selectClearedAlarms" operator=">=" row-count="1" >\
+      <statement>\
+        SELECT a.alarmid as _id, e.eventseverity AS _sev, now() as _ts\
+          FROM alarms a\
+          JOIN events e \
+            ON e.eventid = a.lasteventid\
+         WHERE severity = 2\
+           AND alarmtype = 1\
+           AND a.lasteventtime > a.lastautomationtime\
+      </statement>\
+    </trigger>\
+  \
+    <trigger name="selectResolvers" operator=">=" row-count="1" >\
+      <statement>\
+        SELECT *, now() as _ts \
+          FROM alarms \
+         WHERE alarmType=2\
+      </statement>\
+    </trigger>\
+  </triggers>\
+    \
+  <actions>\
+  \
+    <action name="escalateAlarm" >\
+      <statement>\
+        UPDATE alarms\
+           SET severity = severity +1, firstautomationtime = COALESCE(firstautomationtime, $\{_ts\}), lastautomationtime = $\{_ts\}\
+         WHERE alarmid = $\{_alarmid\}\
+      </statement>\
+    </action>\
+  \
+    <action name="resetSeverity" >\
+      <statement>\
+        UPDATE alarms\
+           SET severity = $\{_sev\}, firstautomationtime = COALESCE(firstautomationtime, $\{_ts\}), lastautomationtime = $\{_ts\}\
+         WHERE alarmid = $\{_id\}\
+      </statement>\
+    </action>\
+\
+    <action name="doNothing" >\
+      <statement>\
+        UPDATE alarms\
+           SET severity = $\{_sev\}, firstautomationtime = COALESCE(firstautomationtime, $\{_ts\}), lastautomationtime = $\{_ts\}\
+         WHERE alarmid = $\{_id\}\
+      </statement>\
+    </action>\
+    <!-- action used for postgres 7.4 compatibility -->\
+    <action name="garbageCollect" >\
+      <statement>\
+        DELETE FROM alarms\
+         WHERE COALESCE(lastautomationtime, lasteventtime) < now() - interval '5 days'\
+           AND alarmacktime IS NULL\
+      </statement>\
+    </action>\
+  \
+    <!-- a better action when using postgres 8.1 \
+    <action name="garbageCollect" >\
+      <statement>\
+        DELETE FROM alarms\
+         WHERE GREATEST(lastautomationtime, lasteventtime) < now() - interval '5 days'\
+           AND alarmacktime IS NULL\
+      </statement>\
+    </action>\
+    -->\
+  \
+    <action name="deletePastClearedAlarms" >\
+      <statement>\
+        DELETE from alarms\
+         WHERE severity <= 3\
+           AND COALESCE(lastautomationtime, lasteventtime) < now() - interval '2 minutes'\
+           AND alarmacktime IS NULL\
+      </statement>\
+    </action>\
+\
+    <action name="deleteAckedAlarms" >\
+      <statement>\
+        DELETE from alarms\
+         WHERE severity <= 7\
+           AND COALESCE(lastautomationtime, lasteventtime) < now() - interval '1 minute'\
+           AND alarmacktime IS not NULL\
+      </statement>\
+    </action>\
+\
+    <action name="deleteUnknownSyslogAlarms">\
+	<statement>\
+		DELETE from alarms\
+ 		 WHERE alarmType = 1\
+			AND alarmacktime IS NULL\
+			AND  eventuei like 'uei.opennms.org/syslogd/unknown%'\
+	</statement>\
+	</action>\
+\
+    <action name="deleteNonInterestingSyslogAlarms">\
+	<statement>\
+		DELETE from alarms\
+ 		 WHERE alarmType = 1\
+			AND alarmacktime IS NULL\
+             		AND eventuei not like 'uei.opennms.org/syslogd/%/Emergency'\
+			AND  eventuei not like 'uei.opennms.org/syslogd/%/Alert'\
+			AND  eventuei not like 'uei.opennms.org/syslogd/%/Error'\
+			AND  eventuei not like 'uei.opennms.org/syslogd/%/Critical'\
+			AND  eventuei like 'uei.opennms.org/syslogd%'\
+	</statement>\
+	</action>\
+ \
+<!--\
+    <action name="clearProblems" >\
+      <statement>\
+        UPDATE alarms \
+           SET severity=2, firstautomationtime = COALESCE(firstautomationtime, $\{_ts\}), lastautomationtime = $\{_ts\}\
+         WHERE alarmType=1 \
+           AND severity > 2 \
+           AND lastEventTime <  $\{lastEventTime\} \
+           AND eventUei = $\{clearUei\} \
+           AND COALESCE(dpName, '') = COALESCE($\{dpName\}, '') \
+           AND COALESCE(nodeID, 0) = COALESCE($\{nodeID\}, 0) \
+           AND COALESCE(ipaddr, '') = COALESCE($\{ipaddr\}, '') \
+           AND COALESCE(serviceID, 0) = COALESCE($\{serviceID\}, 0)\
+      </statement> \
+    </action>\
+-->\
+\
+    <!--  New and optimized version of clearing problems -->\
+    <action name="clearProblems" >\
+      <statement>\
+        UPDATE alarms \
+           SET severity=2, firstautomationtime = COALESCE(firstautomationtime, $\{_ts\}), lastautomationtime = $\{_ts\}\
+         WHERE alarmType=1 \
+           AND severity > 2 \
+           AND lastEventTime <  $\{lastEventTime\} \
+           AND reductionKey = $\{clearKey\} \
+      </statement> \
+    </action>\
+    \
+    <action name="deletePurgeableStatisticsReports" >\
+      <statement>\
+        DELETE from statisticsReport\
+         WHERE purgeDate < now()\
+      </statement>\
+    </action>\
+\
+  </actions>\
+\
+  <!--  Deprecating this element... see the new <action-events> element -->    \
+  <auto-events>\
+    <auto-event name="escalationEvent" >\
+      <uei>uei.opennms.org/vacuumd/alarmEscalated</uei>\
+    </auto-event>\
+  </auto-events>\
+\
+  <!-- Note: action events that have org.apache.maven.project.MavenProject@61bd1a3c tokens require the for-each-result attribute to be set to true -->\
+  <action-events>\
+    <action-event name="eventEscalated" for-each-result="true" >\
+      <assignment type="field" name="uei" value="uei.opennms.org/vacuumd/alarmEscalated" />\
+      <assignment type="field" name="nodeid" value="$\{_nodeid\}" />\
+      <assignment type="field" name="interface" value="$\{_ipaddr\}" />\
+      <assignment type="field" name="service" value="$\{_servicename\}" />\
+      <assignment type="parameter" name="alarmId" value="$\{_alarmid\}" />\
+      <assignment type="parameter" name="alarmEventUei" value="$\{_eventUei\}" />\
+    </action-event>\
+\
+  <action-event name="syslogCritical" for-each-result="true" >\
+      <assignment type="field" name="uei" value="uei.opennms.org/syslogd/alarmCreated" />\
+      <assignment type="field" name="nodeid" value="$\{_nodeid\}" />\
+      <assignment type="field" name="interface" value="$\{_ipaddr\}" />\
+      <assignment type="field" name="service" value="$\{_servicename\}" />\
+      <assignment type="parameter" name="logmsg" value="$\{_logmsg\}" />\
+      <assignment type="parameter" name="alarmId" value="$\{_id\}" />\
+      <assignment type="parameter" name="alarmEventUei" value="$\{_eventUei\}" />\
+    </action-event>\
+  <action-event name="log4jCritical" for-each-result="true" >\
+      <assignment type="field" name="uei" value="uei.opennms.org/syslogd/log4jCreated" />\
+      <assignment type="field" name="nodeid" value="$\{_nodeid\}" />\
+      <assignment type="field" name="interface" value="$\{_ipaddr\}" />\
+      <assignment type="field" name="service" value="$\{_servicename\}" />\
+      <assignment type="parameter" name="logmsg" value="$\{_logmsg\}" />\
+      <assignment type="parameter" name="alarmId" value="$\{_id\}" />\
+      <assignment type="parameter" name="alarmEventUei" value="$\{_eventUei\}" />\
+    </action-event>\
+  </action-events>\
+\
+</VacuumdConfiguration>\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Syslogd_Automations&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The events\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0\fs24 \cf0   <event-label>Syslog Alarm event: alarmCreated</event-label>\
+      <descr>\
+		Message:\'a0%parm[syslogmessage]% <br>\
+        <p>Alarm #<a href="/opennms/alarm/detail.jsp?id=%parm[alarmId]%">%parm[alarmId]%</a>\
+        was created</p>\
+	%parm[all]%\
+      </descr>\
+      <logmsg dest='logndisplay'>\
+	Message:\'a0%parm[syslogmessage]% <br>\
+        <p>Alarm #<a href="/opennms/alarm/detail.jsp?id=%parm[alarmId]%">%parm[alarmId]%</a>\
+        for node:%nodelabel%; interface:%interface%; was created</p>\
+	%parm[logmsg]%\
+	<br>\
+	The whole event: \
+	%parm[all]%\
+      </logmsg>\
+ 	     <severity>Major</severity>\
+    </event>\
+\
+\
+ <event>\
+      <uei>uei.opennms.org/syslogd/log4jCreated</uei>\
+      <event-label>Log4j Alarm event: log4jCreated</event-label>\
+      <descr>\
+		Message:\'a0%parm[syslogmessage]% <br>\
+        <p>Alarm #<a href="/opennms/alarm/detail.jsp?id=%parm[alarmId]%">%parm[alarmId]%</a>\
+        was created</p>\
+	%parm[all]%\
+      </descr>\
+      <logmsg dest='logndisplay'>\
+	Message:\'a0%parm[syslogmessage]% <br>\
+        <p>Alarm #<a href="/opennms/alarm/detail.jsp?id=%parm[alarmId]%">%parm[alarmId]%</a>\
+        for node:%nodelabel%; interface:%interface%; was created</p>\
+	%parm[logmsg]%\
+	<br>\
+	The whole event: \
+	%parm[all]%\
+      </logmsg>\
+ 	     <severity>Major</severity>\
+  </event>\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Syslogd_Automations&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Notifications\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0\fs24 \cf0     <notification name="Jabber SyslogAlarm Created" status="on" writeable="yes">\
+        <uei xmlns="">uei.opennms.org/syslogd/alarmCreated</uei>\
+        <description xmlns="">Jabber SyslogAlarmCreated</description>\
+        <rule xmlns="">(IPADDR\'a0!= '0.0.0.0')</rule>\
+        <destinationPath xmlns="">Jabber</destinationPath>\
+        <text-message xmlns="">Alarm - a compound syslog message has been generated.\
+%severity%\'a0%nodelabel%\'a0:\'a0%noticeid%\'a0%parm[all]%\
+Any new messages will be added to this alarm.\
+Please investigate this issue and create a Jira.</text-message>\
+        <subject xmlns="">Notice #%noticeid%</subject>\
+    </notification>\
+\
+<notification name="Jabber log4j Alarm" status="on" writeable="yes">\
+        <uei xmlns="">uei.opennms.org/syslogd/log4jCreated</uei>\
+        <description xmlns="">Jabber SyslogAlarmCreated</description>\
+	<rule xmlns="">(IPADDR\'a0!= '0.0.0.0') & (notifyCategory\'a0!= 'qa')</rule>\
+        <destinationPath xmlns="">Jabber</destinationPath>\
+	<text-message xmlns="">log4j Alarm - a compound log4j message has been generated.\
+%severity%\'a0%nodelabel%\'a0:\'a0%noticeid%\'a0%parm[all]%\
+Any new messages will be added to this alarm.\
+Please investigate this issue and create a Jira.</text-message>\
+        <subject xmlns="">Notice #%noticeid%</subject>\
+    </notification>\
+\
+}

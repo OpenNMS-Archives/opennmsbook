@@ -1,0 +1,170 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Situation\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Assume you are collecting data on several nodes. These information are related to each other. In my example, I am collecting the number of open radius sessions from my radius servers.\
+The idea is now to show two graphs:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}One with a line per server, showing how the load is distributed over the servers\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 [{\field{\*\fldinst{HYPERLINK "http://farm4.static.flickr.com/3066/2385202702_02ee276b4a_o.png"}}{\fldrslt \cf2 \ul \ulc2 [1]}}]\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	\'95	}One with an Area showing the total number of concurrent users\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 [{\field{\*\fldinst{HYPERLINK "http://farm3.static.flickr.com/2118/2385202742_c4f40bf31a_o.png"}}{\fldrslt \cf2 \ul \ulc2 [2]}}]\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Problem\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you look at the way OpenNMS is storing the data you see that that happens by node. The creation of the graphs happens as well "per node". With the given tools it's not possible to aggregate data sources from several nodes into a single graph.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Solution\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The solution to this problem was described by Tarus on the opennms discussion mailinglist. As he was only sketching out the concept, I will describe in more detail how to get to the intended graphs.\
+The basic idea is the following: If opennms insists on having all the data sources in one node, we make sure it has. This can be done by using symlinks - the data source is a file. So you can simply add a symlink on the filesystem to make the data source from node A available to opennms in the directory of node B.\
+Using a real server as a "master" has however the disadvantage that this real server is connected to the "real" world. In the real world servers change names, place, interface or dedication.\
+But there's no need to use a "real" server as the point of reporting. A node can well be created without having an interface.\
+So the solution is: Create a virtual node, link all the datasources into it and define your graph. That simple.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Step by Step\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Creating a "virtual" Node\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Idea: Use the "Provisioning Groups" to add a node without interface.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0\cf0 {\listtext	\'95	}Log in as Administrator to OpenNMS\
+{\listtext	\'95	}Select the Admin Menu\
+{\listtext	\'95	}Then "Manage Provisioning Groups"\
+{\listtext	\'95	}'Enter a name for the new Group', eg "Reporting Nodes" and 'then' click on "Add New Group" (clicking on "Add New Group" without giving a name will throw an ugly error)\
+{\listtext	\'95	}Click on the Group Name ("Reporting Nodes")\
+{\listtext	\'95	}"Add Node", enter a name for the Node ("App XYZ Reporting") and Save; there's no need to add an interface or anything else\
+{\listtext	\'95	}You are done here - click on "done"\
+{\listtext	\'95	}Now you should be back in the Provisioning Groups overview\
+{\listtext	\'95	}The Nodes in Group / Nodes in DB field for your new group says "1/0"\
+{\listtext	\'95	}To import the new nodes, click on "Import"\
+{\listtext	\'95	}Reload the page\
+{\listtext	\'95	}The Nodes in Group / DB should read 1/1 now - your node is in the DB\
+{\listtext	\'95	}You can now search for your node (use the global search function)\
+{\listtext	\'95	}'Write down the NodeID' - in my case it's "2790"\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The new virtual node should now be in the DB.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Link the Data Sources\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Idea: Create symlinks in the file system to make the data sources available in the virtual node.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0\cf0 {\listtext	\'95	}Log on to your opennms system\
+{\listtext	\'95	}cd into your share/rrd/snmp/ directory\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Now you need to find the datasources you want to link. This means that you need to know two things:\
+The filename of the data source and the NodeIDs of the nodes you want to report on.\
+In my cases the datasources are named "radusers_eins(zwei,drei).jrb":\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 /opt/OpenNMS/share/rrd/snmp/2790$ ls -l \
+total 521\
+lrwxrwxrwx 1 root root     20 2008-04-02 19:01 radusers_eins.jrb -> ../2777/radusers.jrb\
+lrwxrwxrwx 1 root root     20 2008-04-02 19:00 radusers_zwei.jrb -> ../1185/radusers.jrb\
+lrwxrwxrwx 1 root root     20 2008-04-02 19:01 radusers_drei.jrb -> ../1252/radusers.jrb\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The Nodes I retrieve the data from are 2777, 1185 and 1252:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 radusers_eins.jrb -> ../2777/radusers.jrb\
+^^^^^^^^^^^^^           ^^^^^^^^^^^^^     \
+New ds-name          Real Datasource\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Note: Under Windows 2000+ running OpenNMS, Hardlinks can be archived by using the GNU Tools for Win32 using the ln.exe command the same as on a Linux server. GNU Tools for Win32 can be found at {\field{\*\fldinst{HYPERLINK "http://sourceforge.net/projects/unxutils"}}{\fldrslt \cf2 \ul \ulc2 http://sourceforge.net/projects/unxutils}}. Windows 2008 and Vista can create hardlinks using the native MKLINK command which is now included with Windows.\
+When this step is finished I have\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls5\ilvl0\cf0 {\listtext	\'95	}A virtual Node\
+{\listtext	\'95	}Symbolically linked data sources in the rrd/snmp/$NODE directory\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Creating a Graph\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Idea: Now we use the standard graphing facilities and make the graph.\
+Not much special anymore, but because creating RRD Graphs is such a major pain, I add the config I did:\
+Note that the new linked names are referenced in the report columns definition, while the original file names are used in the graphs DEF.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 # radius.allusers\
+report.radius.allusers.name=allusers\
+report.radius.allusers.columns=radusers_eins,radusers_zwei,radusers_drei\
+report.radius.allusers.type=nodeSnmp\
+report.radius.allusers.command=--title="Users per Server" \\\
+    --vertical-label Number \\\
+    DEF:broker=\{rrd1\}:radusers:AVERAGE \\\
+    DEF:broker2=\{rrd2\}:radusers:AVERAGE \\\
+    DEF:broker3=\{rrd3\}:radusers:AVERAGE \\\
+    LINE1:broker#ff0000:"drei" \\\
+    GPRINT:broker:MIN:"Min\\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:broker:AVERAGE:"Avg\\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:broker:MAX:"Max\\\\:\'a0%8.2lf\'a0%s\\\\n" \\\
+    LINE1:broker2#00ff00:"zwei" \\\
+    GPRINT:broker2:MIN:"Min\\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:broker2:AVERAGE:"Avg\\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:broker2:MAX:"Max\\\\:\'a0%8.2lf\'a0%s\\\\n" \\\
+    LINE1:broker3#0000ff:"drei            " \\\
+    GPRINT:broker3:MIN:"Min\\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:broker3:AVERAGE:"Avg\\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:broker3:MAX:"Max\\\\:\'a0%8.2lf\'a0%s\\\\n" \\\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Where getting three lines was fairly simple, the aggregation took a bit more effort:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 # radius.totalusers\
+report.radius.totalusers.name=totalusers\
+report.radius.totalusers.columns=radusers_eins,radusers_zwei,radusers_drei\
+report.radius.totalusers.type=nodeSnmp\
+report.radius.totalusers.command=--title="Total Concurrent Users" \\\
+    --vertical-label Number \\\
+    DEF:eins=\{rrd1\}:radusers:AVERAGE \\\
+    DEF:zwei=\{rrd2\}:radusers:AVERAGE \\\
+    DEF:drei=\{rrd3\}:radusers:AVERAGE \\\
+    CDEF:totalusers=eins,zwei,drei,+,+ \\\
+    AREA:totalusers#bacaff:"Total Users" \\\
+    GPRINT:totalusers:MIN:"Min  \\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:totalusers:AVERAGE:"Avg  \\\\:\'a0%8.2lf\'a0%s" \\\
+    GPRINT:totalusers:MAX:"Max  \\\\:\'a0%8.2lf\'a0%s\\\\n" \\\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 For examples of the graphs, look for the links on the top of the page.\
+'Key Learnings':\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls6\ilvl0\cf0 {\listtext	\'95	}\{rrdn\} (n=1,2..) is related to the Columns (thanks, Karl)\
+{\listtext	\'95	}CDEF is a pain to configure but works and is "sort of" logical\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=How_to_present_data_sources_from_n_Nodes&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Result\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you have added the new reports (radius.allusers, radius.totalusers) to your list of prefabricated reports they should show now when you look at the resource graphs of your virtual node.\
+That's it.\
+'Tags': RRD, Jrobin, graphing, symlinks, node\
+}

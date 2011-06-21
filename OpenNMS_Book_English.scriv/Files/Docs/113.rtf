@@ -1,0 +1,190 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red230\green255\blue79;\red4\green0\blue240;}
+\deftab720
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 rpntutorial\
+\pard\pardeftab720\ql\qnatural
+
+\b0\fs24 \cf0 \cb2 ATT - NEED TO ASK PERMISSION BEFORE INCLUDING \
+\cb1 \
+\pard\pardeftab720\sa280\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html#___top"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 DESCRIPTION}}
+\b\fs36 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This tutorial should help you get to grips with RRDtool RPN expressions as seen in CDEF arguments of RRDtool graph.\
+\pard\pardeftab720\sa280\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html#___top"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 Reading Comparison Operators}}
+\b\fs36 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The LT, LE, GT, GE and EQ RPN logic operators are not as tricky as they appear. These operators act on the two values on the stack preceding them (to the left). Read these two values on the stack from left to right inserting the operator in the middle. If the resulting statement is true, then replace the three values from the stack with "1". If the statement if false, replace the three values with "0".\
+For example, think about "2,1,GT". This RPN expression could be read as "is two greater than one?" The answer to that question is "true". So the three values should be replaced with "1". Thus the RPN expression 2,1,GT evaluates to 1.\
+Now consider "2,1,LE". This RPN expression could be read as "is two less than or equal to one?". The natural response is "no" and thus the RPN expression 2,1,LE evaluates to 0.\
+\pard\pardeftab720\sa280\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html#___top"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 Reading the IF Operator}}
+\b\fs36 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The IF RPN logic operator can be straightforward also. The key to reading IF operators is to understand that the condition part of the traditional "if X than Y else Z" notation has *already* been evaluated. So the IF operator acts on only one value on the stack: the third value to the left of the IF value. The second value to the left of the IF corresponds to the true ("Y") branch. And the first value to the left of the IF corresponds to the false ("Z") branch. Read the RPN expression "X,Y,Z,IF" from left to right like so: "if X then Y else Z".\
+For example, consider "1,10,100,IF". It looks bizarre to me. But when I read "if 1 then 10 else 100" it's crystal clear: 1 is true so the answer is 10. Note that only zero is false; all other values are true. "2,20,200,IF" ("if 2 then 20 else 200") evaluates to 20. And "0,1,2,IF" ("if 0 then 1 else 2) evaluates to 2.\
+Notice that none of the above examples really simulate the whole "if X then Y else Z" statement. This is because computer programmers read this statement as "if Some Condition then Y else Z". So it's important to be able to read IF operators along with the LT, LE, GT, GE and EQ operators.\
+\pard\pardeftab720\sa280\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html#___top"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 Some Examples}}
+\b\fs36 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 While compound expressions can look overly complex, they can be considered elegantly simple. To quickly comprehend RPN expressions, you must know the algorithm for evaluating RPN expressions: iterate searches from the left to the right looking for an operator. When it's found, apply that operator by popping the operator and some number of values (and by definition, not operators) off the stack.\
+For example, the stack "1,2,3,+,+" gets "2,3,+" evaluated (as "2+3") during the first iteration and is replaced by 5. This results in the stack "1,5,+". Finally, "1,5,+" is evaluated resulting in the answer 6. For convenience, it's useful to write this set of operations as:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  1) 1,2,3,+,+    eval is 2,3,+ = 5    result is 1,5,+\
+ 2) 1,5,+        eval is 1,5,+ = 6    result is 6\
+ 3) 6\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Let's use that notation to conveniently solve some complex RPN expressions with multiple logic operators:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  1) 20,10,GT,10,20,IF  eval is 20,10,GT = 1     result is 1,10,20,IF\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 read the eval as pop "20 is greater than 10" so push 1\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  2) 1,10,20,IF         eval is 1,10,20,IF = 10  result is 10\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 read pop "if 1 then 10 else 20" so push 10. Only 10 is left so 10 is the answer.\
+Let's read a complex RPN expression that also has the traditional multiplication operator:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  1) 128,8,*,7000,GT,7000,128,8,*,IF  eval 128,8,*       result is 1024\
+ 2) 1024   ,7000,GT,7000,128,8,*,IF  eval 1024,7000,GT  result is 0\
+ 3) 0,              7000,128,8,*,IF  eval 128,8,*       result is 1024\
+ 4) 0,              7000,1024,   IF                     result is 1024\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Now let's go back to the first example of multiple logic operators, but replace the value 20 with the variable "input":\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  1) input,10,GT,10,input,IF  eval is input,10,GT  ( lets call this A )\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Read eval as "if input > 10 then true" and replace "input,10,GT" with "A":\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  2) A,10,input,IF            eval is A,10,input,IF\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 read "if A then 10 else input". Now replace A with it's verbose description again and--voila!--you have an easily readable description of the expression:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  if input > 10 then 10 else input\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Finally, let's go back to the first most complex example and replace the value 128 with "input":\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  1) input,8,*,7000,GT,7000,input,8,*,IF  eval input,8,*     result is A\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 where A is "input * 8"\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  2) A,7000,GT,7000,input,8,*,IF          eval is A,7000,GT  result is B\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 where B is "if ((input * 8) > 7000) then true"\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  3) B,7000,input,8,*,IF                  eval is input,8,*  result is C\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 where C is "input * 8"\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  4) B,7000,C,IF\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 At last we have a readable decoding of the complex RPN expression with a variable:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  if ((input * 8) > 7000) then 7000 else (input * 8)\
+\pard\pardeftab720\sa280\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html#___top"}}{\fldrslt 
+\f0\b\fs36 \cf3 \ul \ulc3 Exercises}}
+\f0\b\fs36 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Exercise 1:\
+Compute "3,2,*,1,+ and "3,2,1,+,*" by hand. Rewrite them in traditional notation. Explain why they have different answers.\
+Answer 1:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     3*2+1 = 7 and 3*(2+1) = 9.  These expressions have\
+    different answers because the altering of the plus and\
+    times operators alter the order of their evaluation.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Exercise 2:\
+One may be tempted to shorten the expression\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  input,8,*,56000,GT,56000,input,*,8,IF\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 by removing the redundant use of "input,8,*" like so:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  input,56000,GT,56000,input,IF,8,*\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Use traditional notation to show these expressions are not the same. Write an expression that's equivalent to the first expression, but uses the LE and DIV operators.\
+Answer 2:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     if (input <= 56000/8 ) \{ input*8 \} else \{ 56000 \}\
+    input,56000,8,DIV,LT,input,8,*,56000,IF\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Exercise 3:\
+Briefly explain why traditional mathematic notation requires the use of parentheses. Explain why RPN notation does not require the use of parentheses.\
+Answer 3:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     Traditional mathematic expressions are evaluated by\
+    doing multiplication and division first, then addition and\
+    subtraction.  Parentheses are used to force the evaluation of\
+    addition before multiplication (etc).  RPN does not require\
+    parentheses because the ordering of objects on the stack\
+    can force the evaluation of addition before multiplication.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Exercise 4:\
+Explain why it was desirable for the RRDtool developers to implement RPN notation instead of traditional mathematical notation.\
+Answer 4:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     The algorithm that implements traditional mathematical\
+    notation is more complex then algorithm used for RPN.\
+    So implementing RPN allowed Tobias Oetiker to write less\
+    code!  (The code is also less complex and therefore less\
+    likely to have bugs.)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 \
+\pard\pardeftab720\sa280\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html#___top"}}{\fldrslt 
+\b\fs36 \cf3 \ul \ulc3 AUTHOR}}
+\b\fs36 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Steve Rader <rader@wiscnet.net>\
+}

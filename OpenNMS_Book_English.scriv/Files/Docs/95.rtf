@@ -1,0 +1,123 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 HTTP Monitor Parameters\
+\pard\pardeftab720\ql\qnatural
+
+\b0\fs24 \cf0 ds-name\
+user-agent\
+basic-authentication\
+host-name\
+response-text\'a0\
+Text to look for in the response body. This will be matched against every line, and it will be considered a success at the first match. If there is a "~" at the beginning of the parameter, the rest of the string will be used as a {\field{\*\fldinst{HYPERLINK "http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html"}}{\fldrslt \cf2 \ul \ulc2 regular expression pattern}} match, otherwise the match will be a substring match. Note: the regular expression match is anchored at the beginning and end of the line, so you will likely need to put a ".*" on both sides of your pattern unless you are going to be matching on the entire line.\
+response\
+rrd-repository\
+port\
+timeout\
+retry\
+url\
+verbose\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Example config\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0\fs24 \cf0 <!-- Test for virtual host opennms.com running -->\
+<service name="HTTP" interval="300000" user-defined="false" status="on">\
+  <parameter key="retry" value="1"/>\
+  <parameter key="timeout" value="3000"/>\
+  <parameter key="port" value="80"/>\
+  <parameter key="host-name" value="opennms.com"/>\
+  <parameter key="url" value="/solutions"/>\
+  <parameter key="response" value="200-202,299"/>\
+  <parameter key="response-text" value="~.*[Cc]onsulting.*"/>\
+</service>\
+\
+<!-- Test for instance of OpenNMS 1.2.9 running -->\
+<service name="OpenNMS" interval="300000" user-defined="false" status="on">\
+  <parameter key="retry" value="1"/>\
+  <parameter key="timeout" value="3000"/>\
+  <parameter key="port" value="8080"/>\
+  <parameter key="url" value="/opennms/event/list"/>\
+  <parameter key="basic-authentication" value="admin:admin"/>\
+  <parameter key="response" value="200"/>\
+</service>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Note that the default acceptable responses are the following: When monitoring the "/" URL path: 100-499 When monitoring any other URL path: 100-399\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Non-root URLs\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In order to configure a poller that tests a non-root URL, you need to configure capsd to discover the service and pollerd to poll the discovered service (two different things). Below is an example using ColdFusion.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] capsd-configuration.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 It's perfectly acceptable to have multiple instances of the same protocol-plugin class-name, but they will need different protocol attributes. For example, you may have several protocol-plugins defined for HTTP, all using the same HttpPlugin class. You will, however, need to make sure that they have distinct protocol attributes. Be advised that the HttpPlugin for capsd only uses HTTP/1.0. So tests that require HTTP/1.1(i.e. virtual hosts) will not be discovered.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <protocol-plugin protocol="ColdFusion"\
+                 class-name="org.opennms.netmgt.capsd.plugins.HttpPlugin"\
+                 scan="on" user-defined="false">\
+  <property key="port" value="80"/>\
+  <property key="timeout" value="3000"/>\
+  <property key="retry" value="2"/>\
+  <property key="url" value="/cfide/administrator/index.cfm"/>\
+</protocol-plugin>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] poller-configuration.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 now that you've discovered the service, you'll need to poll it. Note that, just as for capsd discovery, it's prefectly accpetable to have multiple instances of the same poller class, but they will need different names. For example, you may have several pollers testing HTTP services, all using the same HttpMonitor class. You will, however need to make sure that they have distinct service names.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <service name="ColdFusion" interval="300000"\
+         user-defined="false" status="on">\
+  <parameter key="retry" value="3"/>\
+  <parameter key="timeout" value="10000"/>\
+  <parameter key="port" value="80"/>\
+  <parameter key="url" value="/cfide/administrator/index.cfm"/>\
+</service>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Important Notes:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}The name attribute of the service in poller-configuration.xml needs to match the protocol attribute of the protocol-plugin in capsd-configuration.xml.\
+{\listtext	\'95	}The ds-name attribute (not shown in this example) also needs to be unique for each service, or you'll find response time from one service overwriting response time from another.\
+{\listtext	\'95	}You'll also need a line to map the new service to a monitor class (see at the end of the file):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <monitor service="ColdFusion"         class-name="org.opennms.netmgt.poller.monitors.HttpMonitor"/>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Note: This only works in 1.2.4 or later.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Stupid HttpMonitor Tricks\
+\pard\pardeftab720\sa240\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Testing_Filtering_Proxies_With_HTTPMonitor"}}{\fldrslt 
+\b0\fs24 \cf2 \ul \ulc2 Testing_Filtering_Proxies_With_HTTPMonitor}}
+\b0\fs24 \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Do not just test for "OK"\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Some (including me) may think of writing a special webapp that returns "OK" on a website if the program succeeds and use HttpMonitor's response-test configuration to check for "OK" on that website. Since we have {\field{\*\fldinst{HYPERLINK "http://issues.opennms.org/browse/NMS-2702"}}{\fldrslt \cf2 \ul \ulc2 Bug 2702}}, testing for "OK" will never work. So better make "OK" something like "Seems like it's working".\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=HTTPMonitor&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Links\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0
+\b0\fs24 \cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://technocrat.watson-wilson.ca/blosxom/computer/onmsreview.html"}}{\fldrslt \ul http://technocrat.watson-wilson.ca/blosxom/computer/onmsreview.html}}\cf0 \
+}

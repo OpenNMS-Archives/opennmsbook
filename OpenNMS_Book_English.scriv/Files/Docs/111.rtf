@@ -1,0 +1,408 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 LucidaGrande;\f2\fmodern\fcharset0 Courier;
+\f3\fmodern\fcharset0 Courier-Bold;\f4\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red109\green109\blue109;\red4\green0\blue240;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid2\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid3\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\deftab720
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\fs24 \cf0 This guide asumes that you know how to play with RRDTOOL and that you are somewhat familiar with OpenNMS. All the examples presented here were tested on Redhat Linux 7.3, version 1.0 of OpenNMS with Net-SNMP 4.2.3 agents running on the managed stations.\
+I tried to be as accurate as possible, so read this material at your own risk.\
+Author:\
+\pard\pardeftab720\ql\qnatural
+\cf0 Jose Vicente Nunez Zuleta (josevnz@newbreak.com)\
+Newbreak LLC System Administrator\
+Newbreak LLC\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth7940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 Contents\
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+
+\b0\fs24 \cf0 [{\field{\*\fldinst{HYPERLINK "javascript:toggleToc()"}}{\fldrslt \cf4 \ul \ulc4 hide}}]\
+\pard\intbl\itap1\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf4 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Capture_the_appropriate_data_using_SNMP_.28edit_datacollection-config.xml.29"}}{\fldrslt 1\ul  \ulnone Capture the appropriate data using SNMP (edit datacollection-config.xml)}}\cf0 \
+\ls1\ilvl0\cf4 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Edit_the_snmp_graphic_properties_.28file_snmp-graph.properties.29"}}{\fldrslt 2\ul  \ulnone Edit the snmp graphic properties (file snmp-graph.properties)}}\cf0 \
+\pard\intbl\itap1\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls1\ilvl1\cf4 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Check_your_RRDTOOL_files"}}{\fldrslt 2.1\ul  \ulnone Check your RRDTOOL files}}\cf0 \
+\pard\intbl\itap1\tx1660\tx2160\pardeftab720\li2160\fi-2160\ql\qnatural
+\ls1\ilvl2\cf4 {\listtext	
+\f1 \uc0\u9642 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Inspecting_with_RRDTool"}}{\fldrslt 2.1.1\ul  \ulnone Inspecting with RRDTool}}\cf0 \
+\ls1\ilvl2\cf4 {\listtext	
+\f1 \uc0\u9642 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Inspecting_with_the_JRobin_RRD_Inspector"}}{\fldrslt 2.1.2\ul  \ulnone Inspecting with the JRobin RRD Inspector}}\cf0 \
+\pard\intbl\itap1\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls1\ilvl1\cf4 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Add_your_graph_definitions"}}{\fldrslt 2.2\ul  \ulnone Add your graph definitions}}\cf0 \
+\pard\intbl\itap1\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf4 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Add_New_Reports_to_the_reports_Property"}}{\fldrslt 3\ul  \ulnone Add New Reports to the reports Property}}\cf0 \
+\ls1\ilvl0\cf4 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Restart_OpenNMS"}}{\fldrslt 4\ul  \ulnone Restart OpenNMS}}\cf0 \
+\ls1\ilvl0\cf4 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Resources"}}{\fldrslt 5\ul  \ulnone Resources}}\cf0 \
+\ls1\ilvl0\cf4 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Debugging"}}{\fldrslt 6\ul  \ulnone Debugging}}\cf0 \cell \lastrow\row
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=1"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Capture the appropriate data using SNMP (edit datacollection-config.xml)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 You will need to define the OIDs you want to capture in the file datacollection-config.xml file. In our example we want to capture the following Net-SNMP OIDs (memory, host uptime and interface traffic):\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0  <!-- Net-SNMP memory stats, josevnz@newbreak.com --> \
+ <group name="ucd-memory" ifType="ignore">\
+ <!-- Total Swap Size configured for the host. -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.4.3" instance="0" alias="memTotalSwap" type="integer" />   \
+ <!-- Available Swap Space on the host. --> \
+ <mibObj oid=".1.3.6.1.4.1.2021.4.4" instance="0" alias="memAvailSwap" type="integer" />   \
+ <!-- Total Real/Physical Memory Size on the host. -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.4.5" instance="0" alias="memTotalReal" type="integer" />  \
+ <!-- Available Real/Physical Memory Space on the host. -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.4.6" instance="0" alias="memAvailReal" type="integer" />  \
+ <!-- Error flag.  1 indicates very little swap space left -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.4.100" instance="0" alias="memSwapError" type="integer" />\
+ </group>\
+\
+ <!-- Net-SNMP system stats, josevnz@newbreak.com -->\
+ <group name="ucd-systemStats" ifType="ignore">\
+ <!-- Amount of memory swapped to disk (kB/s). -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.11.4" instance="0" alias="ssSwapOut" type="integer" />  \
+ <!-- percentages of user CPU time. -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.11.9" instance="0" alias="ssCpuUser" type="integer" />  \
+ <!-- percentages of user CPU system. -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.11.10" instance="0" alias="ssCpuSystem" type="integer" / \
+ > <!-- percentages of user CPU idle. -->\
+ <mibObj oid=".1.3.6.1.4.1.2021.11.11" instance="0" alias="ssCpuIdle" type="integer" /> \
+ </group>\
+\
+ <group  name = "mib2-interfaces-net-snmp" ifType = "all">\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.10" instance="ifIndex" alias="ifInOctets"    type="counter"/ >\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.11" instance="ifIndex" alias="ifInUcastPkts" type="counter"/ >\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.12" instance="ifIndex" alias="ifInNUcastPkts" type="counter"/>\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.14" instance="ifIndex" alias="ifInErrors"    type="counter"/>\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.16" instance="ifIndex" alias="ifOutOctets"   type="counter"/>\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.19" instance="ifIndex" alias="ifOutDiscards" type="counter"/>\
+ <mibObj oid=".1.3.6.1.2.1.2.2.1.20" instance="ifIndex" alias="ifOutErrors"   type="counter"/>\
+ </group>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Then make sure your OIDs make it into the "systemDef" tag:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0  <systemDef name = "Net-SNMP">\
+ <!-- <sysoidMask>.1.3.6.1.4.1.2021.250.</sysoidMask> -->\
+ <sysoidMask>.1.3.6.1.4.1.2021.</sysoidMask>\
+ <collect>\
+ <includeGroup>mib2-interfaces-net-snmp</includeGroup>\
+ <includeGroup>mib2-host-resources-storage</includeGroup> \
+ <includeGroup>mib2-host-resources-system</includeGroup>\
+ <includeGroup>mib2-host-resources-memory</includeGroup> \
+ <includeGroup>ucd-loadavg</includeGroup>\
+ <includeGroup>ucd-systemStats</includeGroup>\
+ <includeGroup>ucd-memory</includeGroup>\
+ </collect>\
+ </systemDef>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Please note than if a given OID cannot be retrieved (for example the SNMP agent doesn't support it) then the RRDtool file is not created (normally stored in /var/opennms/rrd/snmp/)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b \cf0 Additional notes 
+\f1\b0 \uc0\u8232 
+\f0 Make sure <sysoidMask> matches your systems oid or else it will not find it.\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 $ snmpget -v2c -On -c <community> <host> sysObjectID.0\
+.1.3.6.1.2.1.1.2.0 = OID: .1.3.6.0.0.0.0.0.0.0\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 would give you:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 <sysoidMask>.1.3.6.0.0.0.0.0.0.0.</sysoidMask>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=2"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Edit the snmp graphic properties (file snmp-graph.properties)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=3"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Check your RRDTOOL files\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 You need to define your custom graphs as follows:\
+\pard\pardeftab720\ql\qnatural
+\cf0 name\
+choose the name you will use for the "reports" property\
+columns\
+which RRD files you will use in your graph\
+type\
+use 'interfaceSnmp' if the stat is related with each network interface, use 'nodeSnmp' if affects the whole node, or if the stat is a generic-indexed resourceType such as 
+\i hrStorageIndex
+\i0 , use the name of the type.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b \cf0 NOTE:
+\b0  If you are using an OpenNMS release older than 1.3.2, the types are 
+\i interface
+\i0  and 
+\i node
+\i0  instead of 
+\i interfaceSnmp
+\i0  and 
+\i nodeSnmp
+\i0 . Also, please upgrade!\
+\pard\pardeftab720\ql\qnatural
+\cf0 externalValues\
+database values, currently only ifSpeed\
+propertiesValues\
+values collected as 
+\i string
+\i0  and persisted to 'strings.properties'\
+command\
+This is a command line suitable for passing to RRDTool. If using {\field{\*\fldinst{HYPERLINK "http://www.jrobin.org/"}}{\fldrslt \cf4 \ul \ulc4 JRobin}} (the default since OpenNMS 1.3.2), this command is translated internally into appropriate JRobin method invocations.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=4"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Inspecting with RRDTool\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 This subsection applies only if you are using the JniRrdStrategy. Since OpenNMS 1.3.2, the default is to use the JRobinRrdStrategy; {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To#Inspecting_with_the_JRobin_RRD_Inspector"}}{\fldrslt \cf4 \ul \ulc4 see below}}.\
+One way to know which datasources exist on your RRD file (used in the DEF part of the rrdtool command line) is to get the information from the rrdtool file like this:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 [root@lnxdev0001 16]# rrdtool info hrSystemUptime.rrd\
+filename = "hrSystemUptime.rrd"\
+rrd_version = "0001"\
+step = 300\
+last_update = 1026942859\
+ds[hrSystemUptime].type = "GAUGE"\
+ds[hrSystemUptime].minimal_heartbeat = 600\
+ds[hrSystemUptime].min = NaN\
+ds[hrSystemUptime].max = NaN\
+ds[hrSystemUptime].last_ds = "UNKN"\
+ds[hrSystemUptime].value = 2.0296406018e+10\
+ds[hrSystemUptime].unknown_sec = 0\
+rra[0].cf = "AVERAGE"\
+rra[0].rows = 8928\
+rra[0].pdp_per_row = 1\
+rra[0].xff = 5.0000000000e-01\
+rra[0].cdp_prep[0].value = NaN\
+rra[0].cdp_prep[0].unknown_datapoints = 0\
+rra[1].cf = "AVERAGE"\
+rra[1].rows = 8784\
+rra[1].pdp_per_row = 12\
+rra[1].xff = 5.0000000000e-01\
+rra[1].cdp_prep[0].value = 7.8203629928e+08\
+rra[1].cdp_prep[0].unknown_datapoints = 0\
+rra[2].cf = "MIN"\
+rra[2].rows = 8784\
+rra[2].pdp_per_row = 12\
+rra[2].xff = 5.0000000000e-01\
+rra[2].cdp_prep[0].value = 7.8068611333e+07\
+rra[2].cdp_prep[0].unknown_datapoints = 0\
+rra[3].cf = "MAX"\
+rra[3].rows = 8784\
+rra[3].pdp_per_row = 12\
+rra[3].xff = 5.0000000000e-01\
+rra[3].cdp_prep[0].value = 7.8338616000e+07\
+rra[3].cdp_prep[0].unknown_datapoints = 0\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 As you can see, the ds is 'hrSystemUptime'\
+If for some reason one of the rrdtool files that are part of a graphic definition is missing, then the graphic doesn't show up at all in the web console.\
+Remember than you can always check the contents of a rrdtool file typing:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 rrdtool dump hrSystemUptime.rrd (shows a huge amount of data).\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=5"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Inspecting with the JRobin RRD Inspector\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Since OpenNMS 1.3.2, the default is to use JRobin instead of RRDTool. While JRobin lacks an equivalent of the 
+\i rrdtool info
+\i0  and 
+\i rrdtool dump
+\i0  commands, it does include a Swing GUI application that allows you to inspect the contents of a JRobin RRD file interactively. You can launch the inspector as follows:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 $ java -cp /opt/opennms/lib/jrobin-1.5.8.jar org.jrobin.inspector.RrdInspector hrSystemUptime.jrb\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=6"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Add your graph definitions\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 You can always check if the graphs you want to plot are accurate by running the rrdtool command line; Here is an example to graph the host uptime by hand:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0  rrdtool graph uptime.png --title "Host uptime" --vertical-label \\\
+ Days "DEF:timeticks=hrSystemUptime.rrd:hrSystemUptime:AVERAGE" \\\
+ "CDEF:days=timeticks,8640000,/" AREA:days#FF0000:"Days" \\\
+ GPRINT:days:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" GPRINT:days:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+ GPRINT:days:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s"\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 As you can see in the next lines, you will "copy and paste" part of this line in the graphic definition.\
+Here is the graphic configuration to capture the host uptime, memory usage and link accuracy, file snmp-graph.properties:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 #### Newbreak LLC Custom reports. Jose Vicente Nunez Zuleta (josevnz@newbreak.com) #####\
+# Be very careful with trailing spaces, otherwise you can get problems with the graphics!!!\
+\
+# Get the Uptime if the host uses Net-SNMP (josevnz@newbreak.com). To get the graphic manually:\
+report.netsnmp.uptime.name=Uptime\
+report.netsnmp.uptime.columns=hrSystemUptime\
+report.netsnmp.uptime.type=nodeSnmp\
+report.netsnmp.uptime.command=--title "Host uptime" \\\
+  --vertical-label Days \\\
+  DEF:timeticks=\{rrd1\}:hrSystemUptime:AVERAGE \\\
+  CDEF:days=timeticks,8640000,/ \\\
+  AREA:days#FF0000:"Days" \\\
+  GPRINT:days:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:days:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:days:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s" \\\
+\
+# Get the Memory statistics if the host uses Net-SNMP (josevnz@newbreak.com).\
+report.netsnmp.memory.name=Memory\
+report.netsnmp.memory.columns=memTotalSwap,memAvailSwap,memTotalReal,memAvailReal\
+report.netsnmp.memory.type=nodeSnmp\
+report.netsnmp.memory.command=--title "Host memory usage" \\\
+  --vertical-label bytes \\\
+  DEF:mtotalSwap=\{rrd1\}:memTotalSwap:AVERAGE \\\
+  DEF:mavailSwap=\{rrd2\}:memAvailSwap:AVERAGE \\\
+  DEF:mtotalReal=\{rrd3\}:memTotalReal:AVERAGE \\\
+  DEF:mavailReal=\{rrd4\}:memAvailReal:AVERAGE \\\
+  CDEF:totalSwap=mtotalSwap,1024,* \\\
+  CDEF:availSwap=mavailSwap,1024,* \\\
+  CDEF:totalReal=mtotalReal,1024,* \\\
+  CDEF:availReal=mavailReal,1024,* \\\
+  LINE3:totalSwap#FF0000:"Total swap" \\\
+  LINE1:availSwap#00FF00:"Available swap" \\\
+  LINE3:totalReal#0000FF:"Total real" \\\
+  LINE1:availReal#000000:"Available real" \\\
+  GPRINT:totalSwap:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:totalSwap:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:totalSwap:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:availSwap:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:availSwap:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:availSwap:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:totalReal:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:totalReal:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:totalReal:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:availReal:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:availReal:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:availReal:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s" \\\
+\
+# Calculate the network accuracy using SNMP (josevnz@newbreak.com).\
+# Check the following man pages for more info on rrdtool graph:\
+# - rrdgraph_graph\
+# - rrdgraph\
+# - rrdgraph_examples\
+# Also if you forgot anbout the RPN notation (like me\'a0:) ) then go to:\
+# - http://people.ee.ethz.ch/~oetiker/webtools/rrdtool/tutorial/rpntutorial.html\
+#\
+# Use CDEF to calculate this expression:\
+# accuracy = 100 - ( (DifInErr*100) / (DifInUcast + DifInNUcast) )\
+# In my case, Net-SNMP doesn't show up the ifInNUcastPkts OID on Linux (Solaris works fine)\
+# but the amount of traffic is very low, so even taking out that value the estimate is good.\
+report.netsnmp.accuracy.name=Accuracy\
+#report.netsnmp.accuracy.columns=ifInErrors,ifInUcastPkts,ifInNUcastPkts\
+report.netsnmp.accuracy.columns=ifInErrors,ifInUcastPkts\
+report.netsnmp.accuracy.type=interfaceSnmp\
+report.netsnmp.accuracy.command=--title "Link accuracy" \\\
+  DEF:error=\{rrd1\}:ifInErrors:AVERAGE \\\
+  DEF:ucast=\{rrd2\}:ifInUcastPkts:AVERAGE \\\
+  CDEF:accuracy=100,error,100,*,ucast,/,- \\\
+  LINE2:accuracy#FF0000:"% Accuracy" \\\
+  GPRINT:accuracy:AVERAGE:"Avg  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:accuracy:MIN:"Min  \\\\:\'a0%8.1lf\'a0%s" \\\
+  GPRINT:accuracy:MAX:"Max  \\\\:\'a0%8.1lf\'a0%s" \\\
+\
+# If you are sure than all your machines have information about multicast traffic, then:\
+# DEF:nucast=\{rrd3\}:ifInNUcastPkts:AVERAGE \\\
+# CDEF:accuracy=100,error,100,*,ucast,nucast,+,/,- \\\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=7"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Add New Reports to the 
+\f3 reports
+\f0  Property\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Finally, don't forget to add the reports into the value of the 
+\f2 reports
+\f0  property.\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 #report keys, list ALL prefab reports here!\
+reports=traffic, octets, errors, discards, avgbusy5, freemem, \\\
+  bufferfails, kerneltasks, kernelmem, \\\
+  cpuPercentBusy, \\\
+  novell.numberOfNLMsLoaded, novell.openFiles, novell.licensedConnections, \\\
+  memory, \\\
+  novell.codeDataMemory, novell.cacheBuffers, \\\
+  novell.diskSpaceSys, novell.diskSpaceVol2, \\\
+  winnt2k.diskSpaceC, winnt2k.diskSpaceD, \\\
+  checkpoint.pktsAccepted, checkpoint.pktsRejected, \\\
+  checkpoint.pktsDropped, checkpoint.pktsLogged, \\\
+  loadavg, netsnmp.uptime, netsnmp.memory, netsnmp.accuracy \\\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Our reports are netsnmp.uptime, netsnmp.memory, netsnmp.accuracy on the last line. If you miss this step, you will get web exceptions when attempting to run performance reports. The exceptions will look something like the following:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 Missing Parameter\
+\
+The request you made was incomplete. It was missing the  report parameter.\
+\
+The following parameters are required:\
+report\
+node\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=8"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Restart OpenNMS\
+\pard\pardeftab720\ql\qnatural
+
+\f2\b0\fs24 \cf0 /etc/init.d/opennms restart\
+/etc/init.d/tomcat4 restart\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Probably you will have to wait a couple of minutes before you get useful data to display.\
+If you only changed the snmp-graph.properties you do not need to restart; a reload of the report will reread the properties file.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=9"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Resources\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Please have a look {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/How_to_present_data_sources_from_n_Nodes"}}{\fldrslt \cf4 \ul \ulc4 How to present data sources from n Nodes}} on how to create Graphs which show datasources from several nodes.\
+Tutorial on how to use the RPN notation:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0  {\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html"}}{\fldrslt \cf4 \ul \ulc4 http://oss.oetiker.ch/rrdtool/tut/rpntutorial.en.html}}\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Check the following man pages for more info on rrdtool graph:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0  rrdgraph_graph\
+ rrdgraph\
+ rrdgraph_examples\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=SNMP_Reports_How-To&action=edit&section=10"}}{\fldrslt \cf4 \ul \ulc4 edit}}] Debugging\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you have problems getting your customized reports to work check the 
+\f2 $OPENNMS_HOME/logs/webapp/jetty.log
+\f0  logfile for errors.\
+Check if there is data collected at all for the variables you want to graph. Get the nodeid (on the node's page you can see it in the URL) and go to 
+\f2 $OPENNMS_HOME/share/rrd/snmp/
+\f4\i nodeid#
+\f0\i0 . There should be at least one file in this directory or in some subdirectories named *.jrb. If not check the wiki on how to configure data collection.\
+Use 
+\f2 $OPENNMS_HOME/bin/jrobin-inspector
+\f0  to took into this/those files to see if they contain valid data.\
+}

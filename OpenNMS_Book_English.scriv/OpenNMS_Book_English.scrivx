@@ -40,24 +40,24 @@
                                 <TextSelection>1878,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
-                        <BinderItem ID="9" Type="Text" Created="2011-06-21 10:40:22 -0500" Modified="2011-06-21 10:44:02 -0500">
+                        <BinderItem ID="9" Type="Text" Created="2011-06-21 10:40:22 -0500" Modified="2011-06-21 17:36:19 -0500">
                             <Title>Capability Overview</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>0,0</TextSelection>
+                                <TextSelection>29,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
-                        <BinderItem ID="10" Type="Text" Created="2011-06-21 10:45:04 -0500" Modified="2011-06-21 10:45:14 -0500">
+                        <BinderItem ID="10" Type="Text" Created="2011-06-21 10:45:04 -0500" Modified="2011-06-21 17:36:25 -0500">
                             <Title>License Information</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>0,0</TextSelection>
+                                <TextSelection>18,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                     </Children>
@@ -72,14 +72,14 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                     <Children>
-                        <BinderItem ID="6" Type="Text" Created="2011-06-09 09:45:33 -0500" Modified="2011-06-09 09:46:04 -0500">
+                        <BinderItem ID="6" Type="Text" Created="2011-06-09 09:45:33 -0500" Modified="2011-06-21 17:36:34 -0500">
                             <Title>Accessing the WebUi</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>0,0</TextSelection>
+                                <TextSelection>19,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                         <BinderItem ID="11" Type="Text" Created="2011-06-21 10:55:04 -0500" Modified="2011-06-21 10:55:20 -0500">
@@ -296,16 +296,6 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
-                                <BinderItem ID="32" Type="Text" Created="2011-06-21 11:10:48 -0500" Modified="2011-06-21 11:11:01 -0500">
-                                    <Title>User Management and external Authentication</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
                                 <BinderItem ID="30" Type="Text" Created="2011-06-21 11:09:28 -0500" Modified="2011-06-21 11:09:42 -0500">
                                     <Title>System Architecture</Title>
                                     <MetaData>
@@ -338,6 +328,28 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
+                                <BinderItem ID="32" Type="Text" Created="2011-06-21 11:10:48 -0500" Modified="2011-06-21 11:11:01 -0500">
+                                    <Title>User Management and external Authentication</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="124" Type="Text" Created="2011-06-21 17:34:22 -0500" Modified="2011-06-21 17:34:26 -0500">
+                                            <Title>LDAP</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
                                 <BinderItem ID="26" Type="Text" Created="2011-06-21 10:58:19 -0500" Modified="2011-06-21 10:58:23 -0500">
                                     <Title>Debugging</Title>
                                     <MetaData>
@@ -357,10 +369,14 @@
                                     <TextSettings>
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
+                                    <CorkboardAndOutliner>
+                                        <SelectedSubdocumentIDs>117</SelectedSubdocumentIDs>
+                                    </CorkboardAndOutliner>
                                     <Children>
-                                        <BinderItem ID="35" Type="Text" Created="2011-06-21 11:11:49 -0500" Modified="2011-06-21 11:11:55 -0500">
+                                        <BinderItem ID="35" Type="Text" Created="2011-06-21 11:11:49 -0500" Modified="2011-06-21 17:27:40 -0500">
                                             <Title>Adding new Services</Title>
                                             <MetaData>
+                                                <StatusID>0</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -368,9 +384,10 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="36" Type="Text" Created="2011-06-21 11:11:59 -0500" Modified="2011-06-21 11:12:03 -0500">
+                                        <BinderItem ID="36" Type="Text" Created="2011-06-21 11:11:59 -0500" Modified="2011-06-21 17:27:40 -0500">
                                             <Title>Adding new Devices</Title>
                                             <MetaData>
+                                                <StatusID>0</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -378,9 +395,10 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="60" Type="Text" Created="2011-06-21 11:22:44 -0500" Modified="2011-06-21 11:22:54 -0500">
+                                        <BinderItem ID="60" Type="Text" Created="2011-06-21 11:22:44 -0500" Modified="2011-06-21 17:27:40 -0500">
                                             <Title>OpenNMS Configuration</Title>
                                             <MetaData>
+                                                <StatusID>0</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -388,20 +406,42 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="68" Type="Text" Created="2011-06-21 11:32:29 -0500" Modified="2011-06-21 11:32:34 -0500">
+                                        <BinderItem ID="68" Type="Text" Created="2011-06-21 11:32:29 -0500" Modified="2011-06-21 17:27:40 -0500">
                                             <Title>Scheduled Outages</Title>
                                             <MetaData>
+                                                <StatusID>0</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
                                                 <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="117" Type="Text" Created="2011-06-21 17:20:00 -0500" Modified="2011-06-21 17:27:40 -0500">
+                                            <Title>Managing Configuration</Title>
+                                            <MetaData>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>175,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
-                                <BinderItem ID="61" Type="Text" Created="2011-06-21 11:23:08 -0500" Modified="2011-06-21 11:23:12 -0500">
+                                <BinderItem ID="61" Type="Text" Created="2011-06-21 11:23:08 -0500" Modified="2011-06-21 17:27:25 -0500">
                                     <Title>Backup &amp; Restore</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>511,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem ID="122" Type="Text" Created="2011-06-21 17:31:11 -0500" Modified="2011-06-21 17:31:16 -0500">
+                                    <Title>Security Considerations</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
@@ -718,6 +758,26 @@
                         </BinderItem>
                     </Children>
                 </BinderItem>
+                <BinderItem ID="88" Type="Text" Created="2011-06-21 16:34:58 -0500" Modified="2011-06-21 16:35:21 -0500">
+                    <Title>Bug reporting, Information Sources</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="115" Type="Text" Created="2011-06-21 17:14:13 -0500" Modified="2011-06-21 17:15:07 -0500">
+                    <Title>Popular Discussions</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>186,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
         <BinderItem ID="1" Type="ResearchFolder" Created="2011-06-09 09:44:27 -0500" Modified="2011-06-09 09:44:27 -0500">
@@ -725,6 +785,471 @@
             <MetaData>
                 <IncludeInCompile>Yes</IncludeInCompile>
             </MetaData>
+            <CorkboardAndOutliner>
+                <SelectedSubdocumentIDs>123</SelectedSubdocumentIDs>
+            </CorkboardAndOutliner>
+            <Children>
+                <BinderItem ID="73" Type="Text" Created="2011-06-21 14:50:48 -0500" Modified="2011-06-21 14:51:05 -0500">
+                    <Title>Performance Tuning</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>26854,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="74" Type="Text" Created="2011-06-21 15:09:01 -0500" Modified="2011-06-21 15:09:14 -0500">
+                    <Title>Jetty and HTTPS</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>14820,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="75" Type="Text" Created="2011-06-21 15:10:18 -0500" Modified="2011-06-21 15:10:32 -0500">
+                    <Title>User Management</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1176,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="76" Type="Text" Created="2011-06-21 15:11:36 -0500" Modified="2011-06-21 15:11:45 -0500">
+                    <Title>Spring Security and LDAP</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>24047,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="77" Type="Text" Created="2011-06-21 15:12:30 -0500" Modified="2011-06-21 15:12:39 -0500">
+                    <Title>Filter</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>7457,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="78" Type="Text" Created="2011-06-21 15:13:29 -0500" Modified="2011-06-21 15:13:42 -0500">
+                    <Title>Custom Categories (SLA) Rules</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>7457,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="79" Type="Text" Created="2011-06-21 15:15:17 -0500" Modified="2011-06-21 15:15:29 -0500">
+                    <Title>Importer (TEC)</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>4635,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="80" Type="Text" Created="2011-06-21 15:17:52 -0500" Modified="2011-06-21 15:18:06 -0500">
+                    <Title>Discovery</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>34865,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="81" Type="Text" Created="2011-06-21 15:18:56 -0500" Modified="2011-06-21 15:22:45 -0500">
+                    <Title>SNMP Monitor</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>9128,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="82" Type="Text" Created="2011-06-21 15:22:50 -0500" Modified="2011-06-21 15:22:57 -0500">
+                    <Title>LinkD</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>23666,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="83" Type="Text" Created="2011-06-21 15:25:03 -0500" Modified="2011-06-21 15:25:12 -0500">
+                    <Title>Syslog</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>11284,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="84" Type="Text" Created="2011-06-21 16:30:16 -0500" Modified="2011-06-21 16:30:33 -0500">
+                    <Title>Provisioning</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>71515,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="85" Type="Text" Created="2011-06-21 16:31:37 -0500" Modified="2011-06-21 16:31:48 -0500">
+                    <Title>Trapd</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1131,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="86" Type="Text" Created="2011-06-21 16:32:11 -0500" Modified="2011-06-21 16:32:22 -0500">
+                    <Title>SyslogD Automations</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>15702,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="87" Type="Text" Created="2011-06-21 16:33:47 -0500" Modified="2011-06-21 16:34:03 -0500">
+                    <Title>Provisioner</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1725,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="90" Type="Text" Created="2011-06-21 16:35:27 -0500" Modified="2011-06-21 16:35:39 -0500">
+                    <Title>SNMP Asset provisioning</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>2618,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="91" Type="Text" Created="2011-06-21 16:36:45 -0500" Modified="2011-06-21 16:37:04 -0500">
+                    <Title>Poller Configuration Howto</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>12,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="92" Type="Text" Created="2011-06-21 16:41:05 -0500" Modified="2011-06-21 16:41:16 -0500">
+                    <Title>Service Pollers</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>915,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="93" Type="Text" Created="2011-06-21 16:41:33 -0500" Modified="2011-06-21 17:04:36 -0500">
+                    <Title>Poller Package</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1269,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="94" Type="Text" Created="2011-06-21 16:42:01 -0500" Modified="2011-06-21 16:42:12 -0500">
+                    <Title>Passive Status Keeper</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>24809,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="95" Type="Text" Created="2011-06-21 16:48:44 -0500" Modified="2011-06-21 16:48:57 -0500">
+                    <Title>HTTP Monitor</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>4610,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="96" Type="Text" Created="2011-06-21 16:49:15 -0500" Modified="2011-06-21 16:49:26 -0500">
+                    <Title>Page Sequence Monitor</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>15705,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="97" Type="Text" Created="2011-06-21 16:49:42 -0500" Modified="2011-06-21 16:50:51 -0500">
+                    <Title>Template</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>27,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="98" Type="Text" Created="2011-06-21 16:51:32 -0500" Modified="2011-06-21 16:51:59 -0500">
+                    <Title>Remote Monitor</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>468,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="99" Type="Text" Created="2011-06-21 16:52:22 -0500" Modified="2011-06-21 16:52:41 -0500">
+                    <Title>Remote Polling</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>11925,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="100" Type="Text" Created="2011-06-21 17:02:08 -0500" Modified="2011-06-21 17:02:28 -0500">
+                    <Title>Event Config</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>29137,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="101" Type="Text" Created="2011-06-21 17:02:54 -0500" Modified="2011-06-21 17:03:18 -0500">
+                    <Title>Glossary</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>879,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="102" Type="Text" Created="2011-06-21 17:03:50 -0500" Modified="2011-06-21 17:04:02 -0500">
+                    <Title>Event Reduction</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1427,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="103" Type="Text" Created="2011-06-21 17:04:51 -0500" Modified="2011-06-21 17:05:05 -0500">
+                    <Title>Event Substitution</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>4058,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="104" Type="Text" Created="2011-06-21 17:05:16 -0500" Modified="2011-06-21 17:05:24 -0500">
+                    <Title>Event Params</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1129,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="105" Type="Text" Created="2011-06-21 17:05:41 -0500" Modified="2011-06-21 17:05:53 -0500">
+                    <Title>Event Translator</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>8438,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="106" Type="Text" Created="2011-06-21 17:06:05 -0500" Modified="2011-06-21 17:06:14 -0500">
+                    <Title>Adding Event Defs</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>4750,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="107" Type="Text" Created="2011-06-21 17:06:38 -0500" Modified="2011-06-21 17:06:46 -0500">
+                    <Title>Alarms</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1137,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="108" Type="Text" Created="2011-06-21 17:07:07 -0500" Modified="2011-06-21 17:07:16 -0500">
+                    <Title>Configuring Alarms</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>5942,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="109" Type="Text" Created="2011-06-21 17:08:04 -0500" Modified="2011-06-21 17:08:26 -0500">
+                    <Title>Discovery</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>12,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="110" Type="Text" Created="2011-06-21 17:09:23 -0500" Modified="2011-06-21 17:09:58 -0500">
+                    <Title>Data Collection HT</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>52585,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="111" Type="Text" Created="2011-06-21 17:10:40 -0500" Modified="2011-06-21 17:10:50 -0500">
+                    <Title>SNMP Reports Howto</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>14095,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="112" Type="Text" Created="2011-06-21 17:11:28 -0500" Modified="2011-06-21 17:11:40 -0500">
+                    <Title>Data from several nodes</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>6510,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="113" Type="Text" Created="2011-06-21 17:12:18 -0500" Modified="2011-06-21 17:12:47 -0500">
+                    <Title>RPN Tutorial</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>11,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="114" Type="Text" Created="2011-06-21 17:13:49 -0500" Modified="2011-06-21 17:14:01 -0500">
+                    <Title>IPLIKE</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>4064,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="116" Type="Text" Created="2011-06-21 17:19:29 -0500" Modified="2011-06-21 17:19:53 -0500">
+                    <Title>Managing Configuration</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>6968,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="118" Type="Text" Created="2011-06-21 17:28:54 -0500" Modified="2011-06-21 17:29:10 -0500">
+                    <Title>OpenNMS HA</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>23370,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="119" Type="Text" Created="2011-06-21 17:29:52 -0500" Modified="2011-06-21 17:30:05 -0500">
+                    <Title>Security Considerations</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>5435,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="120" Type="Text" Created="2011-06-21 17:30:27 -0500" Modified="2011-06-21 17:30:40 -0500">
+                    <Title>Controlling daemons</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>19,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="121" Type="Text" Created="2011-06-21 17:30:53 -0500" Modified="2011-06-21 17:31:07 -0500">
+                    <Title>Ports</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>487,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="123" Type="Text" Created="2011-06-21 17:32:00 -0500" Modified="2011-06-21 17:32:15 -0500">
+                    <Title>Configuration File INdex</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>7593,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+            </Children>
         </BinderItem>
         <BinderItem ID="2" Type="TrashFolder" Created="2011-06-09 09:44:27 -0500" Modified="2011-06-09 09:44:27 -0500">
             <Title>Trash</Title>
@@ -752,6 +1277,16 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
+                <BinderItem ID="89" Type="Text" Created="2011-06-21 16:35:08 -0500" Modified="2011-06-21 16:35:08 -0500">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
     </Binder>
@@ -761,6 +1296,7 @@
         </Collection>
         <Collection Type="RecentSearch" ID="2DB6853C-3F29-41B7-884D-6591969D7EB6" Color="0.922 0.91 0.98">
             <Title>Search Results</Title>
+            <SearchSettings Operator="Exact" Type="All" CaseSensitive="No">are a stap</SearchSettings>
         </Collection>
     </Collections>
     <LabelSettings>
@@ -787,7 +1323,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2011-06-09 09:44:27 -0500" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetDaily="No" DeterminedFromDeadline="No">0</SessionTarget>
-        <PreviousSession Words="0" Characters="0" Date="2011-06-21 11:35:51 -0500"></PreviousSession>
+        <PreviousSession Words="1238" Characters="7732" Date="2011-06-21 17:36:36 -0500"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="595.200012,841.799988" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

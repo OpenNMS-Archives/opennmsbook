@@ -1,0 +1,1079 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 LucidaGrande;
+\f3\fmodern\fcharset0 Courier-Bold;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Introduction\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Purpose\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This How-To is one in a series designed to serve as a reference for getting started with OpenNMS. Eventually, these documents will cover everything necessary to get OpenNMS installed and running in your environment.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Copyright\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Content is available under a {\field{\*\fldinst{HYPERLINK "http://creativecommons.org/licenses/by-nc-sa/2.5/"}}{\fldrslt \cf2 \ul \ulc2 Creative Commons Attribution-NonCommercial-ShareAlike2.5 License}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS is an enterprise-grade network management platform developed under the open-source model. Unlike traditional network management products which are very focused on network elements such as interfaces on switches and routers, OpenNMS focuses on the services network resources provide: web pages, database access, DNS, DHCP, etc. (although information on network elements is also available).\
+There are two major ways that OpenNMS gathers data about the network. The first is through 
+\i polling
+\i0 . Processes called 
+\i monitors
+\i0  connect to a network resource and perform a simple test to see if the resource is responding correctly. If not, events are generated. The second is through data collection using 
+\i collectors
+\i0 . Currently data can be collected by\'a0:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}SNMP,\
+{\listtext	\'95	}NSClient (the Nagios Agent),\
+{\listtext	\'95	}JMX,\
+{\listtext	\'95	}HTTP\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Getting data collection configured properly seems to be one of the more difficult tasks in OpenNMS, but it's just a matter of "getting all your ducks in a row". There are several things that have to happen in order for this to work. For all data collection methods:\
+\pard\pardeftab720\ql\qnatural
+\cf0 capsd\'a0\
+During the discovery process, capsd discovers whether the various 
+\i collectable
+\i0  services exist on the discovered node. More specifically for SNMP collection, capd must be able to access SNMP information on that interface and to form some basic relationships, such as IP Address to ifIndex.\
+collectd-configuration.xml\'a0\
+Just as in the 
+\f1 poller-configuration.xml
+\f0  file (covered elsewhere), interfaces are mapped to packages for collection in this file. If data collection is required on an interface, it needs to exist in a package in this file. The default configuration is suitable for most initial purposes.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SNMP\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For SNMP data collection, the following files must be configured correctly:\
+\pard\pardeftab720\ql\qnatural
+\cf0 snmp-config.xml\'a0\
+For each interface, a valid community string must exist in this file.\
+datacollection-config.xml\'a0\
+Each package in the 
+\f1 collectd
+\f0  configuration file points to an 
+\f1 snmp-collection
+\f0  definition in this file. Each 
+\f1 snmp-collection
+\f0  defines what information to collect via SNMP, and it is pretty powerful as far as configuration goes. The default configuration is fairly complete for basic purposes, and will probably not require much changing initially.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] NSClient\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For NSClient data collection, you need to install the NSClient agent on the Windows servers ({\field{\*\fldinst{HYPERLINK "http://nsclient.ready2run.nl/"}}{\fldrslt \cf2 \ul \ulc2 http://nsclient.ready2run.nl/}}), configure it with a port/password, and then configure OpenNMS:\
+\pard\pardeftab720\ql\qnatural
+\cf0 nsclient-config.xml\'a0\
+This is where you configure passwords, timeouts and ports to connect on. Each interface you want to collect on must have a valid password specified in this file (although you can specify a default set of parameters to simplify configuration).\
+nsclient-datacollection-config.xml\'a0\
+This file configures named sets of collections which correspond to names specified in the configuration of collectd. These collection sets define which Windows Perfmon counters to collect, and how to identify which servers they should be collected from.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JMX\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For JMX data collection, the following file must be configured:\
+\pard\pardeftab720\ql\qnatural
+\cf0 jmx-datacollection-config.xml\'a0\
+As for the other 
+\i datacollection-config
+\i0  files, this file specifies which data points should be collected. In this case, it's MBeans, and which beans/attributes should be collected. Again, these are grouped by named set which corresponds to the names used in packages in collectd.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] HTTP\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For HTTP data collection, configure:\
+\pard\pardeftab720\ql\qnatural
+\cf0 http-datacollection-config.xml\'a0\
+In this config file you specify URLS and the regular expressions to use to extract the data points from the returned pages. Again, collections are grouped by names, corresponding to the names used in packages in collected\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The best part about data collection is that if everything goes smoothly, it is completely automated. Particularly, the out of the box configuration requires relatively little customisation (usually just providing SNMP community strings or NSClient passwords) to be usefully functional.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Data Collection\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] snmp-config.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The parameters used to connect with SNMP agents are defined in the 
+\f1 snmp-config.xml
+\f0  file. Here is an example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <snmp-config retry="3" timeout="800" read-community="public" write-community="private">\
+\'a0\'a0\'a0\'a0\'a0<definition version="v2c">\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0<specific>192.168.0.5</specific>\
+\'a0\'a0\'a0\'a0\'a0</definition>\
+\'a0\'a0\'a0\'a0\'a0<definition retry="4" timeout="2000">\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0<range begin="192.168.1.1" end="192.168.1.254"/>\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0<range begin="192.168.3.1" end="192.168.3.254"/>\
+\'a0\'a0\'a0\'a0\'a0</definition>\
+\'a0\'a0\'a0\'a0\'a0<definition read-community="bubba" write-community="zeke">\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0<range begin="192.168.2.1" end="192.168.2.254"/>\
+\'a0\'a0\'a0\'a0\'a0</definition>\
+\'a0\'a0\'a0\'a0\'a0<definition port="1161">\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0<specific>192.168.5.50</specific>\
+\'a0\'a0\'a0\'a0\'a0</definition>\
+</snmp-config>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The common attributes for the 
+\f1 snmp-config
+\f0  tag are as follows:\
+\pard\pardeftab720\ql\qnatural
+\cf0 retry\'a0\
+The number of attempts that will be made to connect to the SNMP agent. Default is 1\
+timeout\'a0\
+The amount of time, in milliseconds, that OpenNMS will wait for a response from the agent. Default is 3000\
+read-community\'a0\
+The default "read" community string for SNMP queries. If not specified, defaults to "public"\
+write-community\'a0\
+The default "write" community string for SNMP queries. Note that this is for future development - OpenNMS does not perform SNMP "sets" at the moment.\
+port\'a0\
+This overrides the default port of 161.\
+version\'a0\
+Here you can force either SNMP version 1 by specifying "v1", version 2c with "v2c", or version 3 with "v3". Default is "v1"\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 For SNMPv3 authentication and collection (only available when using SNMP4J):\
+\pard\pardeftab720\ql\qnatural
+\cf0 security-name\'a0\
+A security name for SNMP v3 authentication\
+auth-passphrase\'a0\
+The passphrase to use for SNMP v3 authentication\
+auth-protocol\'a0\
+The authentication protocol for SNMP v3. Either "MD5" or "SHA". Default is MD5\
+privacy-passphrase\'a0\
+A privacy pass phrase used to encrypt the contents of SNMP v3 packets\
+privacy-protocol\'a0\
+The privacy protocol used to encrypt the contents of SNMP v3 packets. Either "DES", "AES","AES192" or "AES256". Default is DES.\
+engine-id\'a0\
+The engine id of the target agent\
+context-name\'a0\
+The name of the context to obtain data from on the target agent.\
+context-engine-id\'a0\
+The context engine id of the target entity on the agent.\
+enterprise-id\'a0\
+An enterprise id for SNMP v3 collection\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 More rarely used attributes in the snmp-config tag are:\
+\pard\pardeftab720\ql\qnatural
+\cf0 proxy-host\'a0\
+A proxy host to use to communicate with the specified agent(s)\
+max-vars-per-pdu\'a0\
+Number of variables per SNMP request. Default is 10\
+max-request-size\'a0\
+If using SNMP4J as the SNMP library, the maximum size of outgoing SNMP requests. Defaults to 65535, must be at least 484\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 All of the global parameters can be overridden with 
+\f1 definition
+\f0  tags. These new SNMP definitions can apply to ranges or specific IP addresses.\
+Note that if an interface will qualify in multiple ranges in this file, the first one found will be used.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] nsclient-config.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This is the NSClient equivalent of snmp-config.xml, where parameters for connecting to the NSClient agent are defined. An example of such a file is:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <?xml version="1.0"?>\
+<nsclient-config port="1248" retry="3" timeout="800" password="apassword">\
+</nsclient-config>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The parameters that can be configured\
+\pard\pardeftab720\ql\qnatural
+\cf0 retry\'a0\
+The number of attempts that will be made to connect to the NSClient agent. Default is 1\
+timeout\'a0\
+The amount of time, in milliseconds, that OpenNMS will wait for a response from the agent. Default is 3000\
+port\'a0\
+This overrides the default port of 1248.\
+password\'a0\
+The password (if any) required to authenticate to the NSClient agent. Default is the string "None"\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 As with snmp-config.xml, all of the global parameters can be overridden with 
+\f1 definition
+\f0  tags. These new definitions can apply to ranges or specific IP addresses. Note that if an interface is matched in multiple ranges in this file, the first one found will be used.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Capabilities\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 As explained in the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Discovery_Configuration_How-To"}}{\fldrslt \cf2 \ul \ulc2 Discovery How-To}}, the capabilities check process starts with a NewSuspect event (generated either manually or through the discovery process). This NewSuspect event is received by the capabilities daemon (capsd).\
+The capsd process is responsible for testing IP addresses for particular capabilities. Each protocol that can be monitored is defined in the capsd-configuration.xml file. Upon receipt of a NewSuspect event, capsd begins to test each configured protocol to see if it exists on that device.\
+When testing SNMP, capsd makes an attempt to receive the System Object ID (systemOID) for the device using the community string and port defined in 
+\f1 snmp-config.xml
+\f0 . If this succeeds, the SNMP protocol is marked as "true" for this IP address.\
+The capsd process will first complete all tests for all protocols defined in the file for the interface in question, and after that is complete, if SNMP is "true" for this IP address, more tests are performed by capsd.\
+First, three threads are generated to collect the data from the system tree, the ipAddrTable and ifTable.\
+If, for some reason, the ipAddrTable or ifTable are unavailable, the process stops (but the SNMP system data may show up on the node page - this happens a lot with UC-Davis SNMP agents where only the system tree is available, by default, to a query using the "public" community string).\
+Second, all of the sub-target IP addresses in the ipAddrTable are run through the capsd capabilities scan. Note that this is regardless of how management is configured in the configuration file. This only happens on the initial scan and on forced rescans. On normal rescans (by default, every 24 hours), IP addresses that are "unmanaged" in capsd are not polled.\
+Third, every IP address in the ipAddrTable that supports SNMP is tested to see if it maps to a valid ifIndex in the ifTable. If this is true, the IP address is marked as a secondary SNMP interface and is a contender for becoming the primary SNMP interface.\
+Finally, all secondary SNMP interfaces are tested to see if they match a valid package in the 
+\f1 collectd-configuration
+\f0  file. If more than one valid IP address meets all three criteria (supports SNMP, has a valid ifIndex and is included in a collection package), then the lowest IP address is marked as primary. All SNMP data collection is performed via the primary SNMP interface.\
+(Note: in the future we will have the ability to change to a secondary SNMP interface should the primary become unavailable).\
+When the capsd testing process is complete, events are generated, including NodeGainedService events.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] collectd-configuration.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Data collection is handled via the collectd process. collectd listens for NodeGainedService events for the SNMP "service". When this happens, it checks to see if the primary SNMP interface for that node exists in a collection package (which it should by definition). If so, the SNMP collector is instantiated for that IP address.\
+Unless forced toward one version or another via the snmp-config.xml file, when the collection is initialized it will check to see if SNMPv2 is supported by attempting a GET-BULK on system.sysObjectID. If that fails it will revert to version 1.\
+This is a change from earlier versions of OpenNMS. capsd is no longer responsible for determining the SNMP version. Whether or not SNMPv2 is supported on a node will no longer show up on the node page.\
+Let's look at the 
+\f1 collectd-configuration.xml
+\f0  file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <collectd-configuration\
+        threads="5">\
+\
+        <package name="example1">\
+                <filter>IPADDR IPLIKE *.*.*.*</filter>\
+                <specific>0.0.0.0</specific>\
+                <include-range begin="192.168.0.1" end="192.168.0.254"/>\
+                <include-url>file:/opt/OpenNMS/etc/include</include-url>\
+\
+                <service name="SNMP" interval="300000" user-defined="false" status="on">\
+                        <parameter key="collection" value="default"/>\
+                        <parameter key="port" value="161"/>\
+                        <parameter key="retry" value="3"/>\
+                        <parameter key="timeout" value="3000"/>\
+                </service>\
+\
+                <outage-calendar>zzz from poll-outages.xml zzz</outage-calendar>\
+        </package>\
+\
+        <collector service="SNMP"       class-name="org.opennms.netmgt.collectd.SnmpCollector"/>\
+</collectd-configuration>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 If you are familiar with the poller configuration file, you can probably figure out what this file does.\
+The 
+\f1 threads
+\f0  attribute limits the number of threads that will be used by the data collection process. You can increase or decrease this value based upon your network and the size of your server.\
+Just like pollers have poller packages, collectors have collection packages. Each package determines how often the device will be polled for SNMP data, and through the 
+\f1 collection
+\f0  key, what will be polled and how it will be stored. The 
+\f1 example1
+\f0  package is the default included out of the box.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] What Interfaces are Included in a Package?\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 The package name is followed by a list of tags that define what interfaces will be included in the package. All of the tags, except for filter, are optional and unbounded. There are five types of these tags:\
+\pard\pardeftab720\ql\qnatural
+\cf0 filter\'a0\
+Specify a filter that matches the interfaces to be included in the package.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <filter>IPADDR IPLIKE *.*.*.*</filter>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Each package must have a filter tag that performs the initial test to see if an interface should be included in a package. Filters operate on interfaces (not nodes) and is discussed in depth in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Filters"}}{\fldrslt \cf2 \ul \ulc2 this How-To}}. Only one 
+\f1 filter
+\f0  statement can exist per package.\
+\pard\pardeftab720\ql\qnatural
+\cf0 specific \'a0\
+Specify a specific IP address to include in the package.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <specific>192.168.1.59</specific>\
+\pard\pardeftab720\ql\qnatural
+
+\f0 \cf0 include-range\'a0\
+This specifies a particular range of IP addresses to include in a package.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <include-range begin="192.168.0.1" end="192.168.0.254"/>\
+\pard\pardeftab720\ql\qnatural
+
+\f0 \cf0 exclude-range\
+This specifies a particular range of IP addresses to exclude in a package. This will override an 
+\f1 include-range
+\f0  tag.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  <exclude-range begin="192.168.0.100" end="192.168.0.104"/>\
+\pard\pardeftab720\ql\qnatural
+
+\f0 \cf0 include-url\'a0\
+Specify a file that contains a list of IP addresses to include.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <include-url>file:/opt/OpenNMS/etc/include</include-url>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This tag will point to a file that consists of a list of IP addresses, one to a line, that will be included in the package. Comments can be embedded in this file. Any line that begins with a "#" character will be ignored, as will the remainder of any line that includes a space followed by "#".\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Services\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Again, drawing on the analogy with pollers, each poller package has a set of 
+\i protocols
+\i0  that it monitors, collectors have a set of 
+\i services
+\i0  on which they collect data. At the time there is only one: SNMP.\
+The 
+\f1 service
+\f0  tag names the service and also specifies various parameters:\
+\pard\pardeftab720\ql\qnatural
+\cf0 name\'a0\
+This is the name of the service.\
+interval\'a0\
+This specifies the polling interval (5 minutes by default).\
+user-defined\'a0\
+In the future, users may be able to define new collection sources (like from a log file) through a GUI, but at the moment this is set to "false".\
+status\'a0\
+Also in the future, there will be an admin GUI for collectors just as there is for pollers, and users will be able to turn SNMP data collection on or off from a web page. At the moment, this can only be done by editing this file and setting status to either "off" or "on" (default).\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Service Parameters\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 There are three parameters available common to all services:\
+\pard\pardeftab720\ql\qnatural
+\cf0 timeout\'a0\
+The timeout, in milliseconds, to wait for a response to an SNMP request.\
+retries\'a0\
+If a timeout does occur, this controls the number of attempts to make before giving up.\
+port\'a0\
+This allows you to override the default port for SNMP data collection.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs20 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=17"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SNMP\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In addition, the SNMP service can have the following parameters specified:\
+\pard\pardeftab720\ql\qnatural
+\cf0 collection\'a0\
+This points to an SNMP collection in the 
+\f1 datacollection-config.xml
+\f0  file that determines what Object IDs (OIDs) will be collected.\
+oid\'a0\
+The collector will test to see if the interface supports SNMPv2 by doing a GET-BULK request on this OID. By default it is set to the systemOID. If the GET-BULK is successful, then the rest of the polling for this device will take advantage of SNMPv2. Otherwise, SNMPv1 will be used. The intent was to allow for this parameter to override the systemOID value, but it was never implemented, so you can ignore this parameter for now.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs20 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=18"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JBOSS\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS comes with libraries for JBoss 4.0.2. If you need the JBossCollector in order to collect data from JBoss 4.2.2, these will cause a silent failure. In that case, delete $\{OPENNMSHOME\}/lib/jboss*4.0.2.jar and $\{OPENNMSHOME\}/lib/jnp-client-4.0.2.jar, and place your own jbossall-client.jar in $\{OPENNMSHOME\}/lib/jboss/jbossall-client.jar.\
+The JBOSS4 and JBoss32 services can have the following additional parameter specified:\
+\pard\pardeftab720\ql\qnatural
+\cf0 factory\'a0\
+Specifies the method of connecting to the JBOSS server. It can be either HTTP or RMI.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs20 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=19"}}{\fldrslt \cf2 \ul \ulc2 edit}}] NSClient\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The NSClient service has the following additional parameter:\
+\pard\pardeftab720\ql\qnatural
+\cf0 nsclient-collection\'a0\
+This points to a collection in the 
+\f1 nsclient-datacollection-config.xml
+\f0  file that determines what perfmon counters will be collected.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=20"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Outage Calendar\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 In order to keep servers operating properly, it is often necessary to bring them down for scheduled maintenance. Instead of having these maintenance outages reflected as a true service outage, they can be included in an "Poller Outage Calendar" and then referenced by the poller package using the 
+\f1 outage-calendar
+\f0  tag. This tag contains the name of a valid outage in the 
+\f1 poll-outages.xml
+\f0  file.\
+The 
+\f1 outage-calendar
+\f0  tag is optional and unbounded (i.e. you can reference more than one outage).\
+Since version 1.5.91 you can configure scheduled outages from the GUI, got to Admin -> Scheduled Outages.\
+Before version 1.5.91, there were three types of outages: weekly, monthly and specific. Since 1.5.91 there is also the possibility to configure daily outages.\
+If you have the problem nodes are reported to be down thought they are within a daily outage which goes past midnight try to define two timespans within the outage, one until midnight and the other one starting after midnight, e.g. instead of outage 22:00:00-01:00:00 define 22:00:00-23:59:59 and 00:00:00-01:00:00.\
+
+\f2 \uc0\u8232 
+\f0 Examples from the 
+\f1 poll-outages
+\f0  file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <outage name="global" type="weekly">\
+  <time day="sunday" begins="12:30:00" ends="12:45:00"/>\
+  <time day="sunday" begins="13:30:00" ends="14:45:00"/>\
+  <time day="monday" begins="13:30:00" ends="14:45:00"/>\
+  <time day="tuesday" begins="13:00:00" ends="14:45:00"/>\
+  <interface address="192.168.0.1"/>\
+  <interface address="192.168.0.36"/>\
+  <interface address="192.168.0.38"/>\
+</outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This defines an outage calendar called "global" that is run every week. It specifies four outage times: Sunday starting at 12:30 pm and lasting 15 minutes, Sunday starting at 1:30 pm and lasting an hour and fifteen minutes, the same outage on Monday, and one on Tuesday from 1:00 pm to 2:45 pm. This is to demonstrate that you can have multiple outages on a given day and the same outage on different days. Three interfaces will be affected.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <outage name="hub maintenance" type="monthly">\
+  <time day="1" begins="23:30:00" ends="23:45:00"/>\
+  <time day="15" begins="21:30:00" ends="21:45:00"/>\
+  <time day="15" begins="23:30:00" ends="23:45:00"/>\
+  <interface address="192.168.100.254"/>\
+  <interface address="192.168.101.254"/>\
+  <interface address="192.168.102.254"/>\
+  <interface address="192.168.103.254"/>\
+  <interface address="192.168.104.254"/>\
+  <interface address="192.168.105.254"/>\
+  <interface address="192.168.106.254"/>\
+  <interface address="192.168.107.254"/>\
+</outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This outage calendar is called "hub maintenance" that is run every month. On the first of the month the outage begins at 11:30 pm and lasts 15 minutes. The same outage occurs on the 15th of the month in addition to another outage from 9:30 pm to 9:45 pm. Thus you can have the same outage on different dates as well as more than one outage on a particular date. Eight interfaces are affected by this outage.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <outage name="proxy server tuning" type="specific">\
+  <time begins="10-Nov-2001 17:30:00" ends="11-Nov-2001 08:00:00"/>\
+  <interface address="192.168.0.1"/>\
+</outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 It is also possible to include an outage on a specific date and time. This outage named "proxy server tuning" began on November 10th, 2001 at 5:30 pm and lasted until 8:00 am the next day. This affected one interface. You can have more than one "time" entry per specific outage.\
+If a particular outage calendar is included in a collection package, then collection will not occur during this time.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=21"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Final Tags in 
+\f3 collectd-configuration.xml
+\f0 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Just like in the poller configuration file, each service that is collected on must reference the class that is to be used for this collection. Therefore there should be one or more of the following definitions (or your own if you've implemented your own collector class)\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <collector service="SNMP"       class-name="org.opennms.netmgt.collectd.SnmpCollector"/>\
+<collector service="NSClient"       class-name="org.opennms.netmgt.collectd.NSClientCollector"/>\
+<collector service="JBoss4"       class-name="org.opennms.netmgt.collectd.JBossCollector"/>\
+<collector service="JBoss32"      class-name="org.opennms.netmgt.collectd.JBossCollector"/>\
+<collector service="JVM"          class-name="org.opennms.netmgt.collectd.Jsr160Collector"/>\
+<collector service="HttpDocCount" class-name="org.opennms.netmgt.collectd.HttpCollector" />\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=22"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Data Collection Configuration\
+[{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=23"}}{\fldrslt \cf2 \ul \ulc2 edit}}] datacollection-config.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This is one of the more complex files in the product. It determines what values will be collected upon for a given interface and package.\
+At this point in time, it is probably best to review the structure of things and expand upon them somewhat. Okay, just like there are poller packages for monitoring service levels, there are collection packages that control data collection. Poller packages can monitor numerous protocols, and collection packages can collect on numerous data sources, but for now the only one is SNMP.\
+The SNMP data collection service points to an SNMP data collection "scheme". I am out of synonyms for "package", and I don't want to get confused between the packages in the collectd configuration file and the SNMP collections in the data collection configuration file, so for the purpose of this How-To, we'll call them 
+\i schemes
+\i0 . These schemes bring together OIDs for collection into 
+\i groups
+\i0  and the groups are mapped to 
+\i systems
+\i0 . The systems are mapped to interfaces by the systemOID. In addition, each "scheme" controls how the data will be collected and stored.\
+It becomes clearer as we move on.\
+First, let's check out the 
+\f1 datacollection-config.xml
+\f0  file. Outside of the 
+\f1 snmp-collection
+\f0  definition (the "scheme"), there is only one parameter:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <datacollection-config\
+        rrdRepository = "/var/opennms/rrd/snmp/">\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This determines in which directory the collected information will be stored. If you change this value, you must also change the 
+\i rrdRepository
+\i0  values in the following files:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 poller-configuration.xml\
+thresholds.xml\
+http-datacollection-config.xml\
+jmx-datacollection-config.xml\
+nsclient-datacollection-config.xml\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=24"}}{\fldrslt \cf2 \ul \ulc2 edit}}] 
+\f3 snmp-collection
+\f0  General Set Up\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 After the repository had been defined, the next tag starts the 
+\f1 snmp-collection
+\f0  definition:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <snmp-collection name="default"\
+                 maxVarsPerPdu = "50"\
+                 snmpStorageFlag = "all">\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The 
+\f1 name
+\f0  attribute is pretty self-explanatory. This is the name that must be matched to the 
+\f1 key="collection"
+\f0  value in the collectd configuration file. The 
+\f1 maxVarsPerPdu
+\f0  places a limit on the number of SNMP variables that will be retrieved with a GET-BULK request in one packet. You should not need to adjust this, but if you have some SNMP agents that are somewhat slow, you could reduce this to ease the load on them.\
+The 
+\f1 snmpStorageFlag
+\f0  is a pretty important attribute. It can be set to "all" (default) or "primary". What this does is determine if SNMP data collection will occur on all interfaces for a particular node or just the interface marked as "primary". This can greatly affect the size of your Round Robin Database (RRD) if you have a number of multi-interface devices like switches, but it won't have much affect on a network consisting mainly of servers (which tend to only have a single interface).\
+This is one instance where you may want to have two collection packages and two collection schemes. You could build a collection package for just routers where 
+\f1 snmpStorageFlag
+\f0  is set to "all" in the collector scheme and then have everything else in another package where it is set to "primary" in the scheme.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=25"}}{\fldrslt \cf2 \ul \ulc2 edit}}] RRD Configuration\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0 \cf0 <rrd step = "300">\
+  <rra>RRA:AVERAGE:0.5:1:8928</rra>\
+  <rra>RRA:AVERAGE:0.5:12:8784</rra>\
+  <rra>RRA:MIN:0.5:12:8784</rra>\
+  <rra>RRA:MAX:0.5:12:8784</rra>\
+</rrd>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The next section of the scheme configuration specifies RRD (round robin database) parameters for storing and rolling up the collected data sampes. {\field{\*\fldinst{HYPERLINK "http://oss.oetiker.ch/rrdtool/"}}{\fldrslt \cf2 \ul \ulc2 RRDTool}} is a product that grew out of MRTG. It creates a very compact database structure for the storage of periodic data, such as is gathered by OpenNMS. RRD data is stored in files that are created when initialized to hold data for a certain amount of time. This means that with the first data collection these files are as large as they will ever get, but it also means that you will see an initially large decrease in disk space as collection is first started.. Once the RRD file is full, the oldest data is discarded.\
+OpenNMS releases up to and including 1.2.9 used RRDTool proper by default via a JNI (Java Native Interface), meaning that the resulting files could be read by other applications capable of consuming RRDTool's file format. The files written by OpenNMS via the JNI RRD strategy have a 
+\i .rrd
+\i0  extension by default. Beginning with the 1.3.2 release, the default is to use {\field{\*\fldinst{HYPERLINK "http://www.jrobin.org/"}}{\fldrslt \cf2 \ul \ulc2 JRobin}}, a pure-Java implementation of RRDTool 1.0's functionality. The files produced via the JRobin RRD strategy have a 
+\i .jrb
+\i0  extension by default, and are 
+\i not
+\i0  compatible with RRDTool proper. See the JRobin site for the motivation behind this decision.\
+The first line, the 
+\f1 rrd step
+\f0  size, determines the granularity of the data. By default this is set to 300 seconds, or five minutes, which means that the data will be saved once every five minutes per 
+\i step
+\i0 . Note that this is also one of the few places where time in OpenNMS is referenced in seconds instead of milliseconds.\
+Each RRD is made up of Round-Robin Archives. An RRA consists of a certain number of steps. All of the data that is collected in those steps is then consolidated into a single value that is then stored in the RRD. For instance, if I poll a certain SNMP variable once a minute, I could have an RRA that would collect all samples over a step of five minutes, average the (five) values together, and store the average in the RRD.\
+The RRA statements take the form:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 RRA:Cf:xff:steps:rows\
+\pard\pardeftab720\ql\qnatural
+
+\f0 \cf0 RRA\'a0\
+This string defines the line as an RRA configuration command. It does not change, and is always the text "RRA".\
+Cf\'a0\
+This field represents the "consolidation function". It can take one of four values, AVERAGE, MAX, MIN, or LAST. They are detailed below.\
+xff\'a0\
+This is the "x-files factor". If we are trying to consolidate a number of samples into one, there is a chance that there could be gaps where a value wasn't collected (the device was down, etc.). In that case, the value would be UNKNOWN. This factor determines how many of the samples can be UNKNOWN for the consolidated sample is considered UNKNOWN. By default this is set to 0.5 or 50%.\
+steps\'a0\
+This states the number of "steps" that make up the RRA. For example, if the step size is 300 seconds (5 minutes) and the number of steps is 12, then the RRA is 12 x 5 minutes = 60 minutes = 1 hour long, and it will stored the consolidated value for that hour.\
+rows\'a0\
+The 
+\i rows
+\i0  field determine the number of values that will be stored in the RRA.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs20 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=26"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Consolidation Functions\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 These are used in the "Cf" part of an RRA statement.\
+\pard\pardeftab720\ql\qnatural
+\cf0 AVERAGE\'a0\
+Average all the values over the number of steps in the RRA.\
+MAX\'a0\
+Store the maximum value collected over the number of steps in the RRA.\
+MIN\'a0\
+Store the minimum value collected over the number of steps in the RRA.\
+LAST\'a0\
+Store the last value collected over the number of steps in the RRA.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Let's bring this all together with some more examples. Take the first RRA line in the configuration:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 RRA:AVERAGE:0.5:1:8928\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This says to create an archive consisting of the AVERAGE value collected over 1 step and store up to 8928 of them. If, for any step, more than 50% of the values are UNKNOWN, then the average value will be UNKNOWN. Since the default step size is 300 seconds, or five minutes, and the default polling cycle (in the collectd configuration) is five minutes, we would expect there to be one value per step, and so the AVERAGE should be the same as the MIN or MAX or LAST. 8928 five minute samples at 12 samples per hour and 24 hours per day is 31 days. Thus this RRA will hold five minute samples for 31 days before discarding data.\
+The next lines get a little more interesting:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 RRA:AVERAGE:0.5:12:8784\
+RRA:MIN:0.5:12:8784\
+RRA:MAX:0.5:12:8784\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The only difference between these lines is the consolidation function. We are going to "roll up" the step 1 samples (5 minutes) into 12 step samples (1 hour). We are also going to store three values: the average of all samples during the hour, the minimum value of those samples and the maximum value. This data is useful for various reports (the AVERAGE shows throughput whereas MAX and MIN show peaks and valleys). These will be stored as one hour samples 8784 times, or 366 days.\
+So, to summarize, by default the SNMP collector will poll once every five minutes. This value will be stored as collected for 31 days. Also, hourly samples will be stored which include the MIN, MAX and AVERAGE.\
+You can easily change these numbers to increase or decrease the amount of data stored. A few caveats. First, increasing the amount and/or frequency of samples will have a direct affect on the amount of disk space required. You could add a MIN and MAX RRA for the single step RRA, which would increase necessary disk space by up to 50%, but since by default there is only one value, MIN, MAX and AVERAGE will be the same, so it is not really necessary unless you also increase the polling rate. Second, you cannot change these numbers once collection has started without losing all of the collected data up to that point. So it is important to set your values early. When you change these numbers, you must delete all .jrb files in order for them to be re-created.\
+A note for international users: if your LOCALE is set to something other than "en_US" you may need to use a "comma" instead of a "period" in the xff, for example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 RRA:AVERAGE:0,5:12:8784\
+RRA:MIN:0,5:12:8784\
+RRA:MAX:0,5:12:8784\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 You have to do this if you see a "can't parse argument 'RRA:AVERAGE:0.5:1:8928'" in the collectd log file.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=27"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Resource Types\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you wish to collect tabular or "columnar" data from MIB tables that are indexed on some instance identifier other than 
+\i ifIndex
+\i0 , you will need to have a custom 
+\i resourceType
+\i0  element for each unique table-indexing strategy. Details on this type of collection are available separately in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Collecting_SNMP_data_from_tables_with_arbitrary_indexes"}}{\fldrslt \cf2 \ul \ulc2 this article}}.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=28"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Groups\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you are still with me, let's talk about something a little more intuitive with respect to SNMP data collection, the SNMP variables themselves. OpenNMS comes with a utility (
+\b OPENNMS_HOME/contrib/mibparser/dist/parseMib.sh
+\b0 ) that automates much of the work involved in importing OIDs for collection, but its output almost always requires some amount of work by a human operator. Each value is spelled out in a group entry:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <groups>\
+  <group  name = "mib2-interfaces" ifType = "all">\
+    <mibObj oid=".1.3.6.1.2.1.2.2.1.10" instance="ifIndex" alias="ifInOctets" type="counter"/>\
+    <mibObj oid=".1.3.6.1.2.1.2.2.1.13" instance="ifIndex" alias="ifInDiscards" type="counter"/>\
+    <mibObj oid=".1.3.6.1.2.1.2.2.1.14" instance="ifIndex" alias="ifInErrors" type="counter"/>\
+    <mibObj oid=".1.3.6.1.2.1.2.2.1.16" instance="ifIndex" alias="ifOutOctets" type="counter"/>\
+    <mibObj oid=".1.3.6.1.2.1.2.2.1.19" instance="ifIndex" alias="ifOutDiscards type="counter"/>\
+    <mibObj oid=".1.3.6.1.2.1.2.2.1.20" instance="ifIndex" alias="ifOutErrors" type="counter"/>\
+  </group>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 SNMP variable collections are placed into groups to make it easier to associate with specific kinds of devices. A group consists of a group 
+\f1 name
+\f0  and the types of interfaces (
+\f1 ifType
+\f0 ) for which the member objects should be collected.\
+The 
+\f1 ifType
+\f0  attribute can take on the following values:\
+\pard\pardeftab720\ql\qnatural
+\cf0 all\'a0\
+This means that all interface type will be polled for the OIDs included in the group.\
+\
+ignore\'a0\
+This is used for scalar values, i.e. those that appear only once on a device, such as the "load average" for a router. This value will be collected and stored once for the device.\
+[specific numeric value]\'a0\
+You may want to poll certain value from ATM interfaces, others from point-to-point WAN links, and still others from Ethernet interfaces. For example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <group  name = "my-ATM-example" ifType = "37">\
+<group  name = "ethernet-example" ifType = "6,62">\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 See {\field{\*\fldinst{HYPERLINK "http://www.iana.org/assignments/ianaiftype-mib"}}{\fldrslt \cf2 \ul \ulc2 http://www.iana.org/assignments/ianaiftype-mib}}for a comprehensive list of 
+\i ifType
+\i0  values.\
+As a special case, groups containing object definitions for tabular (aka "columnar") data from tables indexed by any instance identifier other than 
+\i ifIndex
+\i0  must have a group type of 
+\b all
+\b0 . This type of data is referred to as 
+\i generic index
+\i0  data, and is described in more detail in article {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Collecting_SNMP_data_from_tables_with_arbitrary_indexes"}}{\fldrslt \cf2 \ul \ulc2 Collecting SNMP data from tables with arbitrary indexes}}.\
+It is important never to mix scalar data, interface-level data, and generic-index data in the same group.\
+Each SNMP MIB variable consists of an OID plus an instance. Usually, that instance is either zero (0) or an index to a table. At the moment, OpenNMS only understands the ifIndex index to the ifTable. All other instances have to be explicitly configured. The 
+\f1 alias
+\f0  must be no more than 19 characters in length (a limitation stemming from the design of RRDTool), unique per combination of device type and resource type, and usually should be unique per OID. The RRD file that is created will have the alias as its filename.\
+OpenNMS understands four types of numeric variables to collect: 
+\f1 gauge, timeticks, integer, counter
+\f0 . Since RRD only understands numeric data, any string types encountered will be parsed to a number before being persisted in RRD storage. If the conversion cannot be made (perhaps you are trying to collect on systemName, for example), a log message will be generated. Starting with OpenNMS 1.3.2, a type of 
+\f1 string
+\f0  can be used to collect string values and store their values separately from RRD files.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=29"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Systems\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Once the groups are defined, the last step is to associate them with the systems to be monitored. The SNMP systemOID (.1.3.6.1.2.1.1.2, instance 0) returns another OID that is meant to uniquely identify the type of equipment being used.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <systems>\
+  <systemDef name = "Net-SNMP">\
+    <sysoidMask>.1.3.6.1.4.1.2021.250.</sysoidMask>\
+    <collect>\
+      <includeGroup>mib2-interfaces-net-snmp</includeGroup>\
+      <includeGroup>mib2-host-resources-storage</includeGroup>\
+      <includeGroup>mib2-host-resources-system</includeGroup>\
+      <includeGroup>mib2-host-resources-memory</includeGroup>\
+      <includeGroup>ucd-loadavg</includeGroup>\
+    </collect>\
+  </systemDef>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 In this system definition, any device with a system OID that is being used for SNMP data collection whose systemOID starts with ".1.3.6.1.4.1.2021.250." will collect on five MIB groups: mib2-interfaces-net-snmp, mib2-host-resources-storage, mib2-host-resources-system, mib2-host-resources-memory and ucd-loadavg.\
+If you want to match against a specific oid use <sysoid> instead of <sysoidMask>\
+So, to review once again - you set up collection packages, similar to poller packages, in the 
+\f1 collectd-configuration.xml
+\f0  file. A key in that file points to a particular 
+\f1 snmp-collection
+\f0  tag in 
+\f1 datacollection-config.xml
+\f0  (this is what I have referred to as a scheme). For each scheme, you set up how the data will be stored, whether all interfaces will be collected on or just the primary interface for each node, what MIB OIDs are included in each MIB group, and what MIB groups are associated with what systems, based on the system definition.\
+Got it? Whew.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=30"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Modular Configuration\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 As of OpenNMS 1.8.4 and 1.9.1, it is now possible to modularly include multiple configuration files into datacollection-config.xml, much like eventconf.xml.\
+First, make sure you have an 
+\f1 $OPENNMS_HOME/etc/datacollection
+\f0  directory. If not, make it. Then, create one or more configuration files in that directory. The opening tag should be "<datacollection-group>" with a name set, which then can contain any number of resourceType, group, and systemDef definitions, just like the main datacollection-config.xml file. For example:\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  <?xml version="1.0"?>\
+ <datacollection-group name="Cisco">\
+ \
+     <resourceType name="cbgpPeerAddrFamilyPrefixEntry" label="Cisco BGP Peer / Address Family"\
+                   resourceLabel="Peer $\{subIndex(0,4)\}">\
+       <persistenceSelectorStrategy class="org.opennms.netmgt.collectd.PersistAllSelectorStrategy"/>\
+       <storageStrategy class="org.opennms.netmgt.dao.support.IndexStorageStrategy"/>\
+     </resourceType>\
+ \
+       <group name="cisco-bgp-peer-addr-family-prefix-stats" ifType="all">\
+         <mibObj oid=".1.3.6.1.4.1.9.9.187.1.2.4.1.1" instance="cbgpPeerAddrFamilyPrefixEntry"\
+                   alias="cbgpPeerAcceptedPfx" type="gauge" />\
+       </group>\
+ \
+     <systemDef name="Cisco Routers">\
+       <sysoidMask>.1.3.6.1.4.1.9.1.</sysoidMask>\
+       <collect>\
+         <includeGroup>adsl-line</includeGroup>\
+         <includeGroup>rfc1315-frame-relay</includeGroup>\
+         <includeGroup>mib2-X-interfaces</includeGroup>\
+         <includeGroup>ietf-bgp4-peer-stats</includeGroup>\
+         <includeGroup>cisco-bgp-peer-addr-family-prefix-stats</includeGroup>\
+         </collect>\
+       </systemDef>\
+ \
+ </datacollection-group>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Then, add it near the end of datacollection-config.xml within an snmp-collection tag, using the group name you defined in the individual XML file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  <?xml version="1.0"?>\
+ <datacollection-config ...>\
+   <snmp-collection ...>\
+ ...\
+     <include-collection dataCollectionGroup="Cisco" />\
+   </snmp-collection>\
+ \
+ </datacollection-config>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=31"}}{\fldrslt \cf2 \ul \ulc2 edit}}] nsclient-datacollection-config.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 First, a simple example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <nsclient-datacollection-config rrdRepository="/opt/opennms/share/rrd/snmp/">\
+  <nsclient-collection name="default">\
+    <rrd step="300">\
+      <rra>RRA:AVERAGE:0.5:1:8928</rra>\
+      <rra>RRA:AVERAGE:0.5:12:8784</rra>\
+      <rra>RRA:MIN:0.5:12:8784</rra>\
+      <rra>RRA:MAX:0.5:12:8784</rra>\
+    </rrd>\
+\
+    <wpms>\
+      <!--  A group for collecting processor stats.\
+        Check the keyvalue "% Processor Time" - if it's there (should be) collect this whole group.\
+      Check every recheckInterval milliseconds (3600000 = 1hr) -->\
+      <wpm name="Processor" keyvalue="\\Processor(_Total)\\% Processor Time" recheckInterval="3600000">\
+      	<!--  Collect these attributes.  Name is the name to pass to NSClient.  \
+      	Alias is the local name for the RRD file \
+      	Type is used to convert values around\
+      	maxval/minval are optional-->\
+      	<attrib name="\\Processor(_Total)\\% Processor Time" alias="cpuProcTime" type="Gauge"/>\
+      	<attrib name="\\Processor(_Total)\\% Interrupt Time" alias="cpuIntrTime" type="Gauge"/>\
+      	<attrib name="\\Processor(_Total)\\% Privileged Time" alias="cpuPrivTime" type="Gauge"/>\
+      	<attrib name="\\Processor(_Total)\\% User Time" alias="cpuUserTime" type="Gauge"/>\
+      </wpm>\
+  </nsclient-datacollection>\
+</nsclient-datacollection-config>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 As for datacollection-config.xml, the name attribute specifies a name that must be matched to the key="collection" value in the collectd configuration file. Similarly, the RRD section has the same syntax and meaning as in datacollection-config.xml; see the earlier section on that for details.\
+The performance monitor counters to collect are defined in the <wpms> section. Groups of counters are defined within a <wpm> tag. Each <wpm> has:\
+\pard\pardeftab720\ql\qnatural
+\cf0 name\'a0\
+arbitrary and for your own purposes\
+keyvalue\'a0\
+if the keyvalue perfmon counter can be obtained from the agent, then the rest of the counters in the group are collected as well.\
+recheckInterval\'a0\
+The presence of the key value is rechecked every 
+\f1 recheckInterval
+\f0  milliseconds, to avoid causing undue load on the server checking for non-existent values.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Note that the value obtained from the keyvalue is not stored, unless explicitly mention in an additional 
+\f1 attrib
+\f0 \
+Perfmon counters that should actually be collected and stored are defined in an 
+\f1 attrib
+\f0  tag, which has the following parameters:\
+\pard\pardeftab720\ql\qnatural
+\cf0 name\'a0\
+The performance counter to collect. This name is the full path to the counter, which is typically \\<section>(<specific_instance>)\\<counter>. Specific instance is only used where there are more than one of a counter available. For example, in the Processor section the specific index can be either 0-(num processors-1), or _Total to see the total of counters across all instances. See the example configuration files for other examples of syntax in specifying the counter name.\
+alias\'a0\
+This is the same as in the mibObj tag in datacollection-config.xml, and defines the name of the RRD data item that will be stored. RRD limitations require it to be 19 characters or less in length.\
+type\'a0\
+Again the same as for mibObj in datacollection-config.xml, defining the interpretation of the data point. A "gauge" is a point in time value, e.g Processor usage, where as a "counter" is for monotonically increasing counter values such as "number of http requests".\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=32"}}{\fldrslt \cf2 \ul \ulc2 edit}}] jmx-datacollection-config.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Again, we start with an example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <?xml version="1.0"?>\
+<jmx-datacollection-config\
+    rrdRepository = "/opt/opennms/rrd/snmp/">\
+    <jmx-collection name="jboss"\
+        maxVarsPerPdu = "50">\
+        <rrd step = "300">\
+            <rra>RRA:AVERAGE:0.5:1:8928</rra>\
+            <rra>RRA:AVERAGE:0.5:12:8784</rra>\
+            <rra>RRA:MIN:0.5:12:8784</rra>\
+            <rra>RRA:MAX:0.5:12:8784</rra>\
+        </rrd>\
+      \
+        <mbeans>   \
+          <mbean name="SystemInfo" objectname="jboss.system:type=ServerInfo">  \
+              <attrib name="FreeMemory"   alias="FreeMemory"       type="gauge"/> \
+              <attrib name="TotalMemory"  alias="TotalMemory"      type="gauge"/>  \
+          </mbean> \
+        </mbeans>\
+   </jmx-collection>\
+</jmx-datacollection-config>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The initial tags have the same layout and meaning as for SNMP (datacollection-config.xml) and NSClient (nsclient-datacollection-config.xml). The top level tag defines where RRD data is stored, the 
+\f1 jmx-collection
+\f0  tag has a name that matches a service configuration in collectd-configuration.xml, and the RRD configuration has exactly the same syntax and meaning.\
+Actual data values to collect are defined within the 
+\f1 mbeans
+\f0  tag. This tag has a list of 
+\f1 mbean
+\f0  tags that represent the MBeans to collect. Each 
+\f1 mbean
+\f0  tag has:\
+\pard\pardeftab720\ql\qnatural
+\cf0 name\'a0\
+An arbitrary name for your own use\
+objectname\'a0\
+The object name used to identify the desired object to the JMX agent\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Within each 
+\f1 mbean
+\f0  tag, the attributes of that obtained object that should be collected are defined in 
+\f1 attrib
+\f0  tags. Each attrib has:\
+\pard\pardeftab720\ql\qnatural
+\cf0 name\'a0\
+The name of the attribute to get out of the mbean object\
+alias\'a0\
+This is the same as in the mibObj tag in datacollection-config.xml, and defines the name of the RRD data item that will be stored. RRD limitations require it to be 19 characters or less in length.\
+type\'a0\
+Again the same as for mibObj in datacollection-config.xml, defining the interpretation of the data point. A "gauge" is a point in time value, e.g Processor usage, where as a "counter" is for monotonically increasing counter values such as "number of http requests".\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=33"}}{\fldrslt \cf2 \ul \ulc2 edit}}] http-datacollection-config.xml\
+\pard\pardeftab720\ql\qnatural
+
+\b0\fs24 \cf0 Again, and example:
+\f1 \
+<?xml version="1.0" encoding="UTF-8"?>\
+<http-datacollection-config  \
+    xmlns:http-dc="http://xmlns.opennms.org/xsd/config/http-datacollection" \
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
+    xsi:schemaLocation="http://xmlns.opennms.org/xsd/config/http-datacollection http://www.opennms.org/xsd/config/http-datacollection-config.xsd" \
+    rrdRepository="@install.share.dir@/rrd/snmp/" >\
+  <http-collection name="doc-count">\
+    <rrd step="300">\
+      <rra>RRA:AVERAGE:0.5:1:8928</rra>\
+      <rra>RRA:AVERAGE:0.5:12:8784</rra>\
+      <rra>RRA:MIN:0.5:12:8784</rra>\
+      <rra>RRA:MAX:0.5:12:8784</rra>\
+    </rrd>\
+    <uris>\
+      <uri name="document-counts">\
+        <url path="/test/resources/httpcolltest.html"\
+             user-agent="Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/412 (KHTML, like Gecko) Safari/412" \
+             matches=".*([0-9]+).*" response-range="100-399" >\
+        </url>\
+        <attributes>\
+          <attrib alias="documentCount" match-group="1" type="counter32"/>\
+        </attributes>\
+      </uri>\
+    </uris>\
+  </http-collection>\
+</http-datacollection-config>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=34"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Where Does All the Data Go?\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In the last section, RRD files were mentioned pretty often. Where do they go? Well, they go into the RRD repository, defined in 
+\f1 datacollection-config.xml
+\f0 , which by default is 
+\f1 /var/opennms/rrd/snmp
+\f0 .\
+For each node for which data is collected, there will exist a directory that consists of the node number. Thus, if the system was collecting data on node 18, there would be a directory called 
+\f1 /var/opennms/rrd/snmp/18
+\f0 .\
+RRDs that are collected for that node (i.e, the node OID matches the system's sysoidMask, and the mibObj of the groups included in that system have ifType\'a0!= ignore) will be present in this directory. The files will be names with the alias defined in the mibObj element, plus ".rrd" (JNI) or ".jrd" (JRobin). For example: cpuPercentBusy.rrd and memorySize.rrd. The extension depends whether the RRD is configured to use JNI or JRobin (the default now).\
+For each interface on the node that is being used for data collection, a subdirectory will exist consisting of the interface description (ifDescr) and the MAC address. The MAC address was added because on some switches, multiple ports will have the same ifDescr. There have been tales of devices where the interfaces had both the same ifDescr and MAC address, and at the moment no solution exists for that case. So, if on node 18 there was an interface described as "eth0", its RRD directory would be 
+\f1 /var/opennms/rrd/snmp/18/eth0-[MAC Addr.]
+\f0 . Into that directory would go all interface specific RRD files such as ifInOctets.rrd and ifOutOctets.rrd.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=35"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Troubleshooting\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Here are a few tips to help troubleshooting SNMP data collection issues.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=36"}}{\fldrslt \cf2 \ul \ulc2 edit}}] verify snmp access to device\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Verify that the node supports SNMP and is reachable from your opennmns server. First try to ping the device. If successfull routing to the device is working.\
+Try snmpwalk like\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 snmpwalk -v 2c -c secret nodename\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 from the server opennms is running on. There might be firewall or routing issues if you try it from another machine.\
+If this fails check if the device has configured snmp access as expected, check the snmp community, snmp version (might be Version 1, 2c or 3) and that there are no firewalls, access-lists or whatever denying access to the device.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=37"}}{\fldrslt \cf2 \ul \ulc2 edit}}] verify opennms snmp access to device\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If still no SNMP information shows up on the node page in the WebUI, check the snmp-config.xml file to insure that the proper community name is configured (and as above insure that a given address is not included in multiple ranges, as only the first match will be used).\
+The next thing to check is the capsd.log file. If this is a new installation, look to see where capsd tested that device. If it is an old installation, you can force a rescan from the node page, and this should create new logs.\
+Look to see that the SNMP service was set to "true" for that IP address. If not, check the SNMP community name once again. Play with it until a rescan does produce a "true".\
+If you have gotten this far, then SNMP information from the system tree should show up on the node page.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=38"}}{\fldrslt \cf2 \ul \ulc2 edit}}] verify snmp oid to collect\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The next error to look for will be something like:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 IfTable: snmpTimeoutError for: ipaddress\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This would indicate that something is wrong as we try to get the ipAddrTable and ifTable information.\
+Two things to try here:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	1.	}Run "snmpwalk -c community_name ipaddress". This should walk the entire SNMP MIB for that device. Some UCD SNMP agents by default will only return the system tree.\
+{\listtext	2.	}Try forcing the version to version 1 in snmp-config.xml and doing a rescan on the node. The ifTable and ipAddrTable can be large, and thus benefit from using the SNMPv2 GET-BULK command. However, we have seen on at least one device that something gets fragmented with the command and we never get to see the tables. If this happens and is fixed by setting the version to 1, please, please, please report it and if possible get a tcpdump of the SNMP packets sent during the capsd scan. Note that the snmpwalk command from the command line uses SNMPGET from version 1 and will not reproduce a problem with version 2.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 If you have a valid ifIndex (it will be displayed on the interface page of the WebUI), then you should be able to collect SNMP information. Check the database:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0\cf0 {\listtext	1.	}Run "psql -U opennms opennms".\
+{\listtext	2.	}At the command prompt, run "SELECT * FROM ipInterface WHERE nodeid=x;" and "x" is the node's ID number.\
+{\listtext	3.	}Check to see if at least one interface is marked as primary ("P").\
+{\listtext	4.	}To exit, type "\\q"\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 If no IP addresses are listed as primary, check your collectd configuration file to insure that at least one IP address that supports SNMP is included in a package. Correct the omission and rescan the node.\
+Up to this point, you should be checking the capsd.log for errors. For the next steps, start looking at collectd.log\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=39"}}{\fldrslt \cf2 \ul \ulc2 edit}}] verify collectd is collecting your data\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Looking at collectd.log for the primary interface of your node, you should see attempts being made to collect via that interface. While the datacollection-config.xml file controls data collection, by default 
+\b any
+\b0  sysObjectID that starts ".1.3.6.1.4.1", which is to my knowledge all of them, will match the mib-2 group which collects on ifInOctets, ifOutOctets, ifInErrors, ifOutErrors, and ifOutDiscards. See if there are any useful log messages (such as timeouts, etc.) that can give you a clue.\
+You may also enable debugging in 
+\f1 $OPENNMS_HOME/etc/log4j.properties
+\f0  (change WARN to DEBUG for collectd:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  log4j.category.OpenNMS.Collectd=DEBUG, COLLECTD\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 and look again into the collectd log files to see if data is really collected.\
+If there is nothing to see that opennms is trying to collect the desired data look into the dokumentation and your configuration for 
+\f1 $OPENNMS_HOME/etc/datacollection-config.xml
+\f0  and 
+\f1 $OPENNMS_HOME/etc/collectd-configuration.xml
+\f0 .\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=40"}}{\fldrslt \cf2 \ul \ulc2 edit}}] check if collected data is written to rrd files\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Finally, look in the 
+\f1 /var/opennms/rrd/snmp/nodeid
+\f0  directory where nodeid is the node ID number for the device you are interested in. You should see *.jrb files being updated, and you can use this command to see if the RRD actually contains data:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $OPENNMS_HOME/bin/jrobin-inspector\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 If the files in the 
+\f1 /var/opennms/rrd/snmp/nodeid
+\f0  directory end in ".rrd", you have configured opennms to use RRD instead of jRRD-Tools, which has a slightly different file format (jRRD ist the default since version 1.3.2). Use\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 rrdtool dump RRDfilename\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 to view collected data.\
+If there still is no data check your rrd configuration in 
+\f1 $OPENNMS_HOME/etc/opennms.properties<code>. If there is a line like
+\f0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.rrd.storeByGroup=false\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 then there should be a *.rrd or *.jrd file for every mib variable you collect. If the line looks like this\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 org.opennms.rrd.storeByGroup=true\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 different mib variables are written to a common file. If you add new mib values to collect you have to delete this file so opennms has to create a new one including the new mib values. You will loose all data that is in this file!\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=41"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Conclusion\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 SNMP Data Collection in OpenNMS is one of the more difficult things to set up. Once configured, however, the process can be completely automatic. It is hoped that this How-To has proved useful. Please direct corrections and comments to the author.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Data_Collection_Configuration_How-To&action=edit&section=42"}}{\fldrslt \cf2 \ul \ulc2 edit}}] What Now?\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0
+\b0\fs24 \cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/SNMP_Reports_How-To"}}{\fldrslt \ul SNMP Reports How-To}}\cf0 \
+\ls4\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Data_coll_graphing"}}{\fldrslt \ul Data coll graphing}}\cf0 \
+}

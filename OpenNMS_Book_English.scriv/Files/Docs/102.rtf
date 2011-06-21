@@ -1,0 +1,45 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 OpenNMS Event Reduction Keys\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The <reductionKey> tag is added to {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Events"}}{\fldrslt \cf2 \ul \ulc2 Events}} defined in the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Event_configuration"}}{\fldrslt \cf2 \ul \ulc2 event-configuration.xml}} file in order to:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	1.	}Identify the Event as an {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Alarms"}}{\fldrslt \cf2 \ul \ulc2 Alarm}}\
+{\listtext	2.	}Used to reduce (de-duplicate) the Event in the Alarms table.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The reductionKey is also a column in the Alarms table where it is persisted (stored). This column has a unique index constraint that prevents duplication of alarms and speeds up reduction searches.\
+The granularity of the reductionKey determines the amount of reduction (see examples below). If a reductionKey is configured to only contain the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Node_ID&action=edit&redlink=1"}}{\fldrslt \cf2 \ul \ulc2 node ID}} associated with the Event, then every Event for that node will be reduced. Going the other direction, if the Event time is added to the reductionKey, then only Events with the same nodedid that occur at exact same time (in milliseconds) will be reduced.\
+Example 1 - little granularity:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <reductionKey>%nodeid%</reductionKey>\
+<alarm-data reduction-key="%nodeid%" alarm-type="1" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Example 2 - much granularity:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <reductionKey>%nodeid%:%time%</reductionKey>\
+<alarm-data reduction-key="%nodeid%:%time%" alarm-type="1" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Example 3 - clearing alarm (see {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Automations"}}{\fldrslt \cf2 \ul \ulc2 Automations}}):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <alarm-data reduction-key="%nodeid%" alarm-type="2" clear-uei="uei.opennms.org/nodes/nodeDown" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The reductionKey value can also be a literal (in example 2 the literal is ':') combined with any one of the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Event_parameters"}}{\fldrslt \cf2 \ul \ulc2 event parameters}}.\
+\pard\pardeftab720\ql\qnatural
+\cf0 \
+\
+Retrieved from "{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Reduction_key"}}{\fldrslt \cf2 \ul \ulc2 http://www.opennms.org/wiki/Reduction_key}}"\
+\
+}
