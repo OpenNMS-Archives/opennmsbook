@@ -17,13 +17,15 @@
 	<key>SCRCompileCenterFirstPageHeaderStringKey</key>
 	<string></string>
 	<key>SCRCompileCenterFooterStringKey</key>
-	<string>&lt;$p&gt;</string>
+	<string></string>
 	<key>SCRCompileCenterHeaderStringKey</key>
 	<string></string>
 	<key>SCRCompileConvertEllipsesToTriplePeriodsKey</key>
 	<false/>
 	<key>SCRCompileConvertEmDashesToHyphensKey</key>
 	<false/>
+	<key>SCRCompileConvertFootnotesToMMDSyntaxKey</key>
+	<true/>
 	<key>SCRCompileConvertItalicsToUnderlineKey</key>
 	<false/>
 	<key>SCRCompileConvertLinkedRTFDImagesToEmbeddedImagesKey</key>
@@ -119,6 +121,50 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<false/>
 	<key>SCRCompileEBookUseFlatTOCKey</key>
 	<false/>
+	<key>SCRCompileEPUBAuthorsKey</key>
+	<array>
+		<string>Ioa Petra'ka</string>
+	</array>
+	<key>SCRCompileEPUBContributorsKey</key>
+	<array/>
+	<key>SCRCompileEPUBCoverBinderDocumentIDKey</key>
+	<integer>-1</integer>
+	<key>SCRCompileEPUBCoverSVGCodeKey</key>
+	<string></string>
+	<key>SCRCompileEPUBCoverSVGViewBoxHeightKey</key>
+	<integer>800</integer>
+	<key>SCRCompileEPUBCoverSVGViewBoxWidthKey</key>
+	<integer>600</integer>
+	<key>SCRCompileEPUBCoverTitleKey</key>
+	<string>Cover</string>
+	<key>SCRCompileEPUBDateKey</key>
+	<string></string>
+	<key>SCRCompileEPUBDescriptionKey</key>
+	<string></string>
+	<key>SCRCompileEPUBEndnotesAreContinuousKey</key>
+	<true/>
+	<key>SCRCompileEPUBEndnotesTitleKey</key>
+	<string>Notes</string>
+	<key>SCRCompileEPUBFirstDocumentIsTitlePageKey</key>
+	<false/>
+	<key>SCRCompileEPUBIncludeiTunesCoverArtFileKey</key>
+	<true/>
+	<key>SCRCompileEPUBLanguageKey</key>
+	<string>en</string>
+	<key>SCRCompileEPUBPublisherKey</key>
+	<string></string>
+	<key>SCRCompileEPUBRightsKey</key>
+	<string></string>
+	<key>SCRCompileEPUBSubjectKey</key>
+	<array/>
+	<key>SCRCompileEPUBTitleKey</key>
+	<string>testing</string>
+	<key>SCRCompileEPUBUniqueIdentifierKey</key>
+	<string></string>
+	<key>SCRCompileEPUBUseCustomIdentifierKey</key>
+	<false/>
+	<key>SCRCompileEPUBUseFlatTOCKey</key>
+	<false/>
 	<key>SCRCompileEndOfTextMarkerKey</key>
 	<string>Ends</string>
 	<key>SCRCompileEndnotesStyleKey</key>
@@ -139,8 +185,9 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<true/>
 	<key>SCRCompileFDXScriptNoteFontKey</key>
 	<data>
-	BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaRiEBVsy
-	NGNdBgAAABAAAAD//kMAbwB1AHIAaQBlAHIAhAFmDIQBYwCYAZgAmACG
+	BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaSSEBVsz
+	NmNdBgAAABoAAAD//kwAdQBjAGkAZABhAEcAcgBhAG4AZABlAAAAhAFmDIQBYwCYAZgA
+	mACG
 	</data>
 	<key>SCRCompileFDXSummaryFontKey</key>
 	<data>
@@ -173,8 +220,6 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFolderFormattingLevelsKey</key>
 	<array>
 		<dict>
-			<key>SCRHasRTFBookmarksKey</key>
-			<true/>
 			<key>SCRIncludeMetaDataKey</key>
 			<false/>
 			<key>SCRIncludeNotesKey</key>
@@ -182,9 +227,9 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			<key>SCRIncludeSynopsesKey</key>
 			<false/>
 			<key>SCRIncludeTextKey</key>
-			<true/>
-			<key>SCRIncludeTitlesKey</key>
 			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<true/>
 			<key>SCRMetaDataAttributesKey</key>
 			<data>
 			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
@@ -225,14 +270,18 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRSynopsisAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
-			YWJsZUFycmF5AISEB05TQXJyYXkAlJUBkoSEhAlOU1RleHRUYWIA
-			lIQCQ2YAJIaGgZQAhARbM2ZdJCSDAADAP4aShJaXBk5TRm9udIaS
-			hISEBk5TRm9udB6UlSiEBVs0MGNdBgAAAB4AAAD//k8AcAB0AGkA
-			bQBhAC0AUgBlAGcAdQBsAGEAcgAAAIQBZg2EAWMAowGjAKMAhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmADiG
+			koSlpQBUhpKEpaUAcIaShKWlAIGMAIaShKWlAIGoAIaShKWlAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgZQAhARbM2ZdHByDZmamP4aG
 			</data>
 			<key>SCRTextAttributesKey</key>
 			<data>
@@ -246,30 +295,32 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRTitleAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
-			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
-			AWMAnwGfAJ8AhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAIWBgACEBFsxZl2DAADAP4aG
 			</data>
 			<key>SCRTitleCaseKey</key>
 			<integer>0</integer>
 			<key>SCRTitlePrefixAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
-			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
-			AWMAnwGfAJ8AhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQX
+			TlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhT
+			dHlsZQCVhARDQ0BTBACFgYAAhARbMWZdgwAAwD+GkoSXmAZOU0Zv
+			bnSGkoSEhAZOU0ZvbnQelZYohAVbNDBjXQYAAAAeAAAA//5PAHAA
+			dABpAG0AYQAtAFIAZQBnAHUAbABhAHIAAACEAWYMhAFjAKABoACg
+			AIaG
 			</data>
 			<key>SCRTitlePrefixCaseKey</key>
 			<integer>0</integer>
 			<key>SCRTitlePrefixKey</key>
-			<string></string>
+			<string>&lt;$hn&gt;	</string>
 			<key>SCRTitleSuffixAttributesKey</key>
 			<data>
 			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
@@ -282,6 +333,470 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRTitleSuffixCaseKey</key>
 			<integer>0</integer>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<true/>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<true/>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWCZKEhIQJTlNUZXh0VGFiAJWEAkNmAHCG
+			koSlpQCBjACGkoSlpQCBqACGkoSlpQCBxACGkoSlpQCB4ACGkoSl
+			pQCB/ACGkoSlpQCBGAGGkoSlpQCBNAGGkoSlpQCBUAGGhoGUAIQE
+			WzNmXUREg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByG
+			koSlpQBEhpKEpaUAcIaShKWlAIGMAIaShKWlAIGoAIaShKWlAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQX
+			TlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhT
+			dHlsZQCVhARDQ0BTBACEhIQOTlNNdXRhYmxlQXJyYXkAhIQHTlNB
+			cnJheQCVlguShISECU5TVGV4dFRhYgCVhAJDZgAchpKEn58ARIaS
+			hJ+fAHCGkoSfnwCBjACGkoSfnwCBqACGkoSfnwCBxACGkoSfnwCB
+			4ACGkoSfnwCB/ACGkoSfnwCBGAGGkoSfnwCBNAGGkoSfnwCBUAGG
+			hoGAAIQEWzFmXYMAAMA/hpKEl5gGTlNGb250hpKEhIQGTlNGb250
+			HpWWKIQFWzQwY10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUA
+			ZwB1AGwAYQByAAAAhAFmDIQBYwCkAaQApACGhg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>	&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<true/>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<true/>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWCJKEhIQJTlNUZXh0VGFiAJWEAkNmAIGM
+			AIaShKWlAIGoAIaShKWlAIHEAIaShKWlAIHgAIaShKWlAIH8AIaS
+			hKWlAIEYAYaShKWlAIE0AYaShKWlAIFQAYaGgZQAhARbM2ZdcHCD
+			Z2amP4aG
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQQ
+			TlNQYXJhZ3JhcGhTdHlsZQCVhARDQ0BTBACEhIQHTlNBcnJheQCV
+			lguShISECU5TVGV4dFRhYgCVhAJDZgAchpKEnZ0ARIaShJ2dAHCG
+			koSdnQCBjACGkoSdnQCBqACGkoSdnQCBxACGkoSdnQCB4ACGkoSd
+			nQCB/ACGkoSdnQCBGAGGkoSdnQCBNAGGkoSdnQCBUAGGhoGAAIQE
+			WzFmXYMAAMA/hpKEl5gGTlNGb250hpKEhIQGTlNGb250HpWWKIQF
+			WzQwY10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwA
+			YQByAAAAhAFmDIQBYwCiAaIAogCGhg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>		&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<true/>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<true/>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWBpKEhIQJTlNUZXh0VGFiAJWEAkNmAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgZQAhARbM2ZdgagAgagAg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYEE5TUGFyYWdyYXBo
+			U3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISE
+			hAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSg
+			oQBEhpKEoKEAcIaShKChAIGMAIaShKChAIGoAIaShKChAIHEAIaS
+			hKChAIHgAIaShKChAIH8AIaShKChAIEYAYaShKChAIE0AYaShKCh
+			AIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>			&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<true/>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<true/>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWBZKEhIQJTlNUZXh0VGFiAJWEAkNmAIHg
+			AIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaShKWlAIFQAYaG
+			gZQAhARbM2ZdgcQAgcQAg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYEE5TUGFyYWdyYXBo
+			U3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISE
+			hAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSg
+			oQBEhpKEoKEAcIaShKChAIGMAIaShKChAIGoAIaShKChAIHEAIaS
+			hKChAIHgAIaShKChAIH8AIaShKChAIEYAYaShKChAIE0AYaShKCh
+			AIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>				&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
 			<key>SCRTitleSuffixKey</key>
 			<string></string>
 		</dict>
@@ -336,7 +851,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileIncludedTagKey</key>
 	<integer>0</integer>
 	<key>SCRCompileIncludesSubtitlesKey</key>
-	<true/>
+	<false/>
 	<key>SCRCompileIndentFootnotesToMatchTextKey</key>
 	<true/>
 	<key>SCRCompileInlineLinksExcludeTitleSuffixKey</key>
@@ -395,7 +910,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileOverridePreservesLineSpacingKey</key>
 	<false/>
 	<key>SCRCompileOverrideTextAndNotesFormatKey</key>
-	<false/>
+	<true/>
 	<key>SCRCompilePageBottomMarginKey</key>
 	<real>1</real>
 	<key>SCRCompilePageBottomMarginUnitsKey</key>
@@ -442,9 +957,9 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileReduceRTFOrEbookFootnoteMarkerFontSizeKey</key>
 	<false/>
 	<key>SCRCompileRemoveCommentsKey</key>
-	<false/>
+	<true/>
 	<key>SCRCompileRemoveFootnotesKey</key>
-	<false/>
+	<true/>
 	<key>SCRCompileRemoveHighlightingKey</key>
 	<false/>
 	<key>SCRCompileRemoveInlineAnnotationsKey</key>
@@ -456,7 +971,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileRightFooterStringKey</key>
 	<string></string>
 	<key>SCRCompileRightHeaderStringKey</key>
-	<string>OpenNMS_Book_English</string>
+	<string></string>
 	<key>SCRCompileStatisticsCharacterCountExcludesWhitespaceKey</key>
 	<false/>
 	<key>SCRCompileStatisticsCountAllTextKey</key>
@@ -484,22 +999,20 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileTextAndFolderCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileTextAndFolderSectionSeparatorKey</key>
-	<integer>3</integer>
+	<integer>2</integer>
 	<key>SCRCompileTextContainerFormattingLevelsKey</key>
 	<array>
 		<dict>
-			<key>SCRHasRTFBookmarksKey</key>
-			<true/>
 			<key>SCRIncludeMetaDataKey</key>
-			<false/>
+			<integer>0</integer>
 			<key>SCRIncludeNotesKey</key>
-			<false/>
+			<integer>0</integer>
 			<key>SCRIncludeSynopsesKey</key>
 			<false/>
 			<key>SCRIncludeTextKey</key>
-			<true/>
-			<key>SCRIncludeTitlesKey</key>
 			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
 			<key>SCRMetaDataAttributesKey</key>
 			<data>
 			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
@@ -540,14 +1053,18 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRSynopsisAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
-			YWJsZUFycmF5AISEB05TQXJyYXkAlJUBkoSEhAlOU1RleHRUYWIA
-			lIQCQ2YAJIaGgZQAhARbM2ZdJCSDAADAP4aShJaXBk5TRm9udIaS
-			hISEBk5TRm9udB6UlSiEBVs0MGNdBgAAAB4AAAD//k8AcAB0AGkA
-			bQBhAC0AUgBlAGcAdQBsAGEAcgAAAIQBZg2EAWMAowGjAKMAhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmADiG
+			koSlpQBUhpKEpaUAcIaShKWlAIGMAIaShKWlAIGoAIaShKWlAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgZQAhARbM2ZdHByDZmamP4aG
 			</data>
 			<key>SCRTextAttributesKey</key>
 			<data>
@@ -561,30 +1078,32 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRTitleAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
-			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZg2E
-			AWMAnwGfAJ8AhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAIWBgACEBFsxZl2DAADAP4aG
 			</data>
 			<key>SCRTitleCaseKey</key>
 			<integer>0</integer>
 			<key>SCRTitlePrefixAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
-			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZg2E
-			AWMAnwGfAJ8AhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQX
+			TlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhT
+			dHlsZQCVhARDQ0BTBACFgYAAhARbMWZdgwAAwD+GkoSXmAZOU0Zv
+			bnSGkoSEhAZOU0ZvbnQelZYohAVbNDBjXQYAAAAeAAAA//5PAHAA
+			dABpAG0AYQAtAFIAZQBnAHUAbABhAHIAAACEAWYMhAFjAKABoACg
+			AIaG
 			</data>
 			<key>SCRTitlePrefixCaseKey</key>
 			<integer>0</integer>
 			<key>SCRTitlePrefixKey</key>
-			<string></string>
+			<string>&lt;$hn&gt;	</string>
 			<key>SCRTitleSuffixAttributesKey</key>
 			<data>
 			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
@@ -592,7 +1111,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
 			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
 			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZg2E
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
 			AWMAnwGfAJ8AhoY=
 			</data>
 			<key>SCRTitleSuffixCaseKey</key>
@@ -600,24 +1119,486 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			<key>SCRTitleSuffixKey</key>
 			<string></string>
 		</dict>
-	</array>
-	<key>SCRCompileTextCustomSeparatorStringKey</key>
-	<string>#</string>
-	<key>SCRCompileTextFormattingLevelsKey</key>
-	<array>
 		<dict>
-			<key>SCRHasRTFBookmarksKey</key>
-			<true/>
 			<key>SCRIncludeMetaDataKey</key>
-			<false/>
+			<integer>0</integer>
 			<key>SCRIncludeNotesKey</key>
-			<false/>
+			<integer>0</integer>
 			<key>SCRIncludeSynopsesKey</key>
 			<false/>
 			<key>SCRIncludeTextKey</key>
-			<true/>
-			<key>SCRIncludeTitlesKey</key>
 			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWCZKEhIQJTlNUZXh0VGFiAJWEAkNmAHCG
+			koSlpQCBjACGkoSlpQCBqACGkoSlpQCBxACGkoSlpQCB4ACGkoSl
+			pQCB/ACGkoSlpQCBGAGGkoSlpQCBNAGGkoSlpQCBUAGGhoGUAIQE
+			WzNmXUREg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByG
+			koSlpQBEhpKEpaUAcIaShKWlAIGMAIaShKWlAIGoAIaShKWlAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQX
+			TlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhT
+			dHlsZQCVhARDQ0BTBACEhIQOTlNNdXRhYmxlQXJyYXkAhIQHTlNB
+			cnJheQCVlguShISECU5TVGV4dFRhYgCVhAJDZgAchpKEn58ARIaS
+			hJ+fAHCGkoSfnwCBjACGkoSfnwCBqACGkoSfnwCBxACGkoSfnwCB
+			4ACGkoSfnwCB/ACGkoSfnwCBGAGGkoSfnwCBNAGGkoSfnwCBUAGG
+			hoGAAIQEWzFmXYMAAMA/hpKEl5gGTlNGb250hpKEhIQGTlNGb250
+			HpWWKIQFWzQwY10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUA
+			ZwB1AGwAYQByAAAAhAFmDIQBYwCkAaQApACGhg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>	&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWCJKEhIQJTlNUZXh0VGFiAJWEAkNmAIGM
+			AIaShKWlAIGoAIaShKWlAIHEAIaShKWlAIHgAIaShKWlAIH8AIaS
+			hKWlAIEYAYaShKWlAIE0AYaShKWlAIFQAYaGgZQAhARbM2ZdcHCD
+			Z2amP4aG
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQQ
+			TlNQYXJhZ3JhcGhTdHlsZQCVhARDQ0BTBACEhIQHTlNBcnJheQCV
+			lguShISECU5TVGV4dFRhYgCVhAJDZgAchpKEnZ0ARIaShJ2dAHCG
+			koSdnQCBjACGkoSdnQCBqACGkoSdnQCBxACGkoSdnQCB4ACGkoSd
+			nQCB/ACGkoSdnQCBGAGGkoSdnQCBNAGGkoSdnQCBUAGGhoGAAIQE
+			WzFmXYMAAMA/hpKEl5gGTlNGb250hpKEhIQGTlNGb250HpWWKIQF
+			WzQwY10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwA
+			YQByAAAAhAFmDIQBYwCiAaIAogCGhg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>		&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWBpKEhIQJTlNUZXh0VGFiAJWEAkNmAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgZQAhARbM2ZdgagAgagAg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYEE5TUGFyYWdyYXBo
+			U3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISE
+			hAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSg
+			oQBEhpKEoKEAcIaShKChAIGMAIaShKChAIGoAIaShKChAIHEAIaS
+			hKChAIHgAIaShKChAIH8AIaShKChAIEYAYaShKChAIE0AYaShKCh
+			AIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>			&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWBZKEhIQJTlNUZXh0VGFiAJWEAkNmAIHg
+			AIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaShKWlAIFQAYaG
+			gZQAhARbM2ZdgcQAgcQAg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYEE5TUGFyYWdyYXBo
+			U3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISE
+			hAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSg
+			oQBEhpKEoKEAcIaShKChAIGMAIaShKChAIGoAIaShKChAIHEAIaS
+			hKChAIHgAIaShKChAIH8AIaShKChAIEYAYaShKChAIE0AYaShKCh
+			AIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>				&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+	</array>
+	<key>SCRCompileTextCustomSeparatorStringKey</key>
+	<string></string>
+	<key>SCRCompileTextFormattingLevelsKey</key>
+	<array>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
 			<key>SCRMetaDataAttributesKey</key>
 			<data>
 			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
@@ -658,14 +1639,18 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRSynopsisAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
-			YWJsZUFycmF5AISEB05TQXJyYXkAlJUBkoSEhAlOU1RleHRUYWIA
-			lIQCQ2YAJIaGgZQAhARbM2ZdJCSDAADAP4aShJaXBk5TRm9udIaS
-			hISEBk5TRm9udB6UlSiEBVs0MGNdBgAAAB4AAAD//k8AcAB0AGkA
-			bQBhAC0AUgBlAGcAdQBsAGEAcgAAAIQBZg2EAWMAowGjAKMAhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmADiG
+			koSlpQBUhpKEpaUAcIaShKWlAIGMAIaShKWlAIGoAIaShKWlAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgZQAhARbM2ZdHByDZmamP4aG
 			</data>
 			<key>SCRTextAttributesKey</key>
 			<data>
@@ -679,30 +1664,32 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			</data>
 			<key>SCRTitleAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
-			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZg2E
-			AWMAnwGfAJ8AhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAIWBgACEBFsxZl2DAADAP4aG
 			</data>
 			<key>SCRTitleCaseKey</key>
 			<integer>0</integer>
 			<key>SCRTitlePrefixAttributesKey</key>
 			<data>
-			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
-			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
-			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
-			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
-			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZg2E
-			AWMAnwGfAJ8AhoY=
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQX
+			TlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhT
+			dHlsZQCVhARDQ0BTBACFgYAAhARbMWZdgwAAwD+GkoSXmAZOU0Zv
+			bnSGkoSEhAZOU0ZvbnQelZYohAVbNDBjXQYAAAAeAAAA//5PAHAA
+			dABpAG0AYQAtAFIAZQBnAHUAbABhAHIAAACEAWYMhAFjAKABoACg
+			AIaG
 			</data>
 			<key>SCRTitlePrefixCaseKey</key>
 			<integer>0</integer>
 			<key>SCRTitlePrefixKey</key>
-			<string></string>
+			<string>&lt;$hn&gt;	</string>
 			<key>SCRTitleSuffixAttributesKey</key>
 			<data>
 			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
@@ -710,11 +1697,475 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
 			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
 			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
-			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZg2E
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
 			AWMAnwGfAJ8AhoY=
 			</data>
 			<key>SCRTitleSuffixCaseKey</key>
 			<integer>0</integer>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWCZKEhIQJTlNUZXh0VGFiAJWEAkNmAHCG
+			koSlpQCBjACGkoSlpQCBqACGkoSlpQCBxACGkoSlpQCB4ACGkoSl
+			pQCB/ACGkoSlpQCBGAGGkoSlpQCBNAGGkoSlpQCBUAGGhoGUAIQE
+			WzNmXUREg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByG
+			koSlpQBEhpKEpaUAcIaShKWlAIGMAIaShKWlAIGoAIaShKWlAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQX
+			TlNNdXRhYmxlUGFyYWdyYXBoU3R5bGUAhIQQTlNQYXJhZ3JhcGhT
+			dHlsZQCVhARDQ0BTBACEhIQOTlNNdXRhYmxlQXJyYXkAhIQHTlNB
+			cnJheQCVlguShISECU5TVGV4dFRhYgCVhAJDZgAchpKEn58ARIaS
+			hJ+fAHCGkoSfnwCBjACGkoSfnwCBqACGkoSfnwCBxACGkoSfnwCB
+			4ACGkoSfnwCB/ACGkoSfnwCBGAGGkoSfnwCBNAGGkoSfnwCBUAGG
+			hoGAAIQEWzFmXYMAAMA/hpKEl5gGTlNGb250hpKEhIQGTlNGb250
+			HpWWKIQFWzQwY10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUA
+			ZwB1AGwAYQByAAAAhAFmDIQBYwCkAaQApACGhg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>	&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWCJKEhIQJTlNUZXh0VGFiAJWEAkNmAIGM
+			AIaShKWlAIGoAIaShKWlAIHEAIaShKWlAIHgAIaShKWlAIH8AIaS
+			hKWlAIEYAYaShKWlAIE0AYaShKWlAIFQAYaGgZQAhARbM2ZdcHCD
+			Z2amP4aG
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKxBOU1BhcmFncmFwaFN0eWxlhpKEhIQQ
+			TlNQYXJhZ3JhcGhTdHlsZQCVhARDQ0BTBACEhIQHTlNBcnJheQCV
+			lguShISECU5TVGV4dFRhYgCVhAJDZgAchpKEnZ0ARIaShJ2dAHCG
+			koSdnQCBjACGkoSdnQCBqACGkoSdnQCBxACGkoSdnQCB4ACGkoSd
+			nQCB/ACGkoSdnQCBGAGGkoSdnQCBNAGGkoSdnQCBUAGGhoGAAIQE
+			WzFmXYMAAMA/hpKEl5gGTlNGb250hpKEhIQGTlNGb250HpWWKIQF
+			WzQwY10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwA
+			YQByAAAAhAFmDIQBYwCiAaIAogCGhg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>		&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWBpKEhIQJTlNUZXh0VGFiAJWEAkNmAIHE
+			AIaShKWlAIHgAIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaS
+			hKWlAIFQAYaGgZQAhARbM2ZdgagAgagAg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYEE5TUGFyYWdyYXBo
+			U3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISE
+			hAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSg
+			oQBEhpKEoKEAcIaShKChAIGMAIaShKChAIGoAIaShKChAIHEAIaS
+			hKChAIHgAIaShKChAIH8AIaShKChAIEYAYaShKChAIE0AYaShKCh
+			AIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>			&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
+			<key>SCRTitleSuffixKey</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>SCRIncludeMetaDataKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeNotesKey</key>
+			<integer>0</integer>
+			<key>SCRIncludeSynopsesKey</key>
+			<false/>
+			<key>SCRIncludeTextKey</key>
+			<false/>
+			<key>SCRIncludeTitlesKey</key>
+			<integer>1</integer>
+			<key>SCRMetaDataAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhISEDk5TTXV0
+			YWJsZUFycmF5AISEB05TQXJyYXkAlJUFkoSEhAlOU1RleHRUYWIA
+			lIQCQ2YAJIaShJ6eAGyGkoSengCBkACGkoSengCBtACGkoSengCB
+			2ACGhoGUAIQEWzNmXSQkgwAAwD+GkoSWlwZOU0ZvbnSGkoSEhAZO
+			U0ZvbnQelJUkhAVbMzZjXQYAAAAcAAAA//5PAHAAdABpAG0AYQAt
+			AEkAdABhAGwAaQBjAIQBZg2EAWMAowGjAKMAhoY=
+			</data>
+			<key>SCRMultiMarkdownPlacesTitlePrefixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRMultiMarkdownPlacesTitleSuffixInsideHashesKey</key>
+			<integer>1</integer>
+			<key>SCRNotesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRPagePaddingKey</key>
+			<integer>0</integer>
+			<key>SCRSubtitlesAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVJIQFWzM2
+			Y10GAAAAHAAAAP/+TwBwAHQAaQBtAGEALQBJAHQAYQBsAGkAYwCE
+			AWYNhAFjAJ8BnwCfAIaG
+			</data>
+			<key>SCRSynopsisAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZQCEhBBOU1Bh
+			cmFncmFwaFN0eWxlAJWEBENDQFMEAISEhA5OU011dGFibGVBcnJh
+			eQCEhAdOU0FycmF5AJWWBZKEhIQJTlNUZXh0VGFiAJWEAkNmAIHg
+			AIaShKWlAIH8AIaShKWlAIEYAYaShKWlAIE0AYaShKWlAIFQAYaG
+			gZQAhARbM2ZdgcQAgcQAg2dmpj+Ghg==
+			</data>
+			<key>SCRTextAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVKIQFWzQw
+			Y10GAAAAHgAAAP/+TwBwAHQAaQBtAGEALQBSAGUAZwB1AGwAYQBy
+			AAAAhAFmDYQBYwCfAZ8AnwCGhg==
+			</data>
+			<key>SCRTitleAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpA5KE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYB05TQ29sb3KGkoSE
+			hAdOU0NvbG9yAJWcA4QCZmYAAYaShJeYEE5TUGFyYWdyYXBoU3R5
+			bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISEhAdO
+			U0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSjowBE
+			hpKEo6MAcIaShKOjAIGMAIaShKOjAIGoAIaShKOjAIHEAIaShKOj
+			AIHgAIaShKOjAIH8AIaShKOjAIEYAYaShKOjAIE0AYaShKOjAIFQ
+			AYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9u
+			YXJ5AISEDE5TRGljdGlvbmFyeQCEhAhOU09iamVjdACFhAFpApKE
+			hIQITlNTdHJpbmcBlYQBKwZOU0ZvbnSGkoSEhAZOU0ZvbnQelZYo
+			hAVbNDBjXQYAAAAeAAAA//5PAHAAdABpAG0AYQAtAFIAZQBnAHUA
+			bABhAHIAAACEAWYMhAFjAJwBnACcAIaShJeYEE5TUGFyYWdyYXBo
+			U3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJWEBENDQFMEAISE
+			hAdOU0FycmF5AJWWC5KEhIQJTlNUZXh0VGFiAJWEAkNmAByGkoSg
+			oQBEhpKEoKEAcIaShKChAIGMAIaShKChAIGoAIaShKChAIHEAIaS
+			hKChAIHgAIaShKChAIH8AIaShKChAIEYAYaShKChAIE0AYaShKCh
+			AIFQAYaGgYAAhARbMWZdgwAAwD+Ghg==
+			</data>
+			<key>SCRTitlePrefixKey</key>
+			<string>				&lt;$hn&gt;	</string>
+			<key>SCRTitleSuffixAttributesKey</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQI
+			TlNPYmplY3QAhYQBaQKShISECE5TU3RyaW5nAZSEASsQTlNQYXJh
+			Z3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFncmFwaFN0eWxl
+			AISEEE5TUGFyYWdyYXBoU3R5bGUAlIQEQ0NAUwQAhYGAAIQEWzFm
+			XYMAAMA/hpKElpcGTlNGb250hpKEhIQGTlNGb250HpSVIIQFWzMy
+			Y10GAAAAGAAAAP/+TwBwAHQAaQBtAGEALQBCAG8AbABkAIQBZhCE
+			AWMAnwGfAJ8AhoY=
+			</data>
 			<key>SCRTitleSuffixKey</key>
 			<string></string>
 		</dict>

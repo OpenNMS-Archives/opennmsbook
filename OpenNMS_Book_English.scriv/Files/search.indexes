@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SearchIndexes Version="1.0">
     <Documents>
+        <Document ID="46">
+            <Title>Asterisk Gateway</Title>
+        </Document>
+        <Document ID="61">
+            <Title>Backup &amp; Restore</Title>
+        </Document>
+        <Document ID="54">
+            <Title>WMI Datacollection</Title>
+        </Document>
+        <Document ID="47">
+            <Title>Provisioning</Title>
+        </Document>
+        <Document ID="62">
+            <Title>Asset Management</Title>
+        </Document>
+        <Document ID="55">
+            <Title>NSClient</Title>
+        </Document>
+        <Document ID="48">
+            <Title>CapsD &amp; Discovery</Title>
+        </Document>
+        <Document ID="63">
+            <Title>Asset Management</Title>
+        </Document>
+        <Document ID="56">
+            <Title>JDBC Datacollection</Title>
+        </Document>
+        <Document ID="49">
+            <Title>Active Polling</Title>
+        </Document>
+        <Document ID="70">
+            <Title>Surveillance Categories</Title>
+        </Document>
+        <Document ID="64">
+            <Title>Graphical Representation</Title>
+        </Document>
+        <Document ID="57">
+            <Title>Presenting Information</Title>
+        </Document>
+        <Document ID="71">
+            <Title>Filters</Title>
+        </Document>
+        <Document ID="65">
+            <Title>Workflow Integration</Title>
+        </Document>
+        <Document ID="72">
+            <Title>Mobile Access</Title>
+        </Document>
+        <Document ID="66">
+            <Title>Standard Services (out of the box)</Title>
+        </Document>
+        <Document ID="59">
+            <Title>System Configuration</Title>
+        </Document>
+        <Document ID="67">
+            <Title>Path Outages</Title>
+        </Document>
         <Document ID="3">
             <Title>Introduction</Title>
             <Synopsis>General introduction</Synopsis>
@@ -13,15 +70,21 @@ All these elements together are “the system”, which is why we call OpenNMS O
 This book is intended both for Users and Administrators of OpenNMS. Users will find everything they need to know to work with the Web User Interface in the first part of the book. 
 </Text>
         </Document>
-        <Document ID="8">
-            <Title>Introduction</Title>
-        </Document>
-        <Document ID="6">
-            <Title>Accessing the WebUi</Title>
+        <Document ID="68">
+            <Title>Scheduled Outages</Title>
         </Document>
         <Document ID="4">
             <Title>User</Title>
             <Synopsis>Information for guys in a NOC</Synopsis>
+        </Document>
+        <Document ID="5">
+            <Title>Administrator</Title>
+        </Document>
+        <Document ID="69">
+            <Title>Surveillance Views</Title>
+        </Document>
+        <Document ID="6">
+            <Title>Accessing the WebUi</Title>
         </Document>
         <Document ID="7">
             <Title>Howto</Title>
@@ -40,8 +103,135 @@ If you have text in another format, or if you have text of which you don’t kno
 There will be a recent pdf as well for your convenience (which shows the current status of the book).
 </Text>
         </Document>
-        <Document ID="5">
-            <Title>Administrator</Title>
+        <Document ID="10">
+            <Title>License Information</Title>
+        </Document>
+        <Document ID="8">
+            <Title>Introduction</Title>
+        </Document>
+        <Document ID="9">
+            <Title>Capability Overview</Title>
+            <Synopsis>What can OpenNMS do?</Synopsis>
+        </Document>
+        <Document ID="11">
+            <Title>Reading SLA Category Data</Title>
+        </Document>
+        <Document ID="12">
+            <Title>Reading Graphs</Title>
+        </Document>
+        <Document ID="13">
+            <Title>Acknowledging Notifications</Title>
+        </Document>
+        <Document ID="20">
+            <Title>SNMP Datacollection</Title>
+        </Document>
+        <Document ID="21">
+            <Title>Monitoring</Title>
+        </Document>
+        <Document ID="14">
+            <Title>Creating Tickets in a Ticket System</Title>
+        </Document>
+        <Document ID="22">
+            <Title>Maps</Title>
+        </Document>
+        <Document ID="15">
+            <Title>One chapter per way to provision with provisiond</Title>
+        </Document>
+        <Document ID="30">
+            <Title>System Architecture</Title>
+        </Document>
+        <Document ID="23">
+            <Title>Graphing</Title>
+        </Document>
+        <Document ID="16">
+            <Title>Installing</Title>
+        </Document>
+        <Document ID="31">
+            <Title>KSC Reports</Title>
+        </Document>
+        <Document ID="24">
+            <Title>Notifications</Title>
+        </Document>
+        <Document ID="17">
+            <Title>Sizing</Title>
+        </Document>
+        <Document ID="32">
+            <Title>User Management and external Authentication</Title>
+        </Document>
+        <Document ID="25">
+            <Title>Syslog</Title>
+        </Document>
+        <Document ID="18">
+            <Title>Thresholding</Title>
+        </Document>
+        <Document ID="40">
+            <Title>OpenNMS Base</Title>
+        </Document>
+        <Document ID="33">
+            <Title>Standard Reports</Title>
+        </Document>
+        <Document ID="26">
+            <Title>Debugging</Title>
+        </Document>
+        <Document ID="19">
+            <Title>Notifications</Title>
+        </Document>
+        <Document ID="41">
+            <Title>SNMP Poller</Title>
+        </Document>
+        <Document ID="34">
+            <Title>Extending Reports</Title>
+        </Document>
+        <Document ID="27">
+            <Title>LinkD</Title>
+        </Document>
+        <Document ID="42">
+            <Title>DHCPD</Title>
+        </Document>
+        <Document ID="35">
+            <Title>Adding new Services</Title>
+        </Document>
+        <Document ID="28">
+            <Title>Eventd</Title>
+        </Document>
+        <Document ID="43">
+            <Title>Ticketing Integration</Title>
+        </Document>
+        <Document ID="50">
+            <Title>Data Analysis</Title>
+        </Document>
+        <Document ID="36">
+            <Title>Adding new Devices</Title>
+        </Document>
+        <Document ID="29">
+            <Title>Trap Handling</Title>
+        </Document>
+        <Document ID="44">
+            <Title>Passive Status Keeper</Title>
+        </Document>
+        <Document ID="51">
+            <Title>Data Collection</Title>
+        </Document>
+        <Document ID="37">
+            <Title>Asset Management</Title>
+        </Document>
+        <Document ID="45">
+            <Title>Alarm Management</Title>
+        </Document>
+        <Document ID="52">
+            <Title>HTTP Datacollection</Title>
+        </Document>
+        <Document ID="38">
+            <Title>Automations</Title>
+        </Document>
+        <Document ID="39">
+            <Title>ScriptD</Title>
+        </Document>
+        <Document ID="60">
+            <Title>OpenNMS Configuration</Title>
+        </Document>
+        <Document ID="53">
+            <Title>JMX Datacollection</Title>
         </Document>
     </Documents>
 </SearchIndexes>
