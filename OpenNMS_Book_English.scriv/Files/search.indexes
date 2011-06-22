@@ -951,71 +951,6 @@ Set admin rights to the new user:
 	3.	and save the file.
 </Text>
         </Document>
-        <Document ID="119">
-            <Title>Security Considerations</Title>
-            <Text>This page is designed to keep various tips and tricks for running a secure OpenNMS installation. Since OpenNMS theorically has views into your entire network, keeping that information safe is very important.
-For a fairly exhaustive list of TCP and UDP ports and ICMP datagram types that OpenNMS uses, see Firewall Policy and OpenNMS.
-Contents
-[hide]
-	•	1 Tomcat Ports
-	◦	1.1 ajp13 8009
-	◦	1.2 http 8080
-	•	2 The RTC User
-[edit] Tomcat Ports
-By default, in its 5.5 incarnation (as used by OpenNMS 1.3.2), a standard tomcat from tomcat.apache.org will start listeners on port 8080 (http connector), 8009 (ajp13 connector) and 8005 (shutdown service). The shutdown service binds directly to the loopback address, so we can effectively ignore this.
-[edit] ajp13 8009
-The ajp connector is only required if you intend to connect to tomcat via ajp13 from apache using mod_jk, mod_jk2 or mod_proxy. Most installations will be happy to turn this off by commenting it out. The configuration directives are found in $TOMCAT_HOME/conf/server.xml thus:
-       &lt;Connector port="8009"
-              enableLookups="false" redirectPort="8443" protocol="AJP/1.3" />    
-You will need comment these out in the usual way and restart tomcat for this to take effect.
-[edit] http 8080
-In order to restrict access to tomcat's applications, you can use it's [remote address filter]. For simplicity's sake, it's probably best to configure this at the highest (Engine) level within tomcat's configuration heriarchy, for example, just under the default Engine configuration:
-
-   &lt;Engine name="Catalina" defaultHost="localhost">
-
-   &lt;Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="192.168.1., 192.168.2." /> 
-
-
-
-
-
-[edit] The RTC User
-OpenNMS employs a Real-Time Console that allows the opennms daemon to communicate network status updates with the front-end servlet engine in near-real-time. Since all of the servlets are protected by a realm module, the opennms daemon must authenticate to the servlets. A special user, rtc was created for this purpose. In the default configuration, though, it is insecure.
-By default, all OpenNMS users are part of the OpenNMS User role. This includes the rtc users. Since the default password for the rtc user is simply rtc, this means anyone who knows this information and has the ability to contact your OpenNMS installation can log in with this user and view your OpenNMS installation. The information contained in your OpenNMS installation is likely not public knowledge and should not be viewable by non-staff. Now, in all fairness, your OpenNMS installation should be protected from the Internet at large if at all possible, but you may have need for it to face the Internet, or you may have internal users who can get to your installation but should not be able to log in.
-Lucky for us, changing the password, and even the username, for the rtc user is an easy task. The first place to change this information for versions 1.3.6 and older is the web.xml deployer file. Find the RTC Subscription parameters section in the web.xml file and change it to be the following:
-  &lt;!-- RTC Subscription parameters -->  
-  &lt;context-param>
-    &lt;param-name>opennms.rtc-client.http-post.username&lt;/param-name>
-    &lt;param-value>RTCUSER&lt;/param-value>
-    &lt;description>The username the RTC uses when authenticating itself in an HTTP POST.&lt;/de  &lt;/context-param>
-  &lt;context-param>
-    &lt;param-name>opennms.rtc-client.http-post.password&lt;/param-name>
-    &lt;param-value>RTCPASSWORD&lt;/param-value>
-    &lt;description>The password the RTC uses when authenticating itself in an HTTP POST.&lt;/de  &lt;/context-param>
-  &lt;context-param>
-    &lt;param-name>opennms.rtc-client.http-post.base-url&lt;/param-name>
-    &lt;param-value>http://localhost:8080/opennms/rtc/post&lt;/param-value>
-    &lt;description>
-      The base of a URL that RTC clients use when creating a RTC subscription URL. 
-      IMPORTANT: This URL must NOT contain a slash at the end.       
-    &lt;/description>
-  &lt;/context-param>
-Set the RTCUSER to your rtc user's username. Next, set the RTCPASSWORD to your chosen password.
-For versions 1.3.7 and newer, change the rtc username and password in the file WEB-INF/configuration.properties if you use Tomcat, or in the file etc/opennms.properties if you use jetty.
-If you change the rtc username, you must make sure the new username is a member of the OpenNMS RTC Daemon role in the etc/magic-users.properties file. Find the lines
-role.rtc.name=OpenNMS RTC Daemon
-role.rtc.users=RTCUSER, admin
-and change RTCUSER to your new rtc user name.
-If you're using LDAP Authentication, then you're done. Just make sure the password for the rtc user in your LDAP directory matches what you set above. If you're using the default OpenNMS realm module, you need tt make some additional changes to the magic-users.properties file in the OpenNMS configuration directory (/opt/OpenNMS/etc in the Linux RPMs).
-If you changed the rtc username as described above, you need to change it in the magic-users.properties file as well. In addition, you'll need to change the rtc password in this file. Find the lines below and make the appropriate changes:
-users=RTCUSER,otherusers
-
-user.RTCUSER.username=RTCUSER
-user.RTCUSER.password=RTCPASSWORD
-Change all instances of RTCUSER to your new rtc user name you set above, and change the RTCPASSWORD to the same password you set above.
-That's it. Restart OpenNMS and Tomcat (if you're using it), and you're done.
-</Text>
-        </Document>
         <Document ID="123">
             <Title>Configuration File INdex</Title>
             <Text>This page shows all the configuration files (in $OPENNMS_HOME/etc/) you can configure in OpenNMS. Some files require a restart of OpenNMS for manual edits to take effect; some are re-written/managed automatically by OpenNMS and the Web GUI, and others may have an associated event that can be sent (e.g. using send-event.pl) to trigger re-reading of the file. Where a "Reload event" is documented below, sending it, with the documented parameter if required, will cause the given configuration file to be reloaded from disk.
@@ -1465,6 +1400,71 @@ Yes
 Yes
 -
  ?
+</Text>
+        </Document>
+        <Document ID="119">
+            <Title>Security Considerations</Title>
+            <Text>This page is designed to keep various tips and tricks for running a secure OpenNMS installation. Since OpenNMS theorically has views into your entire network, keeping that information safe is very important.
+For a fairly exhaustive list of TCP and UDP ports and ICMP datagram types that OpenNMS uses, see Firewall Policy and OpenNMS.
+Contents
+[hide]
+	•	1 Tomcat Ports
+	◦	1.1 ajp13 8009
+	◦	1.2 http 8080
+	•	2 The RTC User
+[edit] Tomcat Ports
+By default, in its 5.5 incarnation (as used by OpenNMS 1.3.2), a standard tomcat from tomcat.apache.org will start listeners on port 8080 (http connector), 8009 (ajp13 connector) and 8005 (shutdown service). The shutdown service binds directly to the loopback address, so we can effectively ignore this.
+[edit] ajp13 8009
+The ajp connector is only required if you intend to connect to tomcat via ajp13 from apache using mod_jk, mod_jk2 or mod_proxy. Most installations will be happy to turn this off by commenting it out. The configuration directives are found in $TOMCAT_HOME/conf/server.xml thus:
+       &lt;Connector port="8009"
+              enableLookups="false" redirectPort="8443" protocol="AJP/1.3" />    
+You will need comment these out in the usual way and restart tomcat for this to take effect.
+[edit] http 8080
+In order to restrict access to tomcat's applications, you can use it's [remote address filter]. For simplicity's sake, it's probably best to configure this at the highest (Engine) level within tomcat's configuration heriarchy, for example, just under the default Engine configuration:
+
+   &lt;Engine name="Catalina" defaultHost="localhost">
+
+   &lt;Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="192.168.1., 192.168.2." /> 
+
+
+
+
+
+[edit] The RTC User
+OpenNMS employs a Real-Time Console that allows the opennms daemon to communicate network status updates with the front-end servlet engine in near-real-time. Since all of the servlets are protected by a realm module, the opennms daemon must authenticate to the servlets. A special user, rtc was created for this purpose. In the default configuration, though, it is insecure.
+By default, all OpenNMS users are part of the OpenNMS User role. This includes the rtc users. Since the default password for the rtc user is simply rtc, this means anyone who knows this information and has the ability to contact your OpenNMS installation can log in with this user and view your OpenNMS installation. The information contained in your OpenNMS installation is likely not public knowledge and should not be viewable by non-staff. Now, in all fairness, your OpenNMS installation should be protected from the Internet at large if at all possible, but you may have need for it to face the Internet, or you may have internal users who can get to your installation but should not be able to log in.
+Lucky for us, changing the password, and even the username, for the rtc user is an easy task. The first place to change this information for versions 1.3.6 and older is the web.xml deployer file. Find the RTC Subscription parameters section in the web.xml file and change it to be the following:
+  &lt;!-- RTC Subscription parameters -->  
+  &lt;context-param>
+    &lt;param-name>opennms.rtc-client.http-post.username&lt;/param-name>
+    &lt;param-value>RTCUSER&lt;/param-value>
+    &lt;description>The username the RTC uses when authenticating itself in an HTTP POST.&lt;/de  &lt;/context-param>
+  &lt;context-param>
+    &lt;param-name>opennms.rtc-client.http-post.password&lt;/param-name>
+    &lt;param-value>RTCPASSWORD&lt;/param-value>
+    &lt;description>The password the RTC uses when authenticating itself in an HTTP POST.&lt;/de  &lt;/context-param>
+  &lt;context-param>
+    &lt;param-name>opennms.rtc-client.http-post.base-url&lt;/param-name>
+    &lt;param-value>http://localhost:8080/opennms/rtc/post&lt;/param-value>
+    &lt;description>
+      The base of a URL that RTC clients use when creating a RTC subscription URL. 
+      IMPORTANT: This URL must NOT contain a slash at the end.       
+    &lt;/description>
+  &lt;/context-param>
+Set the RTCUSER to your rtc user's username. Next, set the RTCPASSWORD to your chosen password.
+For versions 1.3.7 and newer, change the rtc username and password in the file WEB-INF/configuration.properties if you use Tomcat, or in the file etc/opennms.properties if you use jetty.
+If you change the rtc username, you must make sure the new username is a member of the OpenNMS RTC Daemon role in the etc/magic-users.properties file. Find the lines
+role.rtc.name=OpenNMS RTC Daemon
+role.rtc.users=RTCUSER, admin
+and change RTCUSER to your new rtc user name.
+If you're using LDAP Authentication, then you're done. Just make sure the password for the rtc user in your LDAP directory matches what you set above. If you're using the default OpenNMS realm module, you need tt make some additional changes to the magic-users.properties file in the OpenNMS configuration directory (/opt/OpenNMS/etc in the Linux RPMs).
+If you changed the rtc username as described above, you need to change it in the magic-users.properties file as well. In addition, you'll need to change the rtc password in this file. Find the lines below and make the appropriate changes:
+users=RTCUSER,otherusers
+
+user.RTCUSER.username=RTCUSER
+user.RTCUSER.password=RTCPASSWORD
+Change all instances of RTCUSER to your new rtc user name you set above, and change the RTCPASSWORD to the same password you set above.
+That's it. Restart OpenNMS and Tomcat (if you're using it), and you're done.
 </Text>
         </Document>
         <Document ID="80">
@@ -2289,6 +2289,9 @@ The number of matching rows found. Set only if the "match-all" param is set to "
 	•	This feature was enhanced or modified in version 1.3.0
 </Text>
         </Document>
+        <Document ID="124">
+            <Title>LDAP</Title>
+        </Document>
         <Document ID="77">
             <Title>Filter</Title>
             <Text>Think of the filter (also referred to as a rule) as a shorthand SQL statement that automatically selects ipaddr from the ipinterface table. You are basically building the WHERE clause with the rule that you write. There is an XML file called database-schema.xml in the /opt/opennms/etc directory that informs the filter code of what tables it can use in building the WHERE clause. Here is an explaination of that file:
@@ -2440,9 +2443,6 @@ Sometimes you need to include hosts belonging to more than one Category, via an 
 The "catinc" function is used the following way. Note Category names can not have spaces for this to work:
 &lt;rule> &lt;![CDATA[((IPADDR != '0.0.0.0') &amp; catincProduction &amp; catincLinux)]]&gt; &lt;/rule>
 </Text>
-        </Document>
-        <Document ID="124">
-            <Title>LDAP</Title>
         </Document>
         <Document ID="82">
             <Title>LinkD</Title>
@@ -4394,7 +4394,42 @@ T
         <Document ID="10">
             <Title>License Information</Title>
             <Text>OpenNMS
+
+$OpenNMS_License
+
 This Book
+
+OpenNMS is free open source software. Software is knowledge and experience expressed in a programming language. The knowledge and experience which is inside OpenNMS is free for you to use. We thought it consequent to make this book as “free” as a book can be, too. That means that you are permitted to share the content of this book. You can download it as a PDF file from our software repository. You can share that, too. In fact - the more you share it, the better for OpenNMS - the more experienced users we have, the better our project will become. 
+
+If you want to express your appreciation for the work which went inside this book, buy a paperback or donate. You can find information about how to donate on the website for our book: http://www.opennms.org/book
+
+
+You are free:
+
+to Share — to copy, distribute and transmit the work
+to Remix — to adapt the work
+	
+Under the following conditions:
+
+Attribution — You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).  
+What does "Attribute this work" mean?  The page you came from contained embedded licensing metadata, including how the creator wishes to be attributed for re-use. You can use the HTML here to cite the work. Doing so will also include metadata on your page so that others can find the original work as well.  
+Noncommercial — You may not use this work for commercial purposes. 
+
+Share Alike — If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one. 
+
+With the understanding that:
+
+Waiver — Any of the above conditions can be waived if you get permission from the copyright holder.
+
+Public Domain — Where the work or any of its elements is in the public domain under applicable law, that status is in no way affected by the license.
+
+Other Rights — In no way are any of the following rights affected by the license:
+
+	◦	Your fair dealing or fair use rights, or other applicable copyright exceptions and limitations;
+	◦	The author's moral rights;
+	◦	Rights other persons may have either in the work itself or in how the work is used, such as publicity or privacy rights.
+
+Notice — For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do this is with a link to this web page: http://www.opennms.org/book
 </Text>
         </Document>
         <Document ID="93">
@@ -6127,7 +6162,9 @@ Retrieved from "http://www.opennms.org/wiki/Event_Translator"
         </Document>
         <Document ID="7">
             <Title>Howto</Title>
-            <Text>The OpenNMS Book in English is located in GIT:
+            <Text>Technical Information
+
+The OpenNMS Book in English is located in GIT:
 ssh://$USER@opennms.git.sourceforge.net/gitroot/opennms/opennmsbook
 If you clone this directory you will find 
 
@@ -6140,6 +6177,13 @@ Each Chapter is stored as an individual .rtf in this folder.
 The text format is RTF, which means that you can edit text in any RTF-capable editor.
 If you have text in another format, or if you have text of which you don’t know where to put, please save it in the ./inbound/ folder.
 There will be a recent pdf as well for your convenience (which shows the current status of the book).
+
+Writing Style
+
+There is a style guide written by the BBC in the git repository. It is written for news and not for a manual, but: read through it for inspiration. A lot of the statements true for news are true for this book as well. We do not aim to create an academical work, but a readable, useful book which becomes a permanent reference for the reader.
+This means, above all: Short sentences. 
+Another consideration is the way in which we address the reader. “How are we doing today” is what the doctor says when we visit (mine does not, but that’s another story). Avoid the “we do this” and then “we do that” - it’s not us, it’s either the writer or the reader. Texts get more lively when it’s active.
+
 </Text>
         </Document>
         <Document ID="8">
