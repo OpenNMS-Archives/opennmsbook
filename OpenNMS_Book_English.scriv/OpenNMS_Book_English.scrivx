@@ -50,14 +50,14 @@
                                 <TextSelection>29,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
-                        <BinderItem ID="10" Type="Text" Created="2011-06-21 10:45:04 -0500" Modified="2011-06-21 17:36:25 -0500">
+                        <BinderItem ID="10" Type="Text" Created="2011-06-21 10:45:04 -0500" Modified="2011-06-21 19:23:17 -0500">
                             <Title>License Information</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>18,0</TextSelection>
+                                <TextSelection>7,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                     </Children>
@@ -1323,7 +1323,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2011-06-09 09:44:27 -0500" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetDaily="No" DeterminedFromDeadline="No">0</SessionTarget>
-        <PreviousSession Words="1238" Characters="7732" Date="2011-06-21 17:36:36 -0500"></PreviousSession>
+        <PreviousSession Words="1661" Characters="10169" Date="2011-06-21 19:23:17 -0500"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="595.200012,841.799988" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
