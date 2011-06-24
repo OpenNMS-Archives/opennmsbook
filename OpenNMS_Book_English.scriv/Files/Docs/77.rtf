@@ -5,7 +5,9 @@
 \deftab720
 \pard\pardeftab720\sa240\ql\qnatural
 
-\f0\fs24 \cf0 Think of the filter (also referred to as a rule) as a shorthand SQL statement that automatically selects ipaddr from the ipinterface table. You are basically building the WHERE clause with the rule that you write. There is an XML file called {\field{\*\fldinst{HYPERLINK "http://opennms.svn.sourceforge.net/viewvc/opennms/opennms/trunk/opennms-base-assembly/src/main/filtered/etc/database-schema.xml?view=markup"}}{\fldrslt \cf2 \ul \ulc2 database-schema.xml}} in the /opt/opennms/etc directory that informs the filter code of what tables it can use in building the WHERE clause. Here is an explaination of that file:\
+\f0\fs24 \cf0 Filter\
+Added text w/ vi
+Think of the filter (also referred to as a rule) as a shorthand SQL statement that automatically selects ipaddr from the ipinterface table. You are basically building the WHERE clause with the rule that you write. There is an XML file called {\field{\*\fldinst{HYPERLINK "http://opennms.svn.sourceforge.net/viewvc/opennms/opennms/trunk/opennms-base-assembly/src/main/filtered/etc/database-schema.xml?view=markup"}}{\fldrslt \cf2 \ul \ulc2 database-schema.xml}} in the /opt/opennms/etc directory that informs the filter code of what tables it can use in building the WHERE clause. Here is an explaination of that file:\
 Each table used by the filter code is in a <table> tag. If a table has an attribute of 'visible=false' then no columns in that table can be used in the WHERE clause and thus can't appear in the rule. You will get some sort of syntax exception if it sees any non-visible columns in the rule. The same applies to a non-visible column in a table.\
 A <join> tag tells the filter module how to relate this table to the ipinterface table. The ipinterface table is marked with the attribute 'key=primary', meaning that it is going to be the table we select ipaddr from and join all other tables to.\
 In brief, you can use C / Java-style comparison operators to data types they apply to ( == and\'a0!= can be used on strings, as can the SQL 

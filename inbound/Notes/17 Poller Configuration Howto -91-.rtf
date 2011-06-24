@@ -1,0 +1,341 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 LucidaGrande;
+}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr16\min36\sec45\timesinceref330385005}
+{\revtim\yr2011\mo6\dy21\hr16\min37\sec4\timesinceref330385024}}\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Introduction\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Purpose\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This How-To is one in a series designed to serve as a reference for getting started with OpenNMS. Eventually, these documents will cover everything necessary to get OpenNMS installed and running in your environment.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Copyright\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Content is available under a {\field{\*\fldinst{HYPERLINK "http://creativecommons.org/licenses/by-nc-sa/2.5/"}}{\fldrslt \cf2 \ul \ulc2 Creative Commons Attribution-NonCommercial-ShareAlike2.5 License}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Corrections and Omissions\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Please submit any corrections and omissions to the author.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS is an enterprise-grade network management platform developed under the open-source model. Unlike traditional network management products which are very focused on network elements such as interfaces on switches and routers, OpenNMS focuses on the services network resources provide: web pages, database access, DNS, DHCP, etc. (although information on network elements is also available).\
+There are two major ways that OpenNMS gathers data about the network. The first is through 
+\i polling
+\i0 . Processes called 
+\i monitors
+\i0  connect to a network resource and perform a simple test to see if the resource is responding correctly. If not, events are generated. The second is through data collection using 
+\i collectors
+\i0 . Currently, the only collector is for SNMP data, and it will be covered in another How-To.\
+The basic idea behind the poller starts with grouping network devices into 
+\i packages
+\i0 . Each package will consist of various 
+\i services
+\i0  and how they are to be polled (i.e. frequency). In addition, should an outage be detected, each package can have its own 
+\i downtime model
+\i0  which controls how the poller will dynamically adjust its polling on services that are down. Finally, each package has an 
+\i outage calendar
+\i0  that schedules times when the poller is 
+\i not
+\i0  to poll (i.e. scheduled downtime).\
+The poller will only operate on interfaces and services that have been previously discovered by capsd (see the Discovery How-To for information on configuring that process).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Polling\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Poller Configuration File Header\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Polling in OpenNMS is controlled by the 
+\f1 poller-configuration.xml
+\f0  file (located in the 
+\f1 /opt/OpenNMS/etc
+\f0  directory).\
+Let's look at that file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <poller-configuration threads="30" serviceUnresponsiveEnabled="false">\
+        <node-outage status="on"\
+                     pollAllIfNoCriticalServiceDefined="true">\
+                <critical-service name="ICMP"/>\
+        </node-outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 There are three basic behaviors that are configured in the header of this file:\
+\pard\pardeftab720\ql\qnatural
+\cf0 poller-configuration threads\'a0\
+This determines the maximum number of threads that will be used for polling, and can be adjusted up or down depending on the size of your network and the power of your server. (See {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Performance_tuning#Poller_threads"}}{\fldrslt \cf2 \ul \ulc2 Performance tuning#Poller threads}}.)\
+serviceUnresponsiveEnabled\'a0\
+A poll consists of a connection to a particular port on a remote interface, and then a test to see if the service on that port returns an expected response. If the response is not received within the 
+\i timeout
+\i0 , the service is considered down. In some networks, however, short, intermittent failures are common. This will result in what is known as a "{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/30_second_outage"}}{\fldrslt \cf2 \ul \ulc2 30 second outage}}". Due to the default downtime model, a failed service will be polled again in 30 seconds. Note that this is a real problem: a user attempting to access that resource would also have experienced a timeout. But in some networks these 30 second outages can be annoying yet hard to correct. So the option was added to denote a failure as when the port connection fails and not the response. In this case, an 
+\i unresponsive
+\i0  service does not generate an outage, but only a "service unresponsive" event. To enable this behavior, set this value to "true".\
+node-outage\'a0\
+The basic event that is generated when a poll fails is called "NodeLostService". If more than one service is lost, multiple NodeLostService events will be generated. If all the services on an interface are down, instead of a NodeLostService event, an "InterfaceDown" event will be generated. If all the interfaces on a node are down, the node itself can be considered down, and this section of the configuration file controls the poller behavior should that occur. If a "NodeDown" event occurs and 
+\f1 node-outage status="on"
+\f0  then all of the InterfaceDown and NodeLostService events will be suppressed and only a NodeDown event will be generated. Instead of attempting to poll all the services on the down node, the poller will attempt to poll only the 
+\f1 critical-service
+\f0 , by default ICMP. Once the critical service returns, the poller will then resume polling the other services. If the critical service is not available on a node, the 
+\f1 pollAllIfNoCriticalServiceDefined
+\f0  parameter controls the behavior. If set to "true" then all services will be polled. If set to "false" then the first service in the package that exists on the node will be polled until service is restored, and then polling will resume for all services.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Note that any changes to this file will not take affect until OpenNMS is restarted.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Poller Packages\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 A poller package consists of a name, a group of interfaces to poll, and the services to be polled on those interfaces. Multiple packages can be configured, and an interface can exist in more than one package (although the value of that is questionable). This gives great flexibility to how the service levels will be determined for a given device.\
+For example, you could build packages based upon different polling rates, say, "gold", "silver" and "bronze". In the gold package, services would be polled every minute, the silver package every five minutes and the bronze package every fifteen. Or, you could build different poller packages based upon levels of monitoring. A "basic" package may just poll ICMP and HTTP, whereas a "deluxe" package would include databases, etc..\
+In addition to a list of services, each package can have a "downtime" model and an "outage calendar", both discussed below.\
+The definition of a package starts with a 
+\f1 package
+\f0  tag:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <package name="example1">\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This is followed by a list of tags that define what interfaces will be included in the package. There are five of these tags:\
+\pard\pardeftab720\ql\qnatural
+\cf0 filter\'a0\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 IPADDR IPLIKE *.*.*.*\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Each package must have a filter tag that performs the initial test to see if an interface should be included in a package. Filters operate on interfaces (not nodes) and are discussed on the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Filters"}}{\fldrslt \cf2 \ul \ulc2 filters}} page. Only one 
+\f1 filter
+\f0  statement can exist per package.\
+\pard\pardeftab720\ql\qnatural
+\cf0 specific\'a0\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <specific>192.168.1.59</specific>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This specifies a particular IP address to include in a package.\
+\pard\pardeftab720\ql\qnatural
+\cf0 include-range\'a0\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <include-range begin="192.168.0.1" end="192.168.0.254"/>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This specifies a particular range of IP addresses to include in a package.\
+\pard\pardeftab720\ql\qnatural
+\cf0 exclude-range\'a0\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <exclude-range begin="192.168.0.100" end="192.168.0.104"/>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This specifies a particular range of IP addresses to exclude in a package. This will override an 
+\f1 include-range
+\f0  tag.\
+\pard\pardeftab720\ql\qnatural
+\cf0 include-url\'a0\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <include-url>file:/opt/OpenNMS/etc/include</include-url>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This tag will point to a file that consists of a list of IP addresses, one to a line, that will be included in the package. Comments can be imbedded in this file. Any line that begins with a "#" character will be ignored, as will the remainder of any line that includes a space followed by "#".\
+All of the above tags, except for filter, are optional and unbounded.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Poller Services\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Once the IP addresses to include in a package are defined, the services to be polled are listed. For example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <service name="DNS" interval="300000" user-defined="false" status="on">\
+  <parameter key="retry" value="3"/>\
+  <parameter key="timeout" value="5000"/>\
+  <parameter key="port" value="53"/>\
+  <parameter key="lookup" value="localhost"/>\
+</service>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The common parameters for the poller service are as follows:\
+\pard\pardeftab720\ql\qnatural
+\cf0 retry\'a0\
+The number of attempts that will be made to connect to the service. Default is\
+timeout\'a0\
+The amount of time, in milliseconds, that OpenNMS will wait for a response from the service. Default is\
+port\'a0\
+\
+lookup\'a0\
+\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 This will poll the DNS service once every five minutes (300,000 ms). The rest of the block is similar to the corresponding block in the capsd configuration. Since users can define new services to be polled, the 
+\f1 user-defined
+\f0  attribute indicates this for a particular service. Polling can also be universally stopped for a particular service, indicated by the 
+\f1 status
+\f0  tag. Note that the service as defined in the poller can be different from the one defined in capsd. You may want a longer timeout during discovery, for example. Also, in this example, a DNS request will be made to look up "localhost". This should return an error (as localhost is usually not listed in a DNS) but if that error is returned, DNS is functioning properly and the test passes. Microsoft's implementation of DNS, however, sometimes has problems with this, so you may want to put a real host for the lookup value (and in capsd as well).\
+There must be at least one service defined per package.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Poller Outage Calendar\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 (In versions newer than 1.5.x this feature is called "scheduled outages")\
+In order to keep servers operating properly, it is often necessary to bring them down for scheduled maintenance. Instead of having these maintenance outages reflected as a true service outage, they can be included in an "Poller Outage Calendar" and then referenced by the poller package using the 
+\f1 outage-calendar
+\f0  tag. This tag contains the name of a valid outage in the 
+\f1 poll-outages.xml
+\f0  file.\
+The 
+\f1 outage-calendar
+\f0  tag is optional and unbounded (i.e. you can reference more than one outage).\
+Since version 1.5.91 you can configure scheduled outages from the GUI, got to Admin -> Scheduled Outages.\
+Before version 1.5.91, there were three types of outages: weekly, monthly and specific. Since 1.5.91 there is also the possibility to configure daily outages.\
+If you have the problem that nodes are reported to be down thought they are within a daily outage which goes past midnight try to define two timespans within the outage, one until midnight and the other one starting after midnight, e.g. instead of outage 22:00:00-01:00:00 define 22:00:00-23:59:59 and 00:00:00-01:00:00.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f2 \cf0 \line 
+\f0 Examples from the 
+\f1 poll-outages
+\f0  file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <outage name="global" type="weekly">\
+  <time day="sunday" begins="12:30:00" ends="12:45:00"/>\
+  <time day="sunday" begins="13:30:00" ends="14:45:00"/>\
+  <time day="monday" begins="13:30:00" ends="14:45:00"/>\
+  <time day="tuesday" begins="13:00:00" ends="14:45:00"/>\
+  <interface address="192.168.0.1"/>\
+  <interface address="192.168.0.36"/>\
+  <interface address="192.168.0.38"/>\
+</outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This defines an outage calendar called "global" that is run every week. It specifies four outage times: Sunday starting at 12:30 pm and lasting 15 minutes, Sunday starting at 1:30 pm and lasting an hour and fifteen minutes, the same outage on Monday, and one on Tuesday from 1:00 pm to 2:45 pm. This is to demonstrate that you can have multiple outages on a given day and the same outage on different days. Three interfaces will be affected.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <outage name="hub maintenance" type="monthly">\
+  <time day="1" begins="23:30:00" ends="23:45:00"/>\
+  <time day="15" begins="21:30:00" ends="21:45:00"/>\
+  <time day="15" begins="23:30:00" ends="23:45:00"/>\
+  <interface address="192.168.100.254"/>\
+  <interface address="192.168.101.254"/>\
+  <interface address="192.168.102.254"/>\
+  <interface address="192.168.103.254"/>\
+  <interface address="192.168.104.254"/>\
+  <interface address="192.168.105.254"/>\
+  <interface address="192.168.106.254"/>\
+  <interface address="192.168.107.254"/>\
+</outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This outage calendar is called "hub maintenance" that is run every month. On the first of the month the outage begins at 11:30 pm and lasts 15 minutes. The same outage occurs on the 15th of the month in addition to another outage from 9:30 pm to 9:45 pm. Thus you can have the same outage on different dates as well as more than one outage on a particular date. Eight interfaces are affected by this outage.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <outage name="proxy server tuning" type="specific">\
+  <time begins="10-Nov-2001 17:30:00" ends="11-Nov-2001 08:00:00"/>\
+  <interface address="192.168.0.1"/>\
+</outage>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 It is also possible to include an outage on a specific date and time. This outage named "proxy server tuning" began on November 10th, 2001 at 5:30 pm and lasted until 8:00 am the next day. This affected one interface. You can have more than one "time" entry per specific outage.\
+If a particular outage calendar is included in a poller package, then polling will not occur during this time. Note that this does not mean that the service will be considered "up" during this time. If the maintenance is started a minute too soon and an outage is detected, then no poll will be made to restore the service until after the outage window has closed.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Downtime Models\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 One of the most powerful features of the OpenNMS poller is its downtime models. The goal of the poller is to verify service levels, and everyone involved would like to see those be as high as possible. By default, the poller will poll every five minutes. If that polling rate was static, then the shortest an outage could be would be five minutes: one poll to note the outage and the next to note it was restored. In these days of service levels in the "99.99%" range, a five minute outage can be devastating. You might as well guarantee "100%" availability since 
+\i any
+\i0  outage will break your service level agreement.\
+To help combat this, OpenNMS uses adaptive polling. Once an outage is detected, polling is temporarily increased to try and detect, as soon as possible, when the service is restored.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <downtime interval="30000" begin="0" end="300000"/>             <!-- 30s, 0, 5m -->\
+<downtime interval="300000" begin="300000" end="43200000"/>     <!-- 5m, 5m, 12h -->\
+<downtime interval="600000" begin="43200000" end="432000000"/>  <!-- 10m, 12h, 5d -->\
+<downtime begin="432000000" delete="true"/>                     <!-- anything after 5 days delete -->\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 What this downtime model will do is the following: from the moment the outage begins (time 0) until five minutes later (time 300,000 ms), the poller will poll every 30 seconds (30,000 ms). After five minutes, it is assumed that any service level that would be greatly affected by a five minute outage has been broken, so from five minutes (300,000 ms) into the outage until the first 12 hours of the outage (43,200,000 ms) polling resumes its five minute (300,000 ms) interval.\
+If the outage is older than 12 hours, it must not be important and/or it is difficult to fix, so from when the outage is 12 hours old until it is 5 days (432,000,000 ms) old, the interval is reduced to poll once every ten minutes (600,000 ms).\
+If a service has been down for longer than five days, it is deleted (well, marked as "forced unmanaged") and no longer polled. Note that this is optional, you can continue to poll a down service for as long as you would like. For the last downtime interval in the model, just leave the "end" time off in order to extend polling indefinitely.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Poller Monitors\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For each service in a poller package, there must be a corresponding monitor. In the capsd configuration, this was included on the service line itself, but since there is the potential for a particular service to exist many times in the poller configuration file, this bit of bookkeeping was put, once, at the end of the file.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <monitor service="DominoIIOP"   class-name="org.opennms.netmgt.poller.DominoIIOPMonitor"/>\
+<monitor service="ICMP"         class-name="org.opennms.netmgt.poller.IcmpMonitor"/>\
+<monitor service="Citrix"       class-name="org.opennms.netmgt.poller.CitrixMonitor"/>\
+<monitor service="LDAP"         class-name="org.opennms.netmgt.poller.LdapMonitor"/>\
+<monitor service="HTTP"         class-name="org.opennms.netmgt.poller.HttpMonitor"/>\
+<monitor service="HTTP-8080"    class-name="org.opennms.netmgt.poller.HttpMonitor"/>\
+<monitor service="HTTP-8000"    class-name="org.opennms.netmgt.poller.HttpMonitor"/>\
+<monitor service="HTTPS"        class-name="org.opennms.netmgt.poller.HttpsMonitor"/>\
+<monitor service="SMTP"         class-name="org.opennms.netmgt.poller.SmtpMonitor"/>\
+<monitor service="DHCP"         class-name="org.opennms.netmgt.poller.DhcpMonitor"/>\
+<monitor service="DNS"          class-name="org.opennms.netmgt.poller.DnsMonitor" />\
+<monitor service="FTP"          class-name="org.opennms.netmgt.poller.FtpMonitor"/>\
+<monitor service="SNMP"         class-name="org.opennms.netmgt.poller.SnmpMonitor"/>\
+<monitor service="Oracle"       class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="Postgres"     class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="MySQL"        class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="Sybase"       class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="Informix"     class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="SQLServer"    class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="SSH"          class-name="org.opennms.netmgt.poller.TcpMonitor"/>\
+<monitor service="IMAP"         class-name="org.opennms.netmgt.poller.ImapMonitor"/>\
+<monitor service="POP3"         class-name="org.opennms.netmgt.poller.Pop3Monitor"/>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 You should not need to modify this section unless you manually add your own pollers.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Documentation for Specific Pollers\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Some documentation has been written for:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls1\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/HTTP_monitor"}}{\fldrslt \ul HTTP}}\cf0 .\
+\ls1\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/RadiusPoller"}}{\fldrslt \ul Radius}}\cf0 .\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Conclusion\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 It is hoped that this How-To has proved useful. Please direct corrections and comments to the author.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Polling_Configuration_How-To&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Examples\
+\pard\pardeftab720\sa240\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Monitoring_a_Dell_PowerEdge_Expandable_RAID_Controller_3/Di"}}{\fldrslt 
+\b0\fs24 \cf2 \ul \ulc2 Monitoring a Dell PowerEdge Expandable RAID Controller 3/Di}}
+\b0\fs24 \
+}

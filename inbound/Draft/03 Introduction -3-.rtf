@@ -1,0 +1,17 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\fswiss\fcharset0 Optima-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\stylesheet {\s0 Normal;}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy9\hr9\min44\sec27\timesinceref329323467}
+{\revtim\yr2011\mo6\dy21\hr19\min50\sec1\timesinceref330396601}}\pard\tx720\tx1440\tx2160\fi360\sl288\slmult1\sb160\ql\qnatural\pardirnatural
+
+\f0\fs26 \cf0 OpenNMS stands for \'93Open Network Management System\'94. It\'92s \'93Open\'94 both because the Software itself is licensed as \'93Open Source\'94 under the GNU Public License. \
+A Network as understood by OpenNMS is a number of somehow reachable network elements, called nodes.\
+It\'92s fair to put in the first bracket at this point already: OpenNMS can in fact manage more than nodes. You can, for example, manage applications. Or whole networks. But as the starting point for the software was the management of network elements, it\'92s called \'93Network Management System\'94 (rather than \'93anything you can somehow reach and get to tell something about itself Management System (aycsragttsaiMS)).\
+When it comes to \'93Management\'94 we have to clarify straight from the beginning that management is done by people with brains. The role of OpenNMS is to provide information about managed nodes. It does so by receiving information from nodes and by reaching out to them to collect information. Once the information is available to OpenNMS it can apply rules and visualize this information. \
+OpenNMS is organized around \'93events\'94. You will encounter these events as Notifications and Alarms in the WebUI (and if you are one of the lucky administrators, by means of personal communication). Besides those visible events, OpenNMS uses events to organize itself: Everything is an event. The different components of OpenNMS, the Daemons, are connected to an event bus. They use this bus to communicate between each other. You can listen in to their conversations if you look into the log of the EventD, the Event Daemon.\
+All these elements together are \'93the system\'94, which is why we call OpenNMS OpenNM-System and not OpenNM-Application.\
+This book is intended both for Users and Administrators of OpenNMS. Users will find everything they need to know to work with the Web User Interface in the first part of the book. \
+}

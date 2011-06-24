@@ -27,7 +27,7 @@ body <!--{background-image: url(gfx/LitLatLogoLeft.jpg); background-repeat: no-r
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-Technical Information  The OpenNMS Book in English is located in GIT: ssh://$USER@opennms.git.sourceforge.net/gitroot/opennms/opennmsbook If you clone this directory you will find   OpenNMS_Book_English.scriv  Which contains the book. The directory structure underneath is managed by a tool called Scrivener.  You do not need Scrivener to help writing the book! All the text content is located in ./OpenNMS_Book_English.scriv/Files/Docs Each Chapter is stored as an individual .rtf in this folder. Th...
+Technical Information  The OpenNMS Book in English is located in GIT: git clone git://opennms.git.sourceforge.net/gitroot/opennms/opennmsbook  ssh://$USER@opennms.git.sourceforge.net/gitroot/opennms/opennmsbook       If you use Scrivener, you can open the project file directly. If you do not use Scrivener, please go into the &ldquo;inbound&rdquo; directory and modify the files in there.  The text format is RTF, which means that you can edit text in any RTF-capable editor. If you have text in another format,...
 </font>
 </td>
 </tr>
@@ -66,6 +66,25 @@ Technical Information  The OpenNMS Book in English is located in GIT: ssh://$USE
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
 General introduction
+</font>
+</td>
+</tr>
+</table>
+
+<br>
+
+<table class="indexcard" width="100%" border="0" bgcolor="white" cellspacing="3" cellpadding="2">
+<tr bgcolor="white">
+<td valign="top" bgcolor="#FFFFFF">
+<font face="verdana, arial, helvetica" size=3 color="#000000">
+<b>OpenNMS</b>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top" bgcolor="white">
+<font face="verdana, arial, helvetica" size=2>
+Introduction slide explained
 </font>
 </td>
 </tr>
@@ -160,7 +179,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+Reading SLA Category Data
 </font>
 </td>
 </tr>
@@ -179,7 +198,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Reading Graphs
 </font>
 </td>
 </tr>
@@ -198,7 +217,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Acknowledging Notifications
 </font>
 </td>
 </tr>
@@ -217,7 +236,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Creating Tickets in a Ticket System
 </font>
 </td>
 </tr>
@@ -236,7 +255,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.KSC Reports
 </font>
 </td>
 </tr>
@@ -255,7 +274,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+Standard Reports
 </font>
 </td>
 </tr>
@@ -274,7 +293,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Asset Management
 </font>
 </td>
 </tr>
@@ -293,7 +312,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Standard Services (out of the box)
 </font>
 </td>
 </tr>
@@ -312,7 +331,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Surveillance Views
 </font>
 </td>
 </tr>
@@ -331,7 +350,7 @@ Accessing the WebUI
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+.Mobile Access
 </font>
 </td>
 </tr>
@@ -362,7 +381,7 @@ Accessing the WebUI
 <tr bgcolor="white">
 <td valign="top" bgcolor="#FFFFFF">
 <font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>Data Analysis</b>
+<b>The administrators workflow</b>
 </font>
 </td>
 </tr>
@@ -381,14 +400,14 @@ Accessing the WebUI
 <tr bgcolor="white">
 <td valign="top" bgcolor="#FFFFFF">
 <font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>Syslog</b>
+<b>Everything is an event</b>
 </font>
 </td>
 </tr>
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+At the heart of OpenNMS is eventd. All process either generate events, rely on events or both, so it needs to be shown in the architecture overview. Second, to demonstrate events in class I always start off with a send-event.pl example. Just sending &quot;uei.foo&quot; to the system and seeing it show up goes a long way toward having the admin understand how events work. From there I would probably have sections on traps, syslog and TL/1, since those would build on the student&apos;s understanding of events. T...
 </font>
 </td>
 </tr>
@@ -400,14 +419,14 @@ Accessing the WebUI
 <tr bgcolor="white">
 <td valign="top" bgcolor="#FFFFFF">
 <font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>Thresholding</b>
+<b>Set out a trap</b>
 </font>
 </td>
 </tr>
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+Traps explained
 </font>
 </td>
 </tr>
@@ -419,14 +438,14 @@ Accessing the WebUI
 <tr bgcolor="white">
 <td valign="top" bgcolor="#FFFFFF">
 <font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>Trap Handling</b>
+<b>Interpret and decide</b>
 </font>
 </td>
 </tr>
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+TL/1 and syslog explained
 </font>
 </td>
 </tr>
@@ -438,14 +457,14 @@ Accessing the WebUI
 <tr bgcolor="white">
 <td valign="top" bgcolor="#FFFFFF">
 <font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>Automations</b>
+<b>Share and Alert</b>
 </font>
 </td>
 </tr>
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
+Notifications and Trouble Ticketing
 </font>
 </td>
 </tr>
@@ -457,33 +476,14 @@ Accessing the WebUI
 <tr bgcolor="white">
 <td valign="top" bgcolor="#FFFFFF">
 <font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>ScriptD</b>
+<b>Service Monitoring</b>
 </font>
 </td>
 </tr>
 <tr>
 <td valign="top" bgcolor="white">
 <font face="verdana, arial, helvetica" size=2>
-
-</font>
-</td>
-</tr>
-</table>
-
-<br>
-
-<table class="indexcard" width="100%" border="0" bgcolor="white" cellspacing="3" cellpadding="2">
-<tr bgcolor="white">
-<td valign="top" bgcolor="#FFFFFF">
-<font face="verdana, arial, helvetica" size=3 color="#000000">
-<b>Path Outages</b>
-</font>
-</td>
-</tr>
-<tr>
-<td valign="top" bgcolor="white">
-<font face="verdana, arial, helvetica" size=2>
-
+.Service Monitoring
 </font>
 </td>
 </tr>

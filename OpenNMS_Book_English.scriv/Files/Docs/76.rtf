@@ -1,8 +1,7 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
 {\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 LucidaGrande;\f2\fmodern\fcharset0 Courier;
 \f3\fmodern\fcharset0 Courier-Bold;}
-{\colortbl;\red255\green255\blue255;\red4\green0\blue240;\red0\green0\blue0;\red109\green109\blue109;
-}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
 {\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid2\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid3\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid1}
 {\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid102\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
 {\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid202\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}
@@ -15,7 +14,8 @@
 \deftab720
 \pard\pardeftab720\sa320\ql\qnatural
 
-\f0\b\fs48 \cf0 Abstract\
+\f0\b\fs48 \cf0 Spring Security and LDAP\
+Abstract\
 \pard\pardeftab720\sa240\ql\qnatural
 
 \b0\fs24 \cf0 Centralized authentication is a "big deal" in any enterprise environment. Integrating your OpenNMS implementation with your environment is a Good Thing. Before linking the two, there are some considerations. The main one is if you want to rely solely on your central authenticator for all OpenNMS auth events, or support a hybrid scheme of the built-in local (aka UserDAO) as well as an LDAP or similar authenticator. Keep in mind that OpenNMS, itself, has processes periodically authenticating (think RTC and Provisioning) and for this reason it is better to go the loosely-coupled route by continuing to support the UserDAO mechanism, as described in the latter implementation section below.\

@@ -1,0 +1,66 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr17\min6\sec5\timesinceref330386765}
+{\revtim\yr2011\mo6\dy21\hr17\min6\sec14\timesinceref330386774}}\deftab720
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\fs24 \cf0 If you have some devices that have SNMP trap events that are not supported by OpenNMS, we welcome you to contribute your configuration files to OpenNMS. The official OpenNMS documentation on creating events files from SNMP MIBs using the 
+\f1 mib2opennms
+\f0  utility is at SourceForge ({\field{\*\fldinst{HYPERLINK "http://sourceforge.net/docman/display_doc.php?docid=22828&group_id=4141"}}{\fldrslt \cf2 \ul \ulc2 Part 5 - Configuring Events}}).\
+Not only will this help others in the community, you won't have to worry about merging your events in during an upgrade.\
+Simply sub a {\field{\*\fldinst{HYPERLINK "http://bugzilla.opennms.org/"}}{\fldrslt \cf2 \ul \ulc2 bug}} with a severity of "enhancement" and attach your events file to the bug.\
+There are only a few guidelines, and it would save a lot of time if you would submit your events using them.\
+First, add a short description in front of the log message for the event. For example, instead of:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 snTrapL4ConnectionRateExceedThreshold trap received snAgGblTrapMessage=%parm[#1]%\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 use:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 Foundry Event: snTrapL4ConnectionRateExceedThreshold trap received snAgGblTrapMessage=%parm[#1]%\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 It's very useful to know at a glance what type of devices or application generated the event.\
+Second, replace "mib2opennms" in the UEI with something that identifies the vendor, such as "vendor/foundry/traps" etc..\
+Finally, if possible, set the severity to something other than "Indeterminate". Sometimes this is not possible, as the trap might be "The server changed state" which could mean that it is either thankfully back up after dying or totally pooched.\
+Severities should always be based, not on the problem itself, but your reaction to it. While the fact that a link is down is critical for everyone on the other side of it, if that person happens to be Zeke and Zeke's off fishing then you wouldn't exactly want to drop everything to fix it.\
+\pard\pardeftab720\ql\qnatural
+\cf0 Critical\'a0\
+Drop everything except your cell phone, and start working on the issue with one hand while calling everyone you know on the other. If the problem doesn't rate calling the President of your company on Christmas morning at 3am, then don't use it.\
+Seriously\'a0\
+unless the event indicates a major problem with a number of devices on the network, don't use Critical. It can be used in an automation to priority promote a Major event, but should rarely be set on its own.\
+Major\'a0\
+Drop what you are doing, and fix this issue. This indicates that a device is no longer operational. In other words, a power supply had failed, a RAID array is dead, etc.\
+Minor\'a0\
+This issue requires attention, but you don't have to drop what you are doing. This would be along the lines of the failure of a redundant power supply (but the main one is still up), etc. The device is still functional, but it will require attention or may fail completely.\
+Warning\'a0\
+This is an informational message with a negative tone. You might have to take some action, but it may just be a temporary condition that will resolve itself. For example, if you are running portsentry and someone port scans your devices, the fact that they have been dropped via a routing table rule would be a warning.\
+Normal\'a0\
+This is an informational message with a neutral or positive tone. It usually doesn't require any action, but is "for your information." Someone logged on to the server, etc. It can also be used to indicate that an error condition has been resolved, when it is not sure that an event that the error condition exist will be sent.\
+Cleared\
+If the device will send an error event such as "backup power supply offline,, the resolution event, such as "backup power supply now online" should have this severity. No action should be required, and this message is basically the same a Normal.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 While all of OpenNMS doesn't follow these rules, we are trying to standardize on them, so please consider using them when submitting events.\
+A few points that are not covered in the official "Configuring Events" document that presented problems in my experience:\
+\pard\pardeftab720\ql\qnatural
+\cf0 Use "-6" with 
+\f1 mib2opennms
+\f0 \'a0\
+mib2opennms needs the "-6" option to force the generic trapType to enterpriseSpecific(6) because libsmi (used by mib2opennms) tends to mis-report it as 1\
+Enumerated types mangled\'a0\
+In several of the MIBs I've compiled (all from the same vendor), The enumerated types in the trap varbinds come out mangled. I don't know whether this is due to flaws in the vendor MIBs or to a bug in libsmi / mib2opennms. At any rate, these need to be corrected by hand. You can find them by searching for the string "(-" in the XML output.\
+Trap Enterprise OIDs come up short\'a0\
+The "mevalue" for "id" came out one level short, so I corrected these by hand. The vendor had subdivided the traps branch of their MIB ( 
+\f1 vendorMgmt.vendorTraps(4)
+\f0  ) into sub-categories ( e.g. 
+\f1 vendorMgmt.vendorTraps(4).vendorHwTraps(1)
+\f0 , 
+\f1 vendorMgmt.vendorTraps(4).ModuleTraps(2)
+\f0  ), but the "mevalue" for the trap enterprise OID was coming out in every case to be the top-level traps branch.\
+}

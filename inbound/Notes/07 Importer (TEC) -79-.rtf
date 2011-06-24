@@ -1,0 +1,170 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr15\min15\sec17\timesinceref330380117}
+{\revtim\yr2011\mo6\dy21\hr15\min15\sec29\timesinceref330380129}}\deftab720
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 Provisioning Integration\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Assumptions\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls1\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}TEC is the name of your Provisioning DB\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Implementation\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0
+\b0\fs24 \cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/PartialImports"}}{\fldrslt \ul How to do partial imports}}\cf0 ?\
+\ls2\ilvl0\cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/ForceAnImport"}}{\fldrslt \ul How to force an import}}\cf0 ?\
+\pard\pardeftab720\sa240\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Integration_Brief"}}{\fldrslt \cf2 \ul \ulc2 Brief description of the integration process}} Adding/Deleting/Changing sites works by..\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Operational Parameters\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls3\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}Integration is configured in the file: model-importer.properties\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 #\
+#http://quartz.sourceforge.net/javadoc/org/quartz/CronTrigger.html\
+#Field Name             Allowed Values          Allowed Special Characters\
+#Seconds                0-59                            , - * /\
+#Minutes                0-59                            , - * /\
+#Hours                  0-23                            , - * /\
+#Day-of-month   1-31                            , - *\'a0? / L W C\
+#Month                  1-12 or JAN-DEC         , - * /\
+#Day-of-Week    1-7 or SUN-SAT          , - *\'a0? / L C #\
+#Year (Opt)             empty, 1970-2099        , - * /\
+\
+importer.importSchedule = 0 0 0 1 1\'a0? 2023\
+\
+# Import URL\
+importer.importURL = file:/tmp/tec_dump.xml\
+\
+#\
+# For SNMP scans\
+importer.scanThreads = 10\
+#\
+# Database persistence threads\
+importer.writeThreads = 8\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls4\ilvl0
+\f0 \cf0 {\listtext	\'95	}How Changes are picked up:\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 OpenNMS recognizes changes to the model-importer.properties file when the OpenNMS service is started. Note that in the next generation of OpenNMS, all services will either dynamically detect their respective config file changes or an event will be used to tell the service to re-read its configuration/add to its configuration.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Logging\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS uses the Log4J library for logging. (see the /etc/opennms/log4j.properties file).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Exported XML\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If the export from TEC contains special characters, there needs to be special entity definitions in the XML header. Example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <?xml version="1.0" encoding="utf-8"?>\
+  <!DOCTYPE myData [\
+    <!ENTITY auml    "\'e4" >\
+    <!ENTITY ouml    "\'f6" >\
+    <!ENTITY uuml    "\'fc" >\
+    <!ENTITY szlig   "\'df" >\
+  ]>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] File Format and Location\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls5\ilvl0
+\b0\fs24 \cf2 {\listtext	\'95	}{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Integration_XML_Format"}}{\fldrslt \ul Integration XML Format}}\cf0 \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Performance\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The OpenNMS team has worked hard provide this integration with the performance required for very large networks. The current default settings in the model-importer.properties file allowed for an initial import of almost 45,000 devices in less than 1 hour. Subsequent runs are more intensive and take approximately 2 hours to complete. This performance improves tremendously when all devices provisioned with the SNMP service are responding to SNMP. At least half of the update time was spent waiting for SNMP timeouts. There is opportunity for improving performance by increasing the number of SNMP scanning threads in the model-importer.properties file.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 #URL\
+importer.importURL = file:/tmp/tec_dump.xml\
+#importer.importURL = https://provisioning.mycompany.com/tecadmin/export?Username=XXXXXX&Password=XXXXXX\
+\
+#Schedule\
+importer.importSchedule = 0 0 3 * *\'a0?\
+\
+#Performance Tuning\
+importer.scanThreads = 50\
+importer.writeThreads = 8\
+importer.maxActiveConnections = 10\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Importer Operation\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Four new OpenNMS events were added to support operation of the Importer service:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  uei.opennms.org/internal/importer/reloadImport\
+ uei.opennms.org/internal/importer/importStarted\
+ uei.opennms.org/internal/importer/importSuccessful\
+ uei.opennms.org/internal/importer/importFailure\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Reload Import Event\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 An event that can be used to cause the OpenNMS Importer service to be run immediately. See: {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/ForceAnImport"}}{\fldrslt \cf2 \ul \ulc2 How to force an import}}\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Import Started Event\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 An event is sent at the beginning of the Import. This can be viewed in the OpenNMS event browser.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Import Successful Event\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 An event is sent upon successful completion of the OpenNMS Import integration. This event contains statistics about the performance of the import.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  ImporterService: Finished Importing: Deletes: 0 Updates: 1 Inserts: 855\
+ Importing: 3m 18s 871ms \
+   Loading Resource: URL [file:/tmp/tec_dump.xml]: 873ms\
+   Auditing: 643ms Preprocessing: 2m 45s 882ms\
+   Total Scan Time: 326.047s  Avg Scan Time: 380.8960280373832ms per node\
+   Processing: 3m 17s 355ms\
+     Total Write Time: 212.918s Avg Write Time: 248.73598130841123ms per node\
+     Total Event Sending Time: 4.057s Avg Event Sending Time: 4.739485981308412ms per node Avg 0.5312295403954432ms per event\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Import Failure Event\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 An event is sent upon the failure of the OpenNMS Importer integration. A parameter contains a message for the cause of the failure. This event should be configured to create an {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Alarms"}}{\fldrslt \cf2 \ul \ulc2 alarm}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Importer_Service&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] JMX MBean\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS has instrumented the Importer service with {\field{\*\fldinst{HYPERLINK "http://en.wikipedia.org/wiki/JMX"}}{\fldrslt \cf2 \ul \ulc2 JMX}}. Import statistics can be pulled from the JMX MBean and also viewed here:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 http://localhost:8280/mbean?objectname=OpenNMS%3AName%3DImporterd\
+}

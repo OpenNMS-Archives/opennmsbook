@@ -1,0 +1,468 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 LucidaGrande;
+}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid301\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid401\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr16\min42\sec1\timesinceref330385321}
+{\revtim\yr2011\mo6\dy21\hr16\min42\sec12\timesinceref330385332}}\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Passive Nodes\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Passive nodes in OpenNMS, are nodes that OpenNMS is unable to directly communicate with because either they are 'not real' or because the only communication avaliable to them is done by someone else. They are termed 'Passive' because we cannot actively poll them but must instead passively rely on information sent to us form somewhere else. This document's intention is to explain Passive Nodes and how to configure and use this exciting new feature of OpenNMS.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Passive Status Keeper Revised\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 In OpenNMS version 1.3.2, the Passive Status Keeper was revised to support greater functionality. The impetus for this change stems from an additional requirement of the passive status keeper custom development project. This final requirement specified the ability to re-assign the node associated with a non "passive status" event to a passive node.\
+In the OpenNMS version 1.3.1, events that set the status of a passive node were identified in the passive-status-configuration.xml file. These events became "passive status" events only in application and were never associated with the passive node, they were associated with the node that sent the event (or in most cases the SNMP Trap). I say only in application because no actual passive status event was ever actually generated, these events ended up performing the same functionality as a passive status event because they're attributes were translated into the parameters required to set the status of the passive node:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}passiveNodeLabel\
+{\listtext	\'95	}passiveIpAddr\
+{\listtext	\'95	}passiveServiceName\
+{\listtext	\'95	}passiveStatus\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Optionally, one can set passiveReasonCode as well, otherwise e.g. SNMP traps will be displayed as "Reason: Unknown".\
+In version 1.3.1, the passive-status-configuration.xml file had sophisticated parsing and formatting functionality that was able to derive the above parameters to control the status of passive services. In version 1.3.2, this functionality was enhanced and moved to a new OpenNMS service called the EventTranslator. The enhancement also changed the configuration, as well. The following documentation has been updated to support the new functionality. Since this documentation started in the OpenNMS WIKI, you can view the history for OpenNMS version 1.3.1 support.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS has been enhanced with a new feature. This features provides OpenNMS with the ability to monitor the availability of what we call passive nodes. The term passive node was derived during the creation of use cases for a requested feature that initially used the term virtual node. Passive nodes, with respect to this feature, are nodes for which OpenNMS maintains the status of its interfaces and services, yet typically, is not an actual IP based service, hence the the original term "virtual" node. (Note: in practice, the status of an IP based service could be tracked with the passive monitor, we'll get to that later). Basically, the status of passive nodes are determined by a non-IP based protocol which are interpreted by an intermediary (proprietary management console) then reported (sent "Northbound") to OpenNMS via an SNMP trap or an OpenNMS XML event. This trap or event is how that status is tracked by the Passive Status Keeper inside OpenNMS.\
+The best way to get an understanding of this new feature is with a practical example, and there is no better example than one from the our original request.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Requirement\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}Monitor availability of satellite communication devices\
+{\listtext	\'95	}Satellite communication devices do not have IP interfaces; however, they do have an IP based management station that monitors their status and can report their status via an SNMP trap. Many satellites use contact closures to indicate alarm state.\
+{\listtext	\'95	}Enable OpenNMS to track the status of these satellite communication devices using SNMP traps.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Challenges and constraints\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Design this feature using the current Poller architecture so that all the current facilities (availability reports, outages and outage calendars, notifications, alarms, etc.) behave as if these service were being monitored directly by implementing an OpenNMS Poller monitor Interface class.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Solution\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] PassiveStatusKeeper.java, PassiveServiceMonitor.java, LoopPlugin.java and EventTranslator.java\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Four new classes were created for monitoring the status of Passive nodes (a passive node is any node that has a passive service). These classes are the Passive Status Keeper, PSK, and the Passive Service Monitor, PSM, the Loopback Plugin (LP), and the Event Translator (ET).\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Passive Status Keeper\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 It is the job of the PSK to simply maintain the status of passive (virtual) services in a hash table. The PSM is called by the Poller, just as the other IP based monitors, yet, its behavior is to report the status currently represented in the PSK's hash table. No polling on the network is performed. This hash table will either contain the latest status reported by a passive status event (PSE). If no status messages have been received, the PSK defaults to status "Up" a.k.a. "Available". (The UEI for the PSE is: "uei.opennms.org/services/passiveServiceStatus") During OpenNMS initialization, the current Outages queried to set the initial state of any passive service with an outage condition when OpenNMS was shutdown.\
+The hash table key is derived using the combination of the nodelabel, ipaddr, and serviceName. When a PSE is received by the PSK, it derives this key from 3 parameters:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls3\ilvl0\cf0 {\listtext	\'95	}passiveNodeLabel\
+{\listtext	\'95	}passiveIpAddr\
+{\listtext	\'95	}passiveServiceName\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The "passiveNodeLabel" needs to be exactly the same as node name in OpenNMS and is case sensitive. If a device has multiple PSK services they can be grouped together under the same IP address.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuration\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 As of 1.3.2, there is no longer any configuration required for the PSK. The PSK simply listens for PSEs and tracks that status of the passive service reported by a PSE. The configuration of PSK in version 1.3.1, mainly involved translating any event into a PSE and registering those events with the PSK. This translation has moved to the new and even more sophisticated OpenNMS daemon called, oddly enough, {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/EventTranslator"}}{\fldrslt \cf2 \ul \ulc2 EventTranslator}} (ET) and the PSK only listens for PSEs. Use ET to create PSEs for PSK (grin).\
+ET provides the ability to translate any event into a completely new event. (We chose creating a new event rather than changing the original event to preserve the integrity of the original event) This functionality can be used to create PSEs deriving the four PSE required parameters using regular expressions, SQL queries, and formatting statements.\
+Okay, before we get into the dirty details of the syntax of ET's configuration to create PSEs, here is a sample used to set that status of a passive service based on a trap from a Pixel Metrics device.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <?xml version="1.0" encoding="UTF-8"?>\
+<event-translator-configuration\
+xmlns="http://xmlns.opennms.org/xsd/translator-configuration"\
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >\
+  <translation>\
+    <!-- Create a new event and translate a few fields/ parameters\
+         for the PixelMetrics Trap tspEventPCRRepetitionError\
+         this translation creates a passiveServiceStatus event and sets\
+         the service status to Down -->\
+    <event-translation-spec uei="uei.opennms.org/mib2opennms/tspEventPCRRepetitionError">\
+      <mappings>\
+        <mapping>\
+          <!-- Create a parameter -->\
+          <assignment type="parameter" name="passiveNodeLabel">\
+            <value type="parameter" name=".1.3.6.1.4.1.6768.6.2.2.5.0" matches="^([A-z]+) ([0-9]+).*" result="$\{1\}-$\{2\}" />\
+          </assignment>\
+          <!-- Create a parameter -->\
+          <assignment type="parameter" name="passiveIpAddr">\
+            <value type="constant" result="169.254.1.1" />\
+          </assignment>\
+          <!-- Create a parameter -->\
+          <assignment type="parameter" name="passiveServiceName">\
+            <value type="parameter" name=".1.3.6.1.4.1.6768.6.2.2.7.0" matches="^([A-z]+): .*" result="$\{1\}" />\
+          </assignment>\
+          <!-- Create a parameter -->\
+          <assignment type="parameter" name="passiveStatus" >\
+            <value type="parameter" name=".1.3.6.1.4.1.6768.6.2.2.7.0" matches=".*exceeded.*" result="Down" />\
+          </assignment>\
+          <!-- Change the UEI to be a passive status event-->\
+          <assignment type="field" name="uei">\
+            <value type="constant" result="uei.opennms.org/services/passiveServiceStatus" />\
+          </assignment>\
+        </mapping>\
+      </mappings>\
+    </event-translation-spec>\
+  </translation>\
+</event-translator-configuration>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Tricky Part\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The derivation of the 4 required parameters of a PSE is the single most important component to using the passive node/service feature. From the fields and parameters in any event, one must be able to piece together these 4 parameters for the translated PSE. As discussed earlier, the first 3 parameters (passiveNodeLabel, passiveIpAddr, passiveServiceName) combine to make a hash table key for the status hash table maintained by PSK. Using the above example, ET will:\
+1) clone the original tspEventPCRRepetitionError event 2) Set the 4 PSE parameters with values derived from fields and parameters of the event 3) publish the new PSE event\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 Note: Since the original event is cloned, all the fields and parameters\
+will remain intact other than those changed by the assignments\
+within each mapping.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\b \cf0 The trickiest part of all
+\b0  is the handling of the result attribute to the value element. The result attribute can function as a literal or as a formatted string with access to the back-references of the regular expression specified in the matches attribute. Whew, that is a mouthful.\
+There are 2 ways to literally set the value. The first way is to use the matches attribute. If the regular expression specified in the matches attribute returns true the result attribute can be a literal string, such as with the "Down" result in the above example's setting of passiveStatus:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <assignment type="parameter" name="passiveStatus" >\
+  <value type="parameter" name=".1.3.6.1.4.1.6768.6.2.2.7.0" matches=".*exceeded.*" result="Down" />\
+</assignment>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The other way to set a literal is to set the type attribute equal to "constant" as in the above example's change of the UEI:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <!-- Change the UEI to be a passive status event-->\
+<assignment type="field" name="uei">\
+  <value type="constant" result="uei.opennms.org/services/passiveServiceStatus" />\
+</assignment>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 . The result attribute will then be set directly without any expression matching.\
+For more in-depth examples of using ET, see {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/EventTranslator"}}{\fldrslt \cf2 \ul \ulc2 EventTranslator}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Sample Implementation\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Okay, now that we know how status for a passive node's services are maintained, now we need a way to get the passive nodes, interfaces, and their services defined into OpenNMS. As of release 1.3.1, there are two methods to accomplish this:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls4\ilvl0\cf0 {\listtext	1.	}send-event.pl method\
+{\listtext	2.	}Loop plug-in method.\
+{\listtext	3.	}Provistioning Group method.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The send-event.pl Method\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS has two not very well-known events (not very published either) called the "Update Server" and "Update Service" events. These events have the UEIs: "uei.opennms.org/internal/capsd/updateServer" and "uei.opennms.org/internal/capsd/updateService", respectively. Use the events to add or delete nodes and services; for our purposes here, passive nodes and services.\
+Here is an example to add a passive node to OpenNMS:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 send-event.pl uei.opennms.org/internal/capsd/updateServer localhost \\\
+        --interface 169.254.1.1 \\\
+        --parm 'nodelabel Channel-9' \\\
+        --parm 'action ADD'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 With this event, a node will be created with the node label "Channel-9" and an IP interface of "169.254.1.1". Note that the node label must be unique in OpenNMS. Also note the different UEI.\
+To add a passive service:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 send-event.pl uei.opennms.org/internal/capsd/updateService localhost \\\
+	--interface 169.254.1.1 \\\
+	--service PCR \\\
+	--parm 'nodelabel Channel-9' \\\
+	--parm 'action ADD'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 With this event, the service PCR is added to the interface 169.254.1.1. This service must already be defined in the Capsd configuration. Note: if this service is not defined to use the Loop Plugin or some custom plugin that can determine the existence of this service, set the scan attribute to "off". (More on the Loop Plugin later).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Loop Plugin Method\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The Loop Plugin (LoopPlugin.java) was created to give OpenNMS users the ability to force a service on to an interface. Using this method, a passive node, interface, and service can be added with one event, the New Suspect event (uei.opennms.org/internal/newSuspect). This is the process to add a passive service using this method:\
+First, add the new service to capsd-configuration.xml:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <protocol-plugin protocol="PCR"\
+               class-name="org.opennms.netmgt.capsd.plugins.LoopPlugin"\
+               scan="on" user-defined="false" >\
+    <property key="ip-match" value="169.254.*.*" />\
+    <property key="is-supported" value="true" />\
+</protocol-plugin>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This configuration will automatically add the PCR service to any interface beginning with "169.254".\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Provisioning Group Method\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 It is now recommended that you add Nodes, Interfaces, and Services, that are not OpenNMS discovered, with the Admin/Provisioing Groups WebUI enhancement added in version 1.3.2. This feature gives you the ability to define nodes, interfaces, and services and manage them (add, change, delete) visually and more completely. The only down side is that you need to add the servcie to the DB manually. Say your new service name is 'davidService':\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  psql -U opennms -c "insert into service values (nextval('serviceNxtId'), 'davidService');"\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This will make the service name show up in the provisioning WebUI drop down list. (Admin | Manage Provisioning Groups). When adding nodes you can add multiple entries. For example a Telephone switch that has minor/major/critical contact closures. After you add them they will not automatically be added to the node list. The "Nodes in Group/Nodes in DB" field will show how many still need to be added. Don't forget to click on "Import" to add them to the database.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f2 \cf0 \line 
+\f0 Now, using either method, you are ready to start passively monitoring this service. This calls for our new Passive Service Monitor class (PassiveServiceMonitor.java) in the Poller configuration. You may use the same default polling package for passive monitors, however, I recommend you create a new polling package that polls much more frequently. This allows are more real-time experience for your outages. I recommend a 30 second polling interval (there isn't any network activity here and accessing a hash table should be in the sub-milliseconds). Enough explanation, here's a sample config:\
+poller-configuration.xml\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <package name="passive-services">\
+    <filter>IPADDR IPLIKE *.*.*.*</filter>\
+    <include-range begin="1.1.1.1" end="254.254.254.254"/>\
+    <rrd step = "300">\
+        <rra>RRA:AVERAGE:0.5:1:2016</rra>\
+        <rra>RRA:AVERAGE:0.5:12:4464</rra>\
+        <rra>RRA:MIN:0.5:12:4464</rra>\
+        <rra>RRA:MAX:0.5:12:4464</rra>\
+    </rrd>\
+    <service name="PCR" interval="30000" user-defined="false" status="on" />\
+    <downtime interval="15000" begin="0" end="300000"/>             <!-- 15s, 0, 5m -->\
+    <downtime interval="30000" begin="300000" end="43200000"/>      <!-- 30s, 5m, 12h -->\
+    <downtime interval="300000" begin="43200000" end="432000000"/>  <!-- 5m, 12h, 5d -->\
+    <downtime begin="432000000" delete="true"/>                     <!-- anything after 5 days delete -->\
+</package>\
+<monitor service="PCR" class-name="org.opennms.netmgt.poller.monitors.PassiveServiceMonitor" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This polling package tells the poller to schedule polling for the PCR service every 30 seconds. When the monitor is called, the monitor will compute the key ("nodelabel:ipaddr:serviceName") and request the status from the PSK.\
+That's not so bad, huh?\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Making it Happen\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 As stated earlier, the PSK subscribes for passive events and sets that status that the above monitor will poll. Events can be generated in a number of ways, however, for the purposes of this feature, we'll look at 2: send-event.pl and SNMP traps.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The send-event.pl Method\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Even if you are going to be using SNMP Traps to set the status of a passive nodes services, you can quickly test your setup for passive status monitoring using the send-event.pl script (or your own version) as shown in the sample here:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 send-event.pl uei.opennms.org/services/passiveServiceStatus localhost \\\
+	--interface 169.254.1.1 \\\
+	--service PCR \\\
+	--parm 'passiveNodeLabel Channel-9' \\\
+	--parm 'passiveIpAddr 169.254.1.1' \\\
+	--parm 'passiveServiceName PCR' \\\
+	--parm 'passiveReasonCode just went down the sink' \\\
+	--parm 'passiveStatus Down'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Using the send-event.pl script, you can always just use the default passiveServiceStatus event already configured in OpenNMS version 1.3.1. This event uses parameters (not fields) and conveniently uses the sample configuration defined in passive-status-configuration.xml shipped in OpenNMS version 1.3.1 and a UEI already defined in eventconf.xml. This event is a handy way to quickly test your configuration.\
+The PSK will add/update an entry in its hash table. A visual representation looks like this (which sql table is this from? Probably it's no SQL table at all but a list kept in memory, so it's not accessible via the database):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 Key 				  | Value\
+----------------------------------|-------\
+"Channel-9:169.254.1.1:PCR"       | Down\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f2 \cf0 \line 
+\f0 Now that the status is set in the PSK, how does OpenNMS monitor that status? This is where the PSM comes in. This Monitor is scheduled for polling just as any of the IP based Service Monitors; however, instead of using network protocols, it requests the status from the PSK. The monitor returns the status of this passive service to the Poller and the behavior is identical and the Outage is recorded, notifications are triggered, the WebUI reflects status and availability, and availability reports can be created. Magic!\
+To restore the outage, the process is the same using the following event:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 send-event.pl uei.opennms.org/services/passiveServiceStatus localhost \\\
+	--interface 169.254.1.1 \\\
+	--service PCR \\\
+	--parm 'passiveNodeLabel Channel-9' \\\
+	--parm 'passiveIpAddr 169.254.1.1' \\\
+	--parm 'passiveServiceName PCR' \\\
+	--parm 'passiveStatus Up'\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Now the PSK hash table will reflect:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 Key 				  | Value\
+----------------------------------|-------\
+"Channel-9:169.254.1.1:PCR"       | Up\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The PSM will poll and see the outage is restored.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=17"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Using SNMP Traps\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For convenience, let's continue with this example and use one of the traps that came with the request for this new feature. This trap is defined in the PIXMET-DVSTATION-MIB and was converted into the OpenNMS event configuration format (eventconf.xml):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <event>\
+  <mask>\
+    <maskelement>\
+      <mename>id</mename> \
+      <mevalue>.1.3.6.1.4.1.6768.3.4.5</mevalue>\
+    </maskelement>\
+    <maskelement>\
+      <mename>generic</mename>\
+      <mevalue>6</mevalue>\
+    </maskelement>\
+    <maskelement>\
+      <mename>specific</mename>\
+      <mevalue>1240</mevalue>\
+    </maskelement>\
+  </mask>\
+  <uei>uei.opennms.org/mib2opennms/tspEventPCRRepetitionError</uei>\
+  <event-label>PIXMET-TSP-MIB defined trap event: tspEventPCRRepetitionError</event-label>\
+  <descr>\
+<p>The time interval between two consecutive Program Clock Reference\
+(PCR) values exceeded the maximum allowed.</p><table>\
+        <tr><td><b>\
+\
+        pmEventClockTimestamp</b></td><td>\
+       \'a0%parm[#1]%;</td><td><p;></p></td;></tr>\
+        <tr><td><b>\
+\
+        pmEventDeviceTimestamp</b></td><td>\
+       \'a0%parm[#2]%;</td><td><p;></p></td;></tr>\
+        <tr><td><b>\
+\
+        pmEventSeverity</b></td><td>\
+       \'a0%parm[#3]%;</td><td><p;>\
+                cleared(1)\
+                indeterminate(2)\
+                critical(3)\
+                major(4)\
+                minor(5)\
+                warning(6)\
+                info(7)\
+                none(8)\
+        </p></td;></tr>\
+        <tr><td><b>\
+\
+        pmEventSource</b></td><td>\
+       \'a0%parm[#4]%;</td><td><p;></p></td;></tr>\
+        <tr><td><b>\
+\
+        pmEventCurrentProfileName</b></td><td>\
+       \'a0%parm[#5]%;</td><td><p;></p></td;></tr>\
+        <tr><td><b>\
+\
+        pmEventSourceName</b></td><td>\
+       \'a0%parm[#6]%;</td><td><p;></p></td;></tr>\
+        <tr><td><b>\
+\
+        pmEventDescription</b></td><td>\
+       \'a0%parm[#7]%;</td><td><p;></p></td;></tr>\
+        <tr><td><b>\
+\
+        pidNumber</b></td><td>\
+       \'a0%parm[#8]%;</td><td><p;></p></td;></tr></table>\
+  </descr>\
+  <logmsg dest='logndisplay'><p>\
+                        tspEventPCRRepetitionError trap received\
+                        pmEventClockTimestamp=%parm[#1]%\
+                        pmEventDeviceTimestamp=%parm[#2]%\
+                        pmEventSeverity=%parm[#3]%\
+                        pmEventSource=%parm[#4]%\
+                        pmEventCurrentProfileName=%parm[#5]%\
+                        pmEventSourceName=%parm[#6]%\
+                        pmEventDescription=%parm[#7]%\
+                        pidNumber=%parm[#8]%</p>\
+  </logmsg>\
+  <severity>Indeterminate</severity>\
+</event>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\b \cf0 The following step isn't necessary in version 1.6 (maybe earlier?). All configuration is in translator-configuration.xml.
+\b0 \
+Now that the trap has been registered as an event, register this event in the passive-status-configuration.xml file as we discussed above:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <passive-event uei="uei.opennms.org/mib2opennms/tspEventPCRRepetitionError">\
+    <status-key>\
+        <node-label>\
+            <event-token is-parm="true" name=".1.3.6.1.4.1.6768.6.2.2.5.0" value="~^([A-z]+) ([0-9]+).*" pattern="$1-$2"/>\
+        </node-label>\
+        <ipaddr>\
+            <event-token is-parm="true" name=".1.3.6.1.4.1.6768.6.2.2.5.0" value="169.254.1.1"/>\
+        </ipaddr>\
+        <service-name>\
+            <event-token is-parm="true" name=".1.3.6.1.4.1.6768.6.2.2.7.0" value="~^([A-z]+): .*" pattern="$1"/>\
+        </service-name>\
+        <status>\
+            <event-token is-parm="true" name=".1.3.6.1.4.1.6768.6.2.2.5.0" value="Down"/>\
+        </status>\
+    </status-key>\
+</passive-event>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Notice the names of the parameters. When a trap is received by OpenNMS the varbinds are converted to event parameters and the name of the parameter is the SNMP Object Identifier. Using your new found knowledge of this feature you gained by mastering the "TRICKY PART" above, you can see how this will set the status of the PCR service of the Channel-9 node for interface 169.254.1.1. Can't you? Oh, here, it might help if you have a look at some data from an actual trap:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 Trap signature:\
+	.1.3.6.1.4.1.6768.3.4.5,undefined,v2,1240,6,public\
+Varbinds:\
+	.1.3.6.1.2.1.1.3.0=963472433(TimeTicks,text);\
+	.1.3.6.1.6.3.1.1.4.1.0=.1.3.6.1.4.1.6768.3.4.5.0.1240(ObjectIdentifier,text);\
+	.1.3.6.1.4.1.6768.6.2.2.1.0=4026458540(TimeTicks,text);\
+	.1.3.6.1.4.1.6768.6.2.2.2.0=07 D5 0B 15 09 05 36 09 2B 0B 00(OctetString,text);\
+	.1.3.6.1.4.1.6768.6.2.2.3.0=4(Int32,text);\
+	.1.3.6.1.4.1.6768.6.2.2.4.0=20(Gauge32,text);\
+	.1.3.6.1.4.1.6768.6.2.2.5.0=Channel 9(OctetString,text);\
+	.1.3.6.1.4.1.6768.6.2.2.6.0=Channel 9(OctetString,text);\
+	.1.3.6.1.4.1.6768.6.2.2.7.0=PCR: PID 0x0902 (2306) (PCR only): 61.171 ms interval between PCR values exceeded max threshold of 60 ms.(OctetString,text);\
+	.1.3.6.1.4.1.6768.3.4.2.2.1.1.0=2306(Gauge32,text)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This passive-status-configuration will derive the key "Channel-9:169.254.1.1:PCR" and a status of "Down" from the contents of this trap. Note that the <ipaddr> and the <status> elements are literals and the name of the parameter could have been 
+\b any valid
+\b0  event field or paramenter.\
+And last but not least: Here is a sample trap command you can use to test this config: (Note: that I only send in the varbinds need to derive the key and status tokens)\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 snmptrap -v 2c -c public localhost '' .1.3.6.1.4.1.6768.3.4.5.1240 \\\
+        .1.3.6.1.6.3.1.1.4.1.0 o .1.3.6.1.4.1.6768.3.4.5.0.1240 \\\
+        .1.3.6.1.4.1.6768.6.2.2.1.0 t 4026458540 \\\
+        .1.3.6.1.4.1.6768.6.2.2.5.0 s "Channel 9" \\\
+        .1.3.6.1.4.1.6768.6.2.2.7.0 s "PCR: PID 0x0902 ... exceeded max threshold of 60ms."\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Passive_Status_Keeper&action=edit&section=18"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Summary\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To attack this feature for you own passive events, take the following steps and use the instructions in this document to complete each task. Looking at the following steps compared.\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls5\ilvl0\cf0 {\listtext	1.	}Define additional passive status events (if using traps) in an event configuration file.\
+{\listtext	2.	}Register these events with the PSK in that passive-status-configuration.xml file.\
+{\listtext	3.	}Create the Passive Nodes/Interfaces/Services (use one of the 2 methods discussed above... the XML-RPC API can be used, too, but that is another set of documentation)\
+{\listtext	4.	}Prosper.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Template:New_Feature_In&action=edit&section=T-1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Version History/Availability\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls6\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}This feature was added in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.1"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.1}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.2"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.2}}\
+}

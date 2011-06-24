@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>automaticallyCheckForChanges</key>
+	<true/>
+	<key>draftFileFormat</key>
+	<integer>1</integer>
+	<key>folderPath</key>
+	<string>/Users/afi/Documents/workspace/opennmsbook/inbound</string>
+	<key>importDestinationID</key>
+	<integer>1</integer>
+	<key>importShowsContainersOnly</key>
+	<true/>
+	<key>otherFileFormat</key>
+	<integer>1</integer>
+	<key>plainTextAddsParagraphPadding</key>
+	<true/>
+	<key>syncsDraftFolder</key>
+	<true/>
+	<key>syncsOnlyDocumentsInCollection</key>
+	<false/>
+	<key>syncsOtherTextFiles</key>
+	<true/>
+	<key>takesSnapshots</key>
+	<true/>
+	<key>usesFileNumbering</key>
+	<true/>
+</dict>
+</plist>

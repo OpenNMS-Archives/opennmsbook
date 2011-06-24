@@ -21,7 +21,8 @@ There is a large number of ports which can be scannd by OpenNMS. Look in capsd a
         </Document>
         <Document ID="117">
             <Title>Managing Configuration</Title>
-            <Text>OpenNMS's configuration is very powerful, but with that unfortunately comes a level of complexity that can make it difficult to manage upgrades. One of the easiest ways to mitigate this is by using git to manage your configuration upgrades.
+            <Text>Managing Configuration
+OpenNMS's configuration is very powerful, but with that unfortunately comes a level of complexity that can make it difficult to manage upgrades. One of the easiest ways to mitigate this is by using git to manage your configuration upgrades.
 Contents
 
 [hide]
@@ -151,13 +152,16 @@ Now that everything's merged, just start OpenNMS back up, and you should be in b
         </Document>
         <Document ID="72">
             <Title>Mobile Access</Title>
+            <Text>.Mobile Access</Text>
         </Document>
         <Document ID="68">
             <Title>Scheduled Outages</Title>
+            <Text>Scheduled Outages</Text>
         </Document>
         <Document ID="73">
             <Title>Performance Tuning</Title>
-            <Text>Tuning Overview
+            <Text>Performance Tuning
+Tuning Overview
 [edit] Hardware
 	•	If you design a new OpenNMS system carefully read the hardware considerations below.
 	•	If you have already a running system, you might still find some possibilities to get nearer to the design described below
@@ -442,9 +446,11 @@ To analyze why your event table is so large, have a look at Event_Maintenance.
         </Document>
         <Document ID="69">
             <Title>Surveillance Views</Title>
+            <Text>.Surveillance Views</Text>
         </Document>
         <Document ID="122">
             <Title>Security Considerations</Title>
+            <Text>Security Considerations</Text>
         </Document>
         <Document ID="118">
             <Title>OpenNMS HA</Title>
@@ -800,7 +806,8 @@ This will protect your data. You can disable it, but you are strongly encouraged
         </Document>
         <Document ID="74">
             <Title>Jetty and HTTPS</Title>
-            <Text>ntroduction
+            <Text>Jetty and HTTPS
+ntroduction
 If users will be accessing the OpenNMS web UI across untrusted networks, it is desirable to protect web sessions using HTTPS. This article explains how to configure OpenNMS' built-in Jetty web server to support HTTPS with no dependencies on external software.
 [edit] For the Impatient
 These instructions are not appropriate for production environments
@@ -929,7 +936,8 @@ keytool -import -noprompt -storepass valvoja -keystore /usr/share/opennms/etc/je
         </Document>
         <Document ID="75">
             <Title>User Management</Title>
-            <Text>Setting Up a new user
+            <Text>User Management
+Setting Up a new user
 This document shows you how to create a new local defined user and how to grant admin rights to users.
 If you want to use LDAP authentication see LDAP Authentication
 [edit] Starting out
@@ -1703,7 +1711,8 @@ The first few lines of the capsd-configuration.xml file control how capsd will b
         </Document>
         <Document ID="76">
             <Title>Spring Security and LDAP</Title>
-            <Text>Abstract
+            <Text>Spring Security and LDAP
+Abstract
 Centralized authentication is a "big deal" in any enterprise environment. Integrating your OpenNMS implementation with your environment is a Good Thing. Before linking the two, there are some considerations. The main one is if you want to rely solely on your central authenticator for all OpenNMS auth events, or support a hybrid scheme of the built-in local (aka UserDAO) as well as an LDAP or similar authenticator. Keep in mind that OpenNMS, itself, has processes periodically authenticating (think RTC and Provisioning) and for this reason it is better to go the loosely-coupled route by continuing to support the UserDAO mechanism, as described in the latter implementation section below.
 Another source of minutiae lies in the specific LDAP implementation you're working with. While AD and OpenLDAP (and Sun DS, etc.) implement the same protocol, their schemas are substantially different. The biggest difference (as highlighted by LDAP search filters referenced below) is the memberOf attribute, which is not supported by default LDAP v3 spec (and is not present in common OpenLDAP installs), but comes standard with AD. This has a significant implication in that you cannot filter a user search by supplementary group membership, and most installs tend not to be fully hierarchical (User's DN doesn't cite a home group). Fortunately, you can either create dedicated per-role LDAP groups or map existing groups to roles by selecting and configuring the appropriate AuthoritiesPopulator. A 'role' is how OpenNMS refers to an access level, btw.
 [edit] Sample Configuration "LDAP only"
@@ -2291,10 +2300,12 @@ The number of matching rows found. Set only if the "match-all" param is set to "
         </Document>
         <Document ID="124">
             <Title>LDAP</Title>
+            <Text>LDAP</Text>
         </Document>
         <Document ID="77">
             <Title>Filter</Title>
-            <Text>Think of the filter (also referred to as a rule) as a shorthand SQL statement that automatically selects ipaddr from the ipinterface table. You are basically building the WHERE clause with the rule that you write. There is an XML file called database-schema.xml in the /opt/opennms/etc directory that informs the filter code of what tables it can use in building the WHERE clause. Here is an explaination of that file:
+            <Text>Filter
+Think of the filter (also referred to as a rule) as a shorthand SQL statement that automatically selects ipaddr from the ipinterface table. You are basically building the WHERE clause with the rule that you write. There is an XML file called database-schema.xml in the /opt/opennms/etc directory that informs the filter code of what tables it can use in building the WHERE clause. Here is an explaination of that file:
 Each table used by the filter code is in a &lt;table> tag. If a table has an attribute of 'visible=false' then no columns in that table can be used in the WHERE clause and thus can't appear in the rule. You will get some sort of syntax exception if it sees any non-visible columns in the rule. The same applies to a non-visible column in a table.
 A &lt;join> tag tells the filter module how to relate this table to the ipinterface table. The ipinterface table is marked with the attribute 'key=primary', meaning that it is going to be the table we select ipaddr from and join all other tables to.
 In brief, you can use C / Java-style comparison operators to data types they apply to ( == and != can be used on strings, as can the SQL LIKE keyword).
@@ -3110,6 +3121,10 @@ Integration with Hyperic Hyperic_HQ_Syslog_Integration (functionally obsolete, b
 	•	This feature was enhanced or modified in version 1.6.3
 </Text>
         </Document>
+        <Document ID="125">
+            <Title>Deployment</Title>
+            <Text>Where to install opennms in your network</Text>
+        </Document>
         <Document ID="79">
             <Title>Importer (TEC)</Title>
             <Text>Provisioning Integration
@@ -3713,6 +3728,9 @@ GET \ "Content-Type: application/xml" \ admin:admin \ http://localhost:8980/open
 OpenNMS Provisioning	33
 </Text>
         </Document>
+        <Document ID="130">
+            <Title>The administrators workflow</Title>
+        </Document>
         <Document ID="85">
             <Title>Trapd</Title>
             <Text>Functionality
@@ -3740,6 +3758,10 @@ I.e. for each trap received, it will get prioritized, categorized and submitted 
 [edit] More examples
 Automating alarms and reducing amount of messages Syslogd_Automations
 </Text>
+        </Document>
+        <Document ID="126">
+            <Title>Houskeeping</Title>
+            <Text>Recurring tasks, daily things to do</Text>
         </Document>
         <Document ID="86">
             <Title>SyslogD Automations</Title>
@@ -4157,6 +4179,15 @@ Bug 3492: Automatically populating asset fields
 	•	This feature was added in version 1.8.2
 </Text>
         </Document>
+        <Document ID="131">
+            <Title>OpenNMS</Title>
+            <Synopsis>Introduction slide explained</Synopsis>
+            <Text>Introduction slide from training explained</Text>
+        </Document>
+        <Document ID="127">
+            <Title>Design patterns and best practices</Title>
+            <Text>Design patterns and best practices</Text>
+        </Document>
         <Document ID="87">
             <Title>Provisioner</Title>
             <Text>OpenNMS has a number of ways to perform automated discovery, but sometimes it is better to just tell OpenNMS what to monitor. A case in point would be a remote router accessed via DSL where the IP address is set via DHCP. If that address changes, OpenNMS may have no way of knowing that automatically.
@@ -4335,6 +4366,7 @@ Monitoring a Dell PowerEdge Expandable RAID Controller 3/Di
         <Document ID="88">
             <Title>Bug reporting, Information Sources</Title>
             <Synopsis>IRC etc.</Synopsis>
+            <Text>Bug reporting, Information Sources</Text>
         </Document>
         <Document ID="92">
             <Title>Service Pollers</Title>
@@ -4390,6 +4422,21 @@ T
 	•	TCP Port Service Poller
 	•	Telnet Service Poller
 </Text>
+        </Document>
+        <Document ID="132">
+            <Title>At the heart of OpenNMS is eventd. All process either generate events, rely on events or both, so it needs to be shown in the architecture overview.
+
+Second, to demonstrate events in class I always start off with a send-event.pl example. Just sending "uei.foo" to the system and seeing it show up goes a long way toward having the admin understand how events work.
+
+From there I would probably have sections on traps, syslog and TL/1, since those would build on the student's understanding of events.
+
+Third, a natural progression from events is notifications. Since currently notifications are triggered on events, it demonstrates a use of a process that consumes events from OpenNMS.
+
+At this point, I would probably move on to service monitoring, followed by data collection, and then return back to events by discussing alarms, automations and the trouble ticket interface.</Title>
+        </Document>
+        <Document ID="128">
+            <Title>SNMP Asset Adapter</Title>
+            <Text>SNMP Asset Adapter</Text>
         </Document>
         <Document ID="10">
             <Title>License Information</Title>
@@ -4464,6 +4511,7 @@ tenforssh.cfg holds a list of IP Addresses (one per line) with the 10 hosts.
         </Document>
         <Document ID="11">
             <Title>Reading SLA Category Data</Title>
+            <Text>Reading SLA Category Data</Text>
         </Document>
         <Document ID="94">
             <Title>Passive Status Keeper</Title>
@@ -4770,6 +4818,16 @@ To attack this feature for you own passive events, take the following steps and 
         </Document>
         <Document ID="12">
             <Title>Reading Graphs</Title>
+            <Text>.Reading Graphs</Text>
+        </Document>
+        <Document ID="133">
+            <Title>Everything is an event</Title>
+            <Text>At the heart of OpenNMS is eventd. All process either generate events, rely on events or both, so it needs to be shown in the architecture overview.
+Second, to demonstrate events in class I always start off with a send-event.pl example. Just sending "uei.foo" to the system and seeing it show up goes a long way toward having the admin understand how events work.
+From there I would probably have sections on traps, syslog and TL/1, since those would build on the student's understanding of events.
+Third, a natural progression from events is notifications. Since currently notifications are triggered on events, it demonstrates a use of a process that consumes events from OpenNMS.
+At this point, I would probably move on to service monitoring, followed by data collection, and then return back to events by discussing alarms, automations and the trouble ticket interface.
+</Text>
         </Document>
         <Document ID="95">
             <Title>HTTP Monitor</Title>
@@ -4846,6 +4904,15 @@ Some (including me) may think of writing a special webapp that returns "OK" on a
         </Document>
         <Document ID="13">
             <Title>Acknowledging Notifications</Title>
+            <Text>.Acknowledging Notifications</Text>
+        </Document>
+        <Document ID="134">
+            <Title>Set out a trap</Title>
+            <Text>Traps explained</Text>
+        </Document>
+        <Document ID="14">
+            <Title>Creating Tickets in a Ticket System</Title>
+            <Text>.Creating Tickets in a Ticket System</Text>
         </Document>
         <Document ID="96">
             <Title>Page Sequence Monitor</Title>
@@ -5046,9 +5113,6 @@ log4j.category.httpclient=DEBUG, MISC
 	•	This feature was enhanced or modified in version 1.6.10
 </Text>
         </Document>
-        <Document ID="14">
-            <Title>Creating Tickets in a Ticket System</Title>
-        </Document>
         <Document ID="97">
             <Title>Template</Title>
             <Text>Description
@@ -5059,6 +5123,11 @@ Author</Text>
         </Document>
         <Document ID="15">
             <Title>One chapter per way to provision with provisiond</Title>
+            <Text>One chapter per way to provision with provisiond</Text>
+        </Document>
+        <Document ID="135">
+            <Title>Interpret and decide</Title>
+            <Text>TL/1 and syslog explained</Text>
         </Document>
         <Document ID="98">
             <Title>Remote Monitor</Title>
@@ -5162,9 +5231,11 @@ Steps:
         </Document>
         <Document ID="16">
             <Title>Installing</Title>
+            <Text>Installing</Text>
         </Document>
         <Document ID="20">
             <Title>SNMP Datacollection</Title>
+            <Text>SNMP Datacollection</Text>
         </Document>
         <Document ID="99">
             <Title>Remote Polling</Title>
@@ -5320,45 +5391,77 @@ For a complete overview of the remote poller architecture, see the Remote Poller
         </Document>
         <Document ID="17">
             <Title>Sizing</Title>
+            <Text>Sizing</Text>
         </Document>
         <Document ID="21">
             <Title>Monitoring</Title>
+            <Text>Monitoring</Text>
+        </Document>
+        <Document ID="140">
+            <Title>Automations</Title>
+            <Text>. Automations</Text>
+        </Document>
+        <Document ID="136">
+            <Title>Share and Alert</Title>
+            <Text>Notifications and Trouble Ticketing</Text>
         </Document>
         <Document ID="18">
             <Title>Thresholding</Title>
+            <Text>. Thresholding</Text>
         </Document>
         <Document ID="22">
             <Title>Maps</Title>
+            <Text>Maps</Text>
         </Document>
         <Document ID="19">
             <Title>Notifications</Title>
+            <Text>Notifications</Text>
+        </Document>
+        <Document ID="137">
+            <Title>Service Monitoring</Title>
+            <Text>.Service Monitoring</Text>
         </Document>
         <Document ID="23">
             <Title>Graphing</Title>
+            <Text>Graphing</Text>
         </Document>
         <Document ID="24">
             <Title>Notifications</Title>
         </Document>
+        <Document ID="138">
+            <Title>Data Collection</Title>
+            <Text>.Data Collection</Text>
+        </Document>
         <Document ID="25">
             <Title>Syslog</Title>
+            <Text>.Syslog</Text>
         </Document>
         <Document ID="30">
             <Title>System Architecture</Title>
         </Document>
         <Document ID="26">
             <Title>Debugging</Title>
+            <Text>Debugging</Text>
+        </Document>
+        <Document ID="139">
+            <Title>Alarms</Title>
+            <Text>.Alarms</Text>
         </Document>
         <Document ID="31">
             <Title>KSC Reports</Title>
+            <Text>.KSC Reports</Text>
         </Document>
         <Document ID="27">
             <Title>LinkD</Title>
+            <Text>LinkD</Text>
         </Document>
         <Document ID="32">
             <Title>User Management and external Authentication</Title>
+            <Text>User Management and external Authentication</Text>
         </Document>
         <Document ID="28">
             <Title>Eventd</Title>
+            <Text>Eventd</Text>
         </Document>
         <Document ID="100">
             <Title>Event Config</Title>
@@ -5800,12 +5903,15 @@ It is hoped that this How-To has proved useful. Please direct corrections and co
         </Document>
         <Document ID="33">
             <Title>Standard Reports</Title>
+            <Text>Standard Reports</Text>
         </Document>
         <Document ID="29">
             <Title>Trap Handling</Title>
+            <Text>.Trap Handling</Text>
         </Document>
         <Document ID="34">
             <Title>Extending Reports</Title>
+            <Text>Extending Reports</Text>
         </Document>
         <Document ID="101">
             <Title>Glossary</Title>
@@ -5827,6 +5933,7 @@ No Severity could be associated with this event.
         </Document>
         <Document ID="35">
             <Title>Adding new Services</Title>
+            <Text>Adding new Services</Text>
         </Document>
         <Document ID="102">
             <Title>Event Reduction</Title>
@@ -5856,12 +5963,15 @@ Retrieved from "http://www.opennms.org/wiki/Reduction_key"
         </Document>
         <Document ID="36">
             <Title>Adding new Devices</Title>
+            <Text>Adding new Devices</Text>
         </Document>
         <Document ID="41">
             <Title>SNMP Poller</Title>
+            <Text>SNMP Poller</Text>
         </Document>
         <Document ID="37">
             <Title>Asset Management</Title>
+            <Text>Asset Management</Text>
         </Document>
         <Document ID="103">
             <Title>Event Substitution</Title>
@@ -5940,15 +6050,19 @@ With OpenNMS 1.5.92, %asset[fieldname]% was added. Replace "fieldname" with any
         </Document>
         <Document ID="42">
             <Title>DHCPD</Title>
+            <Text>DHCPD</Text>
         </Document>
         <Document ID="38">
             <Title>Automations</Title>
+            <Text>. Automations</Text>
         </Document>
         <Document ID="43">
             <Title>Ticketing Integration</Title>
+            <Text>Ticketing Integration</Text>
         </Document>
         <Document ID="39">
             <Title>ScriptD</Title>
+            <Text>ScriptD</Text>
         </Document>
         <Document ID="104">
             <Title>Event Params</Title>
@@ -6018,6 +6132,7 @@ This book is intended both for Users and Administrators of OpenNMS. Users will f
         </Document>
         <Document ID="44">
             <Title>Passive Status Keeper</Title>
+            <Text>Passive Status Keeper</Text>
         </Document>
         <Document ID="4">
             <Title>User</Title>
@@ -6025,6 +6140,7 @@ This book is intended both for Users and Administrators of OpenNMS. Users will f
         </Document>
         <Document ID="45">
             <Title>Alarm Management</Title>
+            <Text>Alarm Management</Text>
         </Document>
         <Document ID="5">
             <Title>Administrator</Title>
@@ -6156,6 +6272,7 @@ Retrieved from "http://www.opennms.org/wiki/Event_Translator"
         </Document>
         <Document ID="46">
             <Title>Asterisk Gateway</Title>
+            <Text>Asterisk Gateway</Text>
         </Document>
         <Document ID="50">
             <Title>Data Analysis</Title>
@@ -6165,15 +6282,13 @@ Retrieved from "http://www.opennms.org/wiki/Event_Translator"
             <Text>Technical Information
 
 The OpenNMS Book in English is located in GIT:
+git clone git://opennms.git.sourceforge.net/gitroot/opennms/opennmsbook
+
 ssh://$USER@opennms.git.sourceforge.net/gitroot/opennms/opennmsbook
-If you clone this directory you will find 
+     
+If you use Scrivener, you can open the project file directly.
+If you do not use Scrivener, please go into the “inbound” directory and modify the files in there.
 
-OpenNMS_Book_English.scriv
-
-Which contains the book. The directory structure underneath is managed by a tool called Scrivener. 
-You do not need Scrivener to help writing the book! All the text content is located in
-./OpenNMS_Book_English.scriv/Files/Docs
-Each Chapter is stored as an individual .rtf in this folder.
 The text format is RTF, which means that you can edit text in any RTF-capable editor.
 If you have text in another format, or if you have text of which you don’t know where to put, please save it in the ./inbound/ folder.
 There will be a recent pdf as well for your convenience (which shows the current status of the book).
@@ -6182,9 +6297,10 @@ Writing Style
 
 There is a style guide written by the BBC in the git repository. It is written for news and not for a manual, but: read through it for inspiration. A lot of the statements true for news are true for this book as well. We do not aim to create an academical work, but a readable, useful book which becomes a permanent reference for the reader.
 This means, above all: Short sentences. 
-Another consideration is the way in which we address the reader. “How are we doing today” is what the doctor says when we visit (mine does not, but that’s another story). Avoid the “we do this” and then “we do that” - it’s not us, it’s either the writer or the reader. Texts get more lively when it’s active.
+Another consideration is the way in which we address the reader. “How are we doing today” is what the doctor says when we visit (mine does not, but that’s another story). Avoid the “we do this” and then “we do that” - it’s not us, it’s either the writer or the reader. 
 
-</Text>
+
+Process</Text>
         </Document>
         <Document ID="8">
             <Title>Introduction</Title>
@@ -6811,9 +6927,11 @@ The "mevalue" for "id" came out one level short, so I corrected these by hand. T
         </Document>
         <Document ID="48">
             <Title>CapsD &amp; Discovery</Title>
+            <Text>CapsD &amp; Discovery</Text>
         </Document>
         <Document ID="52">
             <Title>HTTP Datacollection</Title>
+            <Text>HTTP Datacollection</Text>
         </Document>
         <Document ID="111">
             <Title>SNMP Reports Howto</Title>
@@ -7108,9 +7226,11 @@ Retrieved from "http://www.opennms.org/wiki/Alarms"
         </Document>
         <Document ID="53">
             <Title>JMX Datacollection</Title>
+            <Text>JMX Datacollection</Text>
         </Document>
         <Document ID="54">
             <Title>WMI Datacollection</Title>
+            <Text>WMI Datacollection</Text>
         </Document>
         <Document ID="112">
             <Title>Data from several nodes</Title>
@@ -7220,6 +7340,7 @@ That's it.
         </Document>
         <Document ID="55">
             <Title>NSClient</Title>
+            <Text>NSClient</Text>
         </Document>
         <Document ID="108">
             <Title>Configuring Alarms</Title>
@@ -7288,9 +7409,11 @@ Another new feature added to support Alarms is called Automations. Even though A
         </Document>
         <Document ID="56">
             <Title>JDBC Datacollection</Title>
+            <Text>JDBC Datacollection</Text>
         </Document>
         <Document ID="60">
             <Title>OpenNMS Configuration</Title>
+            <Text>OpenNMS Configuration</Text>
         </Document>
         <Document ID="113">
             <Title>RPN Tutorial</Title>
@@ -7616,7 +7739,8 @@ The first few lines of the capsd-configuration.xml file control how capsd will b
         </Document>
         <Document ID="61">
             <Title>Backup &amp; Restore</Title>
-            <Text>Database
+            <Text>Backup &amp; Restore
+Database
 Always use pg_dump/pg_restore with the -Fc option when backing up and restoring! It is much smarter than a "raw SQL" dump.
 Backing Up 
 pg_dump -U opennms -Fc -f /tmp/opennms.pgsql.gz opennms
@@ -7687,13 +7811,15 @@ This will walk you through setting up IPLIKE on Windows.
         </Document>
         <Document ID="63">
             <Title>Asset Management</Title>
+            <Text>.Asset Management</Text>
         </Document>
         <Document ID="64">
             <Title>Graphical Representation</Title>
         </Document>
         <Document ID="115">
             <Title>Popular Discussions</Title>
-            <Text>Why is it Java?
+            <Text>Popular Discussions
+Why is it Java?
 Why is it using RRD and not a RDBMS for storing graph data?
 Why is there so much XML?
 Why do I need to restart OpenNMS for some configuration changes and for others not?
@@ -7845,15 +7971,19 @@ Now that everything's merged, just start OpenNMS back up, and you should be in b
         </Document>
         <Document ID="70">
             <Title>Surveillance Categories</Title>
+            <Text>Surveillance Categories</Text>
         </Document>
         <Document ID="66">
             <Title>Standard Services (out of the box)</Title>
+            <Text>.Standard Services (out of the box)</Text>
         </Document>
         <Document ID="71">
             <Title>Filters</Title>
+            <Text>Filters</Text>
         </Document>
         <Document ID="67">
             <Title>Path Outages</Title>
+            <Text>Path Outages</Text>
         </Document>
     </Documents>
 </SearchIndexes>

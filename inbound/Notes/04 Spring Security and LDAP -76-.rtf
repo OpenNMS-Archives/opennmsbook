@@ -1,0 +1,707 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 LucidaGrande;\f2\fmodern\fcharset0 Courier;
+\f3\fmodern\fcharset0 Courier-Bold;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid2\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid3\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid102\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid202\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}
+{\list\listtemplateid7\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid601\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid7}
+{\list\listtemplateid8\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid701\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid8}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}{\listoverride\listid7\listoverridecount0\ls7}{\listoverride\listid8\listoverridecount0\ls8}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr15\min11\sec36\timesinceref330379896}
+{\revtim\yr2011\mo6\dy24\hr10\min14\sec34\timesinceref330621274}}\deftab720
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 Spring Security and LDAP\
+Abstract\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Centralized authentication is a "big deal" in any enterprise environment. Integrating your OpenNMS implementation with your environment is a Good Thing. Before linking the two, there are some considerations. The main one is if you want to rely solely on your central authenticator for all OpenNMS auth events, or support a hybrid scheme of the built-in local (aka UserDAO) as well as an LDAP or similar authenticator. Keep in mind that OpenNMS, itself, has processes periodically authenticating (think RTC and Provisioning) and for this reason it is better to go the loosely-coupled route by continuing to support the UserDAO mechanism, as described in the latter implementation section below.\
+Another source of minutiae lies in the specific LDAP implementation you're working with. While AD and OpenLDAP (and Sun DS, etc.) implement the same protocol, their schemas are substantially different. The biggest difference (as highlighted by LDAP search filters referenced below) is the memberOf attribute, which is not supported by default LDAP v3 spec (and is not present in common OpenLDAP installs), but comes standard with AD. This has a significant implication in that you cannot filter a user search by supplementary group membership, and most installs tend not to be fully hierarchical (User's DN doesn't cite a home group). Fortunately, you can either create dedicated per-role LDAP groups or map existing groups to roles by selecting and configuring the appropriate AuthoritiesPopulator. A 'role' is how OpenNMS refers to an access level, btw.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Sample Configuration "LDAP only"\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] OpenNMS Version\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS version 1.7.5 and later\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Spring Security Version\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Spring Security 2.04\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Spring Security\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Version 1.7.5 of openNMS never included the spring security framework so you will need to download it from the following URL {\field{\*\fldinst{HYPERLINK "http://s3.amazonaws.com/dist.springframework.org/release/SEC/spring-security-2.0.4.zip"}}{\fldrslt \cf2 \ul \ulc2 spring-security-2.0.4.zip}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Notes about provided configs\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 I developed these configurations for my company but have tried to sanitize them for public consumption there are fields of note that will be required to be changed in addition to the following you may enable TLS/SSL for your LDAP server if you install root ca's which is beyond the scope of this document.\
+You will need to configure the following values.\
+LDAP host and its port\'a0: ldap://foo.com:389 LDAP search base\'a0: ou=mydepartment,o=mycompany,dc=com\
+\pard\tx1660\tx2160\pardeftab720\li2160\fi-500\ql\qnatural
+\ls1\ilvl2\cf0 {\listtext	
+\f1 \uc0\u9642 
+\f0 	}Note this account only needs search privileges and should be acl limited\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 User that will do binds to perform lookups\'a0: uid=myUser,ou=Users,ou=mydepartment,o=mycompany,dc=ca Password for the above user\'a0: myPassword\
+The group section for the bind is based off the ldif I have provided, customize as you see fit.\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuring applicationContext-spring-security.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Spring security is configured in 
+\f2 $OPENNMS_HOME/jetty-webapps/opennms/WEB-INF/applicationContext-spring-security.xml
+\f0 . You have to add the following definitions there.\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0   <beans:bean id="upperCaseMd5PasswordEncoder" class="org.opennms.web.springframework.security.UpperCaseMd5PasswordEncoder"/>\
+\
+<!-- LDAP Start -->\
+  <beans:bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">\
+\
+    <!-- Enter your LDAP server address, dc, o and ou  here -->\
+    <beans:constructor-arg value="ldap://foo.com:389/ou=mydepartment,o=mycompany,dc=com" />\
+\
+    <!-- Enter User parameters for accessing your LDAP server here -->\
+    <beans:property name="userDn" value="uid=myUser,ou=Users,ou=mydepartment,o=mycompany,dc=ca"/>\
+    <beans:property name="password" value="myPassword"/>\
+\
+  </beans:bean>\
+    <beans:bean id="ldapAuthProvider" class="org.springframework.security.providers.ldap.LdapAuthenticationProvider">\
+      <custom-authentication-provider />\
+        <beans:constructor-arg>\
+           <beans:bean class="org.springframework.security.providers.ldap.authenticator.BindAuthenticator">\
+             <beans:constructor-arg ref="contextSource"/>\
+             <beans:property name="userSearch" ref="userSearch">\
+             </beans:property>\
+           </beans:bean>\
+        </beans:constructor-arg>\
+        <beans:constructor-arg>\
+           <beans:bean class="org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator">\
+             <beans:constructor-arg ref="contextSource"/>\
+             <beans:constructor-arg value="ou=ONMS,ou=Groups"/>\
+             <beans:property name="groupRoleAttribute" value="cn"/>\
+             <beans:property name="searchSubtree" value="false" />\
+             <beans:property name="convertToUpperCase" value="true" />\
+             <beans:property name="rolePrefix" value="ROLE_" />\
+             <beans:property name="groupSearchFilter" value="memberUid=\{1\}" />\
+           </beans:bean>\
+        </beans:constructor-arg>\
+  </beans:bean>\
+\
+  <beans:bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">\
+    <beans:constructor-arg index="0" value="ou=Users" />\
+    <beans:constructor-arg index="1" value="(uid=\{0\})" />\
+    <beans:constructor-arg index="2" ref="contextSource" />\
+    <beans:property name="searchSubtree" value="true" />\
+  </beans:bean>\
+\
+\
+<!-- LDAP End -->\
+\
+  <!-- ====================== RADIUS AUTHENTICATION ===================== -->\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Modify the magic-users.properties\
+\pard\pardeftab720\ql\qnatural
+
+\f2\b0\fs24 \cf0 ###########################################################################\
+## U S E R S\
+###########################################################################\
+\
+# A comma-separated list of user keys.  A user.\{KEY\}.username and\
+# user.\{KEY\}.password property must be set for each key in this property.\
+users=rtc\
+\
+# The RTC View Control Manager daemon uses this user to authenticate itself\
+# while sending RTC data posts.\
+user.rtc.username=rtc\
+user.rtc.password=rtc\
+\
+###########################################################################\
+## R O L E S\
+###########################################################################\
+\
+# A comma-separated list of role keys.  A role.\{KEY\}.name and\
+# role.\{KEY\}.users property must be set for each key in this property.\
+#roles=rtc, admin, rouser, dashboard, provision\
+roles=rtc\
+\
+# This role allows a user to make RTC data posts.\
+role.rtc.name=OpenNMS RTC Daemon\
+role.rtc.users=rtc\
+role.rtc.notInDefaultGroup=true\
+\
+# This role allows users access to configuration and\
+# administrative web pages.\
+#role.admin.name=OpenNMS Administrator\
+#role.admin.users=admin\
+\
+# This role disallows user write access\
+#role.rouser.name=OpenNMS Read-Only User\
+#role.rouser.users=\
+\
+# This role allows access to the dashboard only\
+#role.dashboard.name=OpenNMS Dashboard User\
+#role.dashboard.users=\
+#role.dashboard.notInDefaultGroup=true\
+\
+# This role was added for WIND\
+#role.provision.name=OpenNMS Provision User\
+#role.provision.users=\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Sample LDIF For group structure\
+\pard\pardeftab720\ql\qnatural
+
+\f2\b0\fs24 \cf0 dn: ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+ou: ONMS\
+description: Open NMS groups\
+objectClass: top\
+objectClass: organizationalUnit\
+\
+dn: cn=ADMIN, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7010\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myAdminUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: ADMIN\
+\
+dn: cn=ANONYMOUS, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7011\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myAnonymousUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: ANONYMOUS\
+\
+dn: cn=USER, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7012\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myRegUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: USER\
+\
+dn: cn=DASHBOARD, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7013\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myDashboardUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: DASHBOARD\
+\
+dn: cn=PROVISION, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7014\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myProvisionUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: PROVISION\
+\
+dn: cn=RTC, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7015\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myRTCUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: RTC\
+\
+dn: cn=REMOTING, ou=ONMS, ou=Groups,ou=mydepartment,o=mycompany,dc=com\
+gidNumber: 7015\
+userPassword:: e2NyeXB0fXg=\
+memberUid: myRemotePollerUser\
+objectClass: posixGroup\
+objectClass: top\
+cn: REMOTING\
+\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Sample Configuration "Local Authentication and LDAP"\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] OpenNMS Version\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS version 1.7.8 and later\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Spring Security Version\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Spring Security 2.04 as integrated in OpenNMS 1.7.8\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Design\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}OpenNMS Administration is done for some (internal or external) customer\
+{\listtext	\'95	}OpenNMS Admin Responsibility should never be gained by the customer\
+{\listtext	\'95	}LDAP administration is done by the customer (internal or external)\
+{\listtext	\'95	}OpenNMS internal users shouldn't be authenticated by LDAP\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-500\ql\qnatural
+\ls2\ilvl1\cf0 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}to prevent OpenNMS outages when someone by error changes OpenNMS LDAP users\
+{\listtext	
+\f1 \uc0\u9702 
+\f0 	}for having availability of OpenNMS even when LDAP is down/unreachable\
+{\listtext	
+\f1 \uc0\u9702 
+\f0 	}to avoid OpenNMS performance problems when LDAP responds slowly (opennms internal users heavily use authentication calls)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Technics\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls3\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}OpenNMS-provided authentication is used for Admin and internal users\
+{\listtext	\'95	}LDAP is provided from Active Directory (AD)\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-500\ql\qnatural
+\ls3\ilvl1\cf0 {\listtext	
+\f1 \uc0\u9702 
+\f0 	}only LDAP users from a specific department (OU=...) are allowed\
+{\listtext	
+\f1 \uc0\u9702 
+\f0 	}only users belonging to one of the groups g_operating or g_helpdesk are allowed\
+{\listtext	
+\f1 \uc0\u9702 
+\f0 	}saMAccountName is used to identify the UserID within LDAP/AD\
+{\listtext	
+\f1 \uc0\u9702 
+\f0 	}as always, there are two people from another department that have to be allowed access, too... unfortunally, this part of the example config below doesn't work as designed so don't use it, but it's left here an idea for further enhancements!\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Solution\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls4\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}use DAO authentication (OpenNMS local authentication) for Admin Users\
+{\listtext	\'95	}use DAO authentication for opennms internal users like RTC, MAP etc.\
+{\listtext	\'95	}use LDAP authentication for all (internal or external) customers\
+{\listtext	\'95	}assign ROLE_USER to all LDAP authenticated users\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Values from LDAP/AD Server\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 First you need the ip address and Port of your LDAP server, Port typically is 389. To query the LDAP server your LDAP admin should provide you with an userid and a password. Look for "userIDforLDAP-Queries" in the sample config below.\
+Further you need to know where in the LDAP tree you have to lookup the users you want to authorize. Ask your LDAP admin for those values.\
+Values from LDAP/AD used in this sample to lookup users (some lines from LDIF of a sample-user):\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 dn: CN=SampleUserId,OU=SomeDept,OU=SomeOrgUnit,dc=SomeCompany,dc=SomeCountry\
+...\
+memberOf: CN=g_operating,OU=SomeDept,OU=SomeOrgUnit,dc=SomeCompany,dc=SomeCountry\
+...\
+sAMAccountName: SampleUserID\
+...\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=17"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Spring Security Configuration\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Spring security is configured in 
+\f2 $OPENNMS_HOME/jetty-webapps/opennms/WEB-INF/applicationContext-spring-security.xml
+\f0 . You have to add the following definitions there. You don't have to alter other configuration files for this LDAP integration. Admin-Users are configured in OpenNMS as described in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Docu-overview#Users"}}{\fldrslt \cf2 \ul \ulc2 Docu-overview#Users}}.\
+Just add the following lines below the Dao Authentication in 
+\f2 applicationContext-spring-security.xml
+\f0  and change the fields like IP-address / Root-DN / Userid / Password for the LDAP-server, UserSearch path and groups the users must belong to.\
+Take a look at the filters for the groups - they contain the complete path, obviously in this notation neither the root-DN nor the SearchBase part of the path is added to the filter! (Took me some time to figure this out...).\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=18"}}{\fldrslt \cf2 \ul \ulc2 edit}}] LDAP Authentication Configuration\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Below is the configuration for doing the actual authentication. You will also need to include one of the two AuthoritiesPopulators.\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls5\ilvl0\cf0 {\listtext	\'95	}Detailed AD-specific Config (userSearch with group membership checks, etc.)\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0   <!-- ======================= LDAP AUTHENTICATION ====================== -->\
+\
+  <!-- you need the following line only if you commented out\
+       User Dao Authentication above where it is already defined\
+  -->\
+  <!--\
+  <beans:bean id="upperCaseMd5PasswordEncoder" class="org.opennms.web.springframework.security.UpperCaseMd5PasswordEncoder"/>\
+  -->\
+ \
+ \
+  <!-- this defines your ldap server address, userid, password etc. -->\
+ \
+  <beans:bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">\
+    <beans:constructor-arg value="ldap://11.12.13.14:389/dc=SomeCompany,dc=SomeCountry" />\
+    <beans:property name="userDn" value="userIDforLDAP-Queries"/>\
+    <beans:property name="password" value="password"/>\
+  </beans:bean>\
+ \
+  <!-- this defines LDAP as an authentication provider -->\
+ \
+  <beans:bean id="ldapAuthProvider" class="org.springframework.security.providers.ldap.LdapAuthenticationProvider">\
+    <custom-authentication-provider />      <!-- this adds the ldap authentication method to the ProviderManager -->\
+    <beans:constructor-arg ref="ldapAuthenticator"/>\
+    <beans:constructor-arg ref="ldapAuthoritiesPopulator"/>\
+  </beans:bean>\
+ \
+  <!-- authenticate the user with ldapAuthenticator using userSearch -->\
+ \
+  <beans:bean id="ldapAuthenticator" class="org.springframework.security.providers.ldap.authenticator.BindAuthenticator">\
+    <beans:constructor-arg ref="contextSource"/>\
+    <beans:property name="userSearch" ref="userSearch">\
+    </beans:property>\
+  </beans:bean>\
+ \
+    <!-- userSearch (alt.: userDnPatterns) -->\
+        <!-- Start the userSearch as far down in the tree as possible.\
+             As there are two people from other departments we have to start \
+             the search at a higher level, here OU=SomeOrgUnit.\
+             Else we could start at OU=SomeDept,OU=SomeOrgUnit\
+         -->\
+ \
+    <beans:bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">\
+      <beans:constructor-arg index="0" value="OU=SomeOrgUnit" />\
+ \
+      <!-- allow only users belonging to specific groups to get authenticated -->\
+      <beans:constructor-arg index="1" value="(&amp;(sAMAccountName=\{0\})\
+                 (|(memberOf=cn=g_operating,OU=SomeDept,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)\
+                   (memberOf=cn=g_helpdesk,OU=SomeDept,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)\
+                   (cn=userid_1,OU=hisDepartment,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)\
+                   (cn=userid_2,OU=herDepartment,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)))" />\
+          <beans:constructor-arg index="2" ref="contextSource" />\
+          <beans:property name="searchSubtree" value="true" />\
+    </beans:bean>\
+\
+<!-- Unfortunally this idea to add userid_1 and userid_2 from another departement\
+     didn't work as designed. If anyone knows how to do this please add the correct\
+     configuration here!\
+\
+      <beans:constructor-arg index="1" value="(&amp;(sAMAccountName=\{0\})\
+                (|(memberOf=cn=g_operating,OU=SomeDept,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)\
+                  (memberOf=cn=g_helpdesk,OU=SomeDept,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)\
+                  (cn=userid_1,OU=hisDepartment,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)\
+                  (cn=userid_2,OU=herDepartment,OU=SomeOrgUnit,\
+                       dc=SomeCompany,dc=SomeCountry)))" />\
+          <beans:constructor-arg index="2" ref="contextSource" />\
+          <beans:property name="searchSubtree" value="true" />\
+    </beans:bean>\
+-->\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls6\ilvl0
+\f0 \cf0 {\listtext	\'95	}Basic OpenLDAP-friendly userSearch\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0   <beans:bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">\
+    <beans:constructor-arg index="0" value="ou=People" />\
+    <beans:constructor-arg index="1" value="(uid=\{0\})" />\
+    <beans:constructor-arg index="2" ref="contextSource" />\
+    <beans:property name="searchSubtree" value="true" />\
+  </beans:bean>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=19"}}{\fldrslt \cf2 \ul \ulc2 edit}}] LDAP Authorization\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 There are two AuthoritiesPopulator's, these use information gathered from LDAP to provide the authorization within OpenNMS.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=20"}}{\fldrslt \cf2 \ul \ulc2 edit}}] org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Use this one when you are going to create role-specific LDAP groups (per the group structure LDIF sample above) and assign users to them for their corresponding OpenNMS access.\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0  <beans:bean id="ldapAuthoritiesPopulator" class="org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator">\
+   <beans:constructor-arg ref="contextSource"/>\
+\
+   <beans:constructor-arg 
+\f3\b value="OU=SomeDept,OU=SomeOrgUnit"
+\f2\b0 />\
+\
+   <beans:property name="groupRoleAttribute" value=""/>\
+   <beans:property name="rolePrefix" value="" />\
+\
+   <beans:property name="defaultRole" 
+\f3\b value="ROLE_USER"
+\f2\b0  />\
+\
+ </beans:bean>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=21"}}{\fldrslt \cf2 \ul \ulc2 edit}}] org.opennms.web.springframework.security.UserGroupLdapAuthoritiesPopulator\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Use this one when you want to assign OpenNMS roles to an existing LDAP group structure. The value in the bean key is the name (cn) of the LDAP group you want to map to one or more roles (the bean values list).\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls7\ilvl0\cf0 {\listtext	\'95	}AD Variant\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0           <beans:bean id="UserGroupLdapAuthoritiesPopulator" class="org.opennms.web.springframework.security.UserGroupLdapAuthoritiesPopulator">\
+            <beans:constructor-arg ref="contextSource"/>\
+            <beans:constructor-arg 
+\f3\b value="OU=SomeDept,OU=SomeOrgUnit"
+\f2\b0 />\
+            <beans:property name="searchSubtree" value="true" />\
+            <beans:property name="groupRoleAttribute" value="cn" />\
+            <beans:property name="groupSearchFilter" value="member=\{0\}" />\
+            <beans:property name="groupToRoleMap">\
+              <beans:map>\
+                <beans:entry>\
+                  <beans:key>
+\f3\b <beans:value>myusersgroup</beans:value>
+\f2\b0 </beans:key>\
+                  <beans:list>\
+                    <beans:value>ROLE_USER</beans:value>\
+                  </beans:list>\
+                </beans:entry>\
+                <beans:entry>\
+                  <beans:key>
+\f3\b <beans:value>myadminsgroup</beans:value>
+\f2\b0 </beans:key>\
+                  <beans:list>\
+                    <beans:value>ROLE_ADMIN</beans:value>\
+                    <beans:value>ROLE_USER</beans:value>\
+                  </beans:list>\
+                </beans:entry>\
+              </beans:map>\
+            </beans:property>\
+          </beans:bean>\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls8\ilvl0
+\f0 \cf0 {\listtext	\'95	}OpenLDAP variant\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0          <beans:bean id="UserGroupLdapAuthoritiesPopulator" class="org.opennms.web.springframework.security.UserGroupLdapAuthoritiesPopulator"> \
+           <beans:constructor-arg ref="contextSource"/> \
+           <beans:constructor-arg value="ou=Group"/> \
+           <beans:property name="searchSubtree" value="false" /> \
+           <beans:property name="groupRoleAttribute" value="cn" /> \
+           <beans:property name="groupSearchFilter" value="memberUid=\{1\}" /> \
+           <beans:property name="groupToRoleMap"> \
+             <beans:map> \
+               <beans:entry> \
+                 <beans:key><beans:value>myusersgroup</beans:value></beans:key> \
+                 <beans:list> \
+                   <beans:value>ROLE_USER</beans:value> \
+                 </beans:list> \
+               </beans:entry> \
+               <beans:entry> \
+                 <beans:key><beans:value>myadminsgroup</beans:value></beans:key> \
+                 <beans:list> \
+                   <beans:value>ROLE_ADMIN</beans:value> \
+                   <beans:value>ROLE_USER</beans:value> \
+                 </beans:list> \
+               </beans:entry> \
+             </beans:map> \
+           </beans:property> \
+         </beans:bean>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=22"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Another Example\
+\pard\pardeftab720\ql\qnatural
+
+\f2\b0\fs24 \cf0   <beans:bean id="upperCaseMd5PasswordEncoder" class="org.opennms.web.springframework.security.UpperCaseMd5PasswordEncoder"/>\
+\
+<!-- LDAP Start -->\
+  <beans:bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">\
+\
+    <!-- Enter your LDAP server address, dc, o and ou  here -->\
+    <beans:constructor-arg value="ldaps://ldap.example.com:636/dc=example,dc=com" />\
+\
+    <!-- Enter User parameters for accessing your LDAP server here \
+    <beans:property name="userDn" value="uid=myUser,ou=Users,ou=mydepartment,o=mycompany,dc=ca"/>\
+    <beans:property name="password" value="myPassword"/>\
+    -->\
+\
+  </beans:bean>\
+  <beans:bean id="ldapAuthProvider" class="org.springframework.security.providers.ldap.LdapAuthenticationProvider">\
+    <custom-authentication-provider />      <!-- this adds the ldap authentication method to the ProviderManager -->\
+    <beans:constructor-arg ref="ldapAuthenticator"/>\
+    <beans:constructor-arg ref="UserGroupLdapAuthoritiesPopulator"/>\
+  </beans:bean>\
+ \
+  <!-- authenticate the user with ldapAuthenticator using userSearch -->\
+ \
+  <beans:bean id="ldapAuthenticator" class="org.springframework.security.providers.ldap.authenticator.BindAuthenticator">\
+    <beans:constructor-arg ref="contextSource"/>\
+    <beans:property name="userSearch" ref="userSearch">\
+    </beans:property>\
+  </beans:bean>\
+\
+  <beans:bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">\
+    <beans:constructor-arg index="0" value="ou=people" />\
+    <beans:constructor-arg index="1" value="(uid=\{0\})" />\
+    <beans:constructor-arg index="2" ref="contextSource" />\
+    <beans:property name="searchSubtree" value="true" />\
+  </beans:bean>\
+\
+         <beans:bean id="UserGroupLdapAuthoritiesPopulator" class="org.opennms.web.springframework.security.UserGroupLdapAuthoritiesPopulator"> \
+           <beans:constructor-arg ref="contextSource"/> \
+           <beans:constructor-arg value="ou=group"/> \
+           <beans:property name="searchSubtree" value="true" /> \
+           <beans:property name="groupRoleAttribute" value="cn" /> \
+           <beans:property name="groupSearchFilter" value="memberUid=\{1\}" /> \
+           <beans:property name="groupToRoleMap"> \
+             <beans:map> \
+               <beans:entry> \
+                 <beans:key><beans:value>opennms</beans:value></beans:key> \
+                 <beans:list> \
+                   <beans:value>ROLE_USER</beans:value> \
+                 </beans:list> \
+               </beans:entry> \
+               <beans:entry> \
+                 <beans:key><beans:value>opennms_admin</beans:value></beans:key> \
+                 <beans:list> \
+                   <beans:value>ROLE_ADMIN</beans:value> \
+                   <beans:value>ROLE_USER</beans:value> \
+                 </beans:list> \
+               </beans:entry> \
+             </beans:map> \
+           </beans:property> \
+         </beans:bean>\
+\
+\
+<!-- LDAP End -->\
+\
+  <!-- ====================== RADIUS AUTHENTICATION ===================== -->\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=23"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Troubleshooting\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Enable DEBUG in 
+\f2 log4j.properties
+\f0  for\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 log4j.category.org.springframework.security=DEBUG, MISC\
+log4j.category.OpenNMS.Spring=DEBUG, SPRING\
+log4j.category.org.springframework=DEBUG, SPRING\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Don't forget to disable DEBUG after you finished your tests!\
+Search for LDAP server IP, userid's / groups or IP address of authenticating clients in 
+\f2 spring.log
+\f0  and 
+\f2 misc.log
+\f0 .\
+Look out for 
+\b Granted Authorities: ROLE_USER
+\b0 . If there are other roles too there is a possibility to gain admin rights for your OpenNMS system by providing the roles in LDAP / AD.\
+You might try to add the following bean definitions to your applicationContext-springSecurity.xml file.\
+This bean provides authentication information:\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 <beans:bean id="authenticationLoggerListener" class="org.springframework.security.authentication.event.LoggerListener" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This bean provides authorisation information (if you need it):\
+\pard\pardeftab720\ql\qnatural
+
+\f2 \cf0 <beans:bean id="authorisationLoggerListener" class="org.springframework.security.access.event.LoggerListener" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 For authorisation bean, failures are logged at 'WARN' level, success events are logged at 'INFO' level. So if you need success authorisation events, change the logging level to 'INFO'.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Spring_Security_and_LDAP&action=edit&section=24"}}{\fldrslt \cf2 \ul \ulc2 edit}}] List of Roles\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+
+\fs24 \cf0 ROLE
+\b0 \cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+
+\b \cf0 DESCRIPTION
+\b0 \cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_USER\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS User 
+\b <== Must be included in with each group.
+\b0 \cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_ADMIN\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS Administrator\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_READONLY\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS Read-Only User\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_DASHBOARD\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS Dashboard User\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_RTC\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS RTC Daemon\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_PROVISION\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS Provision User\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2280\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth5940\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 ROLE_REMOTING\cell 
+\pard\intbl\itap1\pardeftab720\ql\qnatural
+\cf0 OpenNMS Remote Poller User\cell \lastrow\row
+\pard\pardeftab720\ql\qnatural
+\cf0 \
+\
+Retrieved from "{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Spring_Security_and_LDAP"}}{\fldrslt \cf2 \ul \ulc2 http://www.opennms.org/wiki/Spring_Security_and_LDAP}}"\
+\
+}

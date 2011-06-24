@@ -1,0 +1,822 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 Courier-Bold;
+\f3\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr17\min2\sec8\timesinceref330386528}
+{\revtim\yr2011\mo6\dy21\hr17\min2\sec28\timesinceref330386548}}\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Introduction\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Purpose\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 This How-To is one in a series designed to serve as a reference for getting started with OpenNMS. Eventually, these documents will cover everything necessary to get OpenNMS installed and running in your environment.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Copyright\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Content is available under a {\field{\*\fldinst{HYPERLINK "http://creativecommons.org/licenses/by-nc-sa/2.5/"}}{\fldrslt \cf2 \ul \ulc2 Creative Commons Attribution-NonCommercial-ShareAlike2.5 License}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Corrections and Omissions\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Please submit any corrections and omissions to the author.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 OpenNMS has three main functional areas:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}Determining Availability of Network Services (discussed in part 3 of this series)\
+{\listtext	\'95	}Gathering Performance Data via SNMP (discussed in part 4 of this series)\
+{\listtext	\'95	}Event Management and Notifications\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The last area: Events, is the subject of this How-To. Notifications will be handled in the next part.\
+Events are a staple of any network management system (NMS). In fact, the main function of an NMS can be described as detecting changes within the network, and every change can be thought of as an event.\
+OpenNMS manages events through a process called 
+\f1 eventd
+\f0 . There are two main types of events: those generated internally by the OpenNMS software and those generated via external SNMP traps. Processes can generate events, such as when the discovery process generates a 
+\f1 newSuspect
+\f0  event when an interface responds to a ping, and processes can "subscribe" to events, as when the 
+\f1 capsd
+\f0  process asks to be notified whenever a 
+\f1 newSuspect
+\f0  event occurs so it can begin its capabilities scan.\
+When an event is generated, various parameters can be set, such as its description, a log message and a severity. In addition, automatic actions can be launched to send event parameters to an external script. This is controlled through the 
+\f1 eventconf.xml
+\f0  file.\
+OpenNMS also comes with a feature rich Notification system. Particular events can be chosen to cause a notification to be sent, such as a page or e-mail.\
+The following sections will discuss Events in detail. Since this functionality changed between 1.0 (the current production release at the time this document was written) and 1.1 (the current development release), notes will be made as to what is available in which release.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Events\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The 
+\f1 eventconf.xml
+\f0  file, found by default in 
+\f1 /opt/OpenNMS/etc
+\f0 , is the configuration file that controls how events are handled. Let's look for a moment at the top of that file:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <events xmlns="http://xmlns.opennms.org/xsd/eventconf">\
+  <global>\
+    <security>\
+      <doNotOverride>logmsg</doNotOverride>\
+      <doNotOverride>operaction</doNotOverride>\
+      <doNotOverride>autoaction</doNotOverride>\
+      <doNotOverride>tticket</doNotOverride>\
+    </security>\
+  </global>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Every file that contains events starts with an 
+\f1 <events>
+\f0  tag and ends with an 
+\f1 </events>
+\f0  tag.\
+The 
+\f1 eventd
+\f0  process listens on port 5817, so other processes, even those external to OpenNMS, can send events to the system. The <security> tag is there so that these events cannot override the actions defined in the 
+\f1 eventconf.xml
+\f0  file. This way, no one with access to the OpenNMS machine could send in an "autoaction" to open, say, a root window on their machine.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Internal Events\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Now, after the global settings section of the 
+\f1 eventconf.xml
+\f0  file come the events. Each event must be defined in order to be properly treated by the OpenNMS system. Let's look at a common event: nodeLostService:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <event>\
+  <uei>http://uei.opennms.org/nodes/nodeLostService</uei>\
+  <event-label>OpenNMS-defined node event: nodeLostService</event-label>\
+  <descr>\
+    &#38lt;p&#38gt;A\'a0%service% outage was identified on interface\
+   \'a0%interface%.&#38lt;/p&#38gt; &#38lt;p&#38gt;A new Outage record has been\
+    created and service level availability calculations will be\
+    impacted until this outage is resolved.&#38lt;/p&#38gt;\
+  </descr>\
+  <logmsg dest='logndisplay'>\
+         \'a0%service% outage identified on interface\'a0%interface%.\
+  </logmsg>\
+  <severity>Major</severity>\
+</event>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Every event is bracketed by an 
+\f1 <event>
+\f0  tag. Within those tags are various other definitions:\
+\pard\pardeftab720\ql\qnatural
+\cf0 The UEI\'a0\
+The "Universal Event Identifier" is simply a label to uniquely identify the event. The original intent was that this would be some sort of XML namespace, hence the "http://", but it really is just a label. In version 1.1 and beyond, the "http://" has been removed. Note: for internal OpenNMS events, the UEI is generated directly by the code and cannot be changed without modifying the source.\
+The 
+\f1 event-label
+\f0 \'a0\
+This is a plain text label for the event, sometimes used in the web user interface.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 descr
+\f0 \'a0\
+is the description of the event. You can embed HTML entities should you wish to format the description more fully. Note that there are elements such as 
+\f1 %interface%
+\f0  that you can place in the event description and log message (which will be described later in this document).\
+
+\f1 logmsg
+\f0 \'a0\
+Is a short description or summary of the event. The "
+\f1 dest
+\f0 " attribute can take on a number of values:\
+
+\f1 logndisplay
+\f0 \'a0\
+Both log the event in the database and display it in the Web UI.\
+
+\f1 logonly
+\f0 \'a0\
+Log the event in the database, but do not display it.\
+
+\f1 suppress
+\f0 \'a0\
+Neither log the event in the database or display it.\
+
+\f1 donotpersist
+\f0 \'a0\
+Do not log the event in the database, but still send it to OpenNMS daemons that are listening for this type of event (e.g.: this can be used to generate notifications).\
+
+\f1 discardtraps
+\f0 \'a0\
+This only applies to traps coming in via trapd. This will cause trapd to discard the trap without creating an event. Other OpenNMS daemons that are listening for this type of event will 
+\b not
+\b0  receive this event. This feature was first available in OpenNMS 1.3.0.\
+
+\f1 severity
+\f0 \'a0\
+This indicates the severity of the event.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Severities\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 When setting severities for events, I often think back to a scene from the movie 
+\i Spinal Tap
+\i0 . This movie is a "documentary" about an aging hard rock band. In one scene the interviewer is asking a band member to what he attributes the band's popularity. He points to the amplifiers and says "while most amplifiers go to 10, ours go to 11". The interviewer asks why not make them go to 10, but just make 10 louder, to which the band member replies "but ours go to 11".\
+I have seen this when people set out to set severities for the events in their NMS. Events are either "Critical" (something's wrong with my network!) or "Normal". The severities between the two tend to be ignored. Unfortunately, it makes it real hard to highlight really important events when everything is either green or red. So rather than put everything "at 11", I suggest setting normal network outages as Minor or Major (but treat them just the same as you normally would), and reserving Critical for those events that really matter.\
+Another way to look at this is to assign actions to severities. Thus a "Critical" event means you wake up the president of your company on Christmas morning and ruin his holiday. So if Helmut's backup ISDN circuit goes down, it is doubtful you would want the severity to be Critical. However, if the entire network backbone is down, it might warrant that phone call.\
+The following is a list of severities that come with OpenNMS, and my personal description of what they mean. Currently, the default events in OpenNMS don't exactly conform to this list, but they will in the future:\
+\pard\pardeftab720\ql\qnatural
+\cf0 Critical (dark red)\'a0\
+This event means numerous devices on the network are affected by the event. Everyone who can should stop what they are doing and focus on fixing the problem.\
+Major (light red)\'a0\
+A device is completely down or in danger of going down. Attention needs to be paid to this problem immediately.\
+Minor (orange)\'a0\
+A part of a device (a service, and interface, a power supply, etc.) has stopped functioning. The device needs attention.\
+Warning (yellow)\'a0\
+An event has occurred that may require action. This severity can also be used to indicate a condition that should be noted (logged) but does not require direct action.\
+Normal (green)\'a0\
+Informational message. No action required.\
+Cleared (light grey)\'a0\
+This event indicates that a prior error condition has been corrected and service is restored.\
+Indeterminate (yellow-green)\'a0\
+The severity of the event cannot be determined.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Additional Parameters\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 A number of additional parameters can occur between the 
+\f1 <event>
+\f0  tags (note that there are others defined in the code but not yet implemented):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <operinstruct>
+\f0 \'a0\
+This is a set of instructions for the NMS operator when the event occurs.\
+
+\f1 <mouseovertext>
+\f0 \'a0\
+This can be text to be displayed when the mouse is placed over the event in the event browser of the Web UI.\
+
+\f1 <autoaction>
+\f0 \'a0\
+The text following this tag must be the complete path to an executable program. The program will be executed every time the event occurs.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 Note that each tag must be closed with its corresponding "/" tag.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Elements\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Various elements can be included in the description, log message, operator instruction and automatic actions for each event. Not all events will have values for all elements, and some refer to SNMP traps, which will be discussed in the next section.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 %uei%
+\f0 \'a0\
+The Universal Event Identifier for the event.\
+
+\f1 %source%
+\f0 \'a0\
+The source of the event (what process).\
+
+\f1 %time%
+\f0 \'a0\
+The time of the event.\
+
+\f1 %nodeid%
+\f0 \'a0\
+The node ID of the device that caused the event.\
+
+\f1 %interface%
+\f0 \'a0\
+The interface associated with the event.\
+
+\f1 %service%
+\f0 \'a0\
+The service associated with the event.\
+
+\f1 %severity%
+\f0 \'a0\
+The severity of the event.\
+
+\f1 %snmphost%
+\f0 \'a0\
+The host of the SNMP agent that generated the event.\
+
+\f1 %snmp%
+\f0 \'a0\
+The SNMP information associated with the event.\
+
+\f1 %id%
+\f0 \'a0\
+The SNMP Enterprise OID for the event.\
+
+\f1 %generic%
+\f0 \'a0\
+The Generic trap number for the event.\
+
+\f1 %specific%
+\f0 \'a0\
+The Specific trap number for the event.\
+
+\f1 %community%
+\f0 \'a0\
+The community string for the trap.\
+
+\f1 %version%
+\f0 \'a0\
+The SNMP version of the trap.\
+
+\f1 %operinstruct%
+\f0 \'a0\
+The operator instructions for the event.\
+
+\f1 %mouseovertext%
+\f0 \'a0\
+The mouse over text for the event.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 In version 1.1 and beyond, there are two more parameters available:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 %nodelabel%
+\f0 \'a0\
+Returns the node label for the node given in 
+\f1 %nodeid%
+\f0  if available.\
+
+\f1 %interfaceresolv%
+\f0 \'a0\
+Does a reverse lookup on the 
+\f1 %interface%
+\f0  and returns its name if available.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 There is also a 
+\f1 parm
+\f0  element that will be discussed later.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] SNMP Traps\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Outside of internally generated events, OpenNMS can also receive SNMP traps via the 
+\f1 trapd
+\f0  process. These are controlled in 
+\f1 eventconf.xml
+\f0  using the 
+\f1 <mask>
+\f0  tag. For example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <event>\
+  <mask>\
+    <maskelement>\
+      <mename>id</mename>\
+      <mevalue>.1.3.6.1.4.1.9.9.70.2</mevalue>\
+    </maskelement>\
+    <maskelement>\
+      <mename>generic</mename>\
+      <mevalue>6</mevalue>\
+    </maskelement>\
+    <maskelement>\
+      <mename>specific</mename>\
+      <mevalue>17</mevalue>\
+    </maskelement>\
+  </mask>\
+  <uei>http://uei.opennms.org/vendor/Cisco/traps/ciscoC3800SysAggregateStatusChange</uei>\
+  <event-label>CISCO-C3800-MIB defined trap event: ciscoC3800SysAggregateStatusChange</event-label>\
+  <descr>&#38lt;p&#38gt;Notification that the aggregate status of a node\
+         has changed.&#38lt;/p&#38gt;&#38lt;table&#38gt;\
+         &#38lt;tr&#38gt;&#38lt;td&#38gt;&#38lt;b&#38gt;\
+         c3800SysNextTrapSeqNum&#38lt;/b&#38gt;</td&#38gt;&#38lt;td&#38gt;%parm[#1]%\
+         &#38lt;/td&#38gt;&#38lt;td&#38gt;&#38lt;p;&#38gt;</p&#38gt;&#38lt;/td;&#38gt;&#38lt;/tr&#38gt;&#38lt;tr&#38gt;&#38lt;td&#38gt;&#38lt;b&#38gt;\
+         sysName&#38lt;/b&#38gt;&#38lt;/td&#38gt;&#38lt;td&#38gt;%parm[#2]%\
+         &#38lt;/td&#38gt;&#38lt;td&#38gt;&#38lt;p;&#38gt;&#38lt;/p&#38gt;&#38lt;/td;&#38gt;&#38lt;/tr&#38gt;&#38lt;tr&#38gt;&#38lt;td&#38gt;&#38lt;b&#38gt;\
+         c3800SysTrapSeverity&#38lt;/b&#38gt;&#38lt;/td&#38gt;&#38lt;td&#38gt;%parm[#3]%\
+         &#38lt;/td&#38gt;&#38lt;td&#38gt;&#38lt;p;&#38gt;\
+         clear(1) minor(2) major(3)&#38lt;/p&#38gt;\
+         &#38lt;/td;&#38gt;&#38lt;/tr&#38gt;&#38lt;tr&#38gt;&#38lt;td&#38gt;&#38lt;b&#38gt;\
+         c3800SysAggregateStatus&#38lt;/b&#38gt;&#38lt;/td&#38gt;&#38lt;td&#38gt;%parm[#4]%\
+         &#38lt;/td&#38gt;&#38lt;td&#38gt;&#38lt;p;&#38gt;\
+         clear(1) minor(2) major(3)</p>\
+         &#38lt;/td;&#38gt;&#38lt;/tr&#38gt;&#38lt;/table&#38gt;\
+  </descr>\
+  <logmsg dest='logndisplay'><p>Cisco Event: C3900: Node Status has changed.</p></logmsg>\
+  <severity>Indeterminate</severity>\
+</event>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 This is a Cisco Systems event for their C3800 device. Parts of it looks similar to the internally generated events, with the main difference being the 
+\f1 <mask>
+\f0  block. This block consists of 
+\f1 <maskelement>
+\f0  tags, and the event will only match if all the defined tags are met.\
+This particular event will match an SNMP trap whose enterprise OID (id) is equal to ".1.3.6.1.4.1.9.9.70.2", its generic trap value is enterprise specific (6) and its specific trap value is 17.\
+The possible 
+\f1 <mename>
+\f0  values are:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	\'95	}uei\
+{\listtext	\'95	}source\
+{\listtext	\'95	}host\
+{\listtext	\'95	}snmphost\
+{\listtext	\'95	}nodeid\
+{\listtext	\'95	}interface\
+{\listtext	\'95	}service\
+{\listtext	\'95	}id\
+{\listtext	\'95	}specific\
+{\listtext	\'95	}generic\
+{\listtext	\'95	}community\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 It is possible to use the "%" symbol to indicate a wildcard in the mask values. For example, to match all Cisco events, I could use:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <mask>\
+  <maskelement>\
+    <mename>id</mename>\
+    <mevalue>.1.3.6.1.4.1.9.%</mevalue>\
+  </maskelement>\
+</mask>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Note: The order in which events are listed in the 
+\f1 eventconf.xml
+\f0  file is extremely important. The search will stop with the first event definition that matches the given event. Thus if the above code with the wildcard was listed before the more specific 
+\f1 ciscoC3800SysAggregateStatusChange
+\f0  event, the latter event would never be generated. Also note that the wildcard is simply a substring match. If an event was generated from a Cisco device with the Enterprise OID of ".1.3.6.1.4.1.9" it would 
+\i not
+\i0  match this event, as there is no trailing ".". If the trailing "." is left off, care must be taken so that a trap with an OID of ".1.3.6.1.4.1.99" is listed before the ".1.3.6.1.4.1.9%" event or else it will match the more generic event.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The 
+\f2 parm
+\f0  Element\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Some events, especially SNMP traps, have additional information sent with them called "variable bindings" or "varbinds" for short. In the 
+\f1 ciscoC3800SysAggregateStatusChange
+\f0  event listed above, there are four of them, and they can be accessed using the 
+\f1 parm
+\f0  element. Each parameter consists of a name and a value.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 %parm[all]%
+\f0 \'a0\
+Will return a space-separated list of all parameter values in the form 
+\f1 parmName1="parmValue1" parmName2="parmValue2"
+\f0  etc.\
+
+\f1 %parm[values-all]%
+\f0 \'a0\
+Will return a space-separated list of all parameter values associated with the event.\
+
+\f1 %parm[names-all]%
+\f0 \'a0\
+Will return a space-separated list of all parameter names associated with the event.\
+
+\f1 %parm[<name>]%
+\f0 \'a0\
+Will return the value of the parameter named <name> if it exists.\
+
+\f1 %parm[##]%
+\f0 \'a0\
+Will return the total number of parameters.\
+
+\f1 %parm[#<num>]%
+\f0 \'a0\
+Will return the value of parameter number <num>.\
+
+\f1 %parm[name-#<num>]%
+\f0 \'a0\
+Will return the name of parameter number <num>.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 For example, the 
+\f1 ciscoC3800SysAggregateStatusChange
+\f0  event description lists out each of the parameters. Thus the second paramater, the 
+\f1 sysName
+\f0  is printed out using 
+\f1 %parm[#2]%
+\f0 .\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Filtering on varbinds (OpenNMS 1.1 and beyond)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Let's take a look at the example 
+\f1 ciscoC3800SysAggregateStatusChange
+\f0  event once more. What should its severity be? Since the event is generated whenever the status changes, you don't know if the change is "bad" (from operational to non-operational) or "good" (the non-operational status is cleared). That information is contained within the parameters that are passed with the event, particularly parameter #3, the trap severity.\
+With 1.1, the ability to filter on variable bindings was added. This is done in the 
+\f1 <mask>
+\f0  block. To re-write the above event:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <mask>\
+  <maskelement>\
+    <mename>id</mename>\
+    <mevalue>.1.3.6.1.4.1.9.9.70.2</mevalue>\
+  </maskelement>\
+  <maskelement>\
+    <mename>generic</mename>\
+    <mevalue>6</mevalue>\
+  </maskelement>\
+  <maskelement>\
+    <mename>specific</mename>\
+    <mevalue>17</mevalue>\
+  </maskelement>\
+  <varbind>\
+    <vbnumber>3</vbnumber>\
+    <vbvalue>3</vbvalue>\
+  </varbind>\
+</mask>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Copying the event and changing the 
+\f1 <mask>
+\f0  block to the above will match on the same id, generic and specific values, but also will require that the third parameter is equal to "3" (indicating a Cisco determined trap severity of "major"). Thus you could change the description and/or severity to match the event.\
+It is also possible to match more than one varbind, and more than one value per varbind:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <varbind>\
+  <vbnumber>3</vbnumber>\
+  <vbvalue>2</vbvalue>\
+  <vbvalue>3</vbvalue>\
+</varbind>\
+<varbind>\
+  <vbnumber>4</vbnumber>\
+  <vbvalue>2</vbvalue>\
+  <vbvalue>3</vbvalue>\
+</varbind>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The above code snippet will match if the third parameter has a value of "2" or "3" 
+\i and
+\i0  the fourth parameter has a value of "2" or "3".\
+This feature was updated long before the 1.6.0 release to allow a regular expression match on the varbind value. Just specify the expression prefixed with a with a "~".\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <varbind>\
+  <vbnumber>1</vbnumber>\
+  <vbvalue>~[Dd]own</vbvalue>\
+</varbind>\
+\pard\pardeftab720\ql\qnatural
+
+\f0 \cf0 This will match a varbind 1 containing the word "Down" or "down" anywhere within its value.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 You can also do quick prefix matches with the '%' in a varbind value:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <varbind>\
+  <vbnumber>1</vbnumber>\
+  <vbvalue>Error:%</vbvalue>\
+</varbind>\
+\pard\pardeftab720\ql\qnatural
+
+\f0 \cf0 this will match varbind 1 with any string beginning with "Error:"\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b \cf0 Again, note that the order in which events are listed is very important. Put the most specific events first.
+\b0 \
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Decoding varbinds (OpenNMS 1.7.0 and beyond)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 A lot of MIBs define specific variables to code the value of some OID. As an example the snmp agent returns a numerical value for the ifAdminStatus and ifOperStatus: 1 means Up and 2 means Down.\
+Because of the fact that OpenNMS has not a MibParser we usually put this map (between numerical encoded value and their meaning) into the event Description.\
+Configuring the Event properly now are able to decode the numerical value sent into trap varbinds to the corresponding string value into the <logmsg>.\
+Let consider a Cisco HSRP status changes trap ( OID .1.3.6.1.4.1.9.9.106.2 generic 6 and specific 1), this trap correspond to uei.opennms.org/vendor/Cisco/traps/cHsrpStateChange event.\
+The trap contains the following varbind: cHsrpGrpStandbyState whose possible values are from 1 to 6 and whose meaning is:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 initial(1) learn(2) listen(3) speak(4) standby(5) active(6).\
+I want to display in logmsg the literal meaning of the HSRP status.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Here is the original event definition:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <event>\
+ <mask>\
+  <maskelement>\
+   <mename>id</mename>\
+   <mevalue>.1.3.6.1.4.1.9.9.106.2</mevalue>\
+  </maskelement>\
+  <maskelement>\
+   <mename>generic</mename>\
+   <mevalue>6</mevalue>\
+  </maskelement>\
+  <maskelement>\
+   <mename>specific</mename>\
+   <mevalue>1</mevalue>\
+  </maskelement>\
+ </mask>\
+ <uei>uei.opennms.org/vendor/Cisco/traps/cHsrpStateChange</uei>\
+ <event-label>CISCO-HSRP-MIB defined trap event: cHsrpStateChange</event-label>\
+ <descr><p>A cHsrpStateChange notification is sent when a\
+ cHsrpGrpStandbyState transitions to either active or\
+ standby state, or leaves active or standby state. There\
+ will be only one notification issued when the state change\
+ is from standby to active and vice versa.</p><table>\
+ <tr><td><b>\
+ cHsrpGrpStandbyState</b></td><td>%parm[#1]%\
+ </td><td><p;>\
+ initial(1) learn(2) listen(3) speak(4) standby(5) active(6)</p>\
+ </td;></tr></table>\
+ </descr>\
+ <logmsg dest='logndisplay'><p>Cisco Event: HSRP State Change.</p></logmsg>\
+ <severity>Minor</severity>\
+ </event>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 An here follows the new event definition in which the status is decoded in the logmsg:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <event>\
+ <mask>\
+  <maskelement>\
+   <mename>id</mename>\
+   <mevalue>.1.3.6.1.4.1.9.9.106.2</mevalue>\
+  </maskelement>\
+  <maskelement>\
+   <mename>generic</mename>\
+   <mevalue>6</mevalue>\
+  </maskelement>\
+  <maskelement>\
+   <mename>specific</mename>\
+   <mevalue>1</mevalue>\
+  </maskelement>\
+ </mask>\
+ <uei>uei.opennms.org/vendor/Cisco/traps/cHsrpStateChange</uei>\
+ <event-label>CISCO-HSRP-MIB defined trap event: cHsrpStateChange</event-label>\
+ <descr><p>A cHsrpStateChange notification is sent when a\
+ cHsrpGrpStandbyState transitions to either active or\
+ standby state, or leaves active or standby state. There\
+ will be only one notification issued when the state change\
+ is from standby to active and vice versa.</p><table>\
+ <tr><td><b>\
+ cHsrpGrpStandbyState</b></td><td>%parm[#1]%\
+ </td><td><p;>\
+ initial(1) learn(2) listen(3) speak(4) standby(5) active(6)</p>\
+ </td;></tr></table>\
+ </descr>\
+ <logmsg dest='logndisplay'><p>Cisco Event: HSRP State Change to\'a0%parm[#1]%.</p></logmsg>\
+ <severity>Minor</severity>\
+ <varbindsdecode>\
+ <parmid>parm[#1]</parmid>\
+ <decode varbindvalue="1" varbinddecodedstring="initial"/>\
+ <decode varbindvalue="2" varbinddecodedstring="learn"/>\
+ <decode varbindvalue="3" varbinddecodedstring="listen"/>\
+ <decode varbindvalue="4" varbinddecodedstring="speak"/>\
+ <decode varbindvalue="5" varbinddecodedstring="standby"/>\
+ <decode varbindvalue="6" varbinddecodedstring="active"/>\
+ </varbindsdecode>\
+</event>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Here the parm[#1] (So the first varbind into the trap is translated using the decode map. If the value of the first OID in this trap is 6 the the log message will be:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <p>Cisco Event: HSRP State Change to active.</p>\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Creating event definitions from trap definition in mibs\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 There is a program named 
+\f1 mib2opennms
+\f0  available to convert trap definitions from mib files to opennms event definitions, see {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Converting_MIBs_Using_mib2opennms"}}{\fldrslt \cf2 \ul \ulc2 Converting MIBs Using mib2opennms}}\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The 
+\f2 eventconf.xml
+\f0  File\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 As mentioned above, the 
+\f1 eventconf.xml
+\f0  file controls the definition of both internal and external events in OpenNMS. The order in which the events are listed is very important as it is possible to have numerous event definitions for a given event if you start to filter on variable bindings.\
+All this has caused the file to grow very large. In 1.0.2, 
+\f1 eventconf.xml
+\f0  was over 3.1 MB of text. In order to make this file easier to manage, a new tag was introduced in 1.1.0 called 
+\f1 <event-file>
+\f0 . This allows files to be "included" as part of 
+\f1 eventconf.xml
+\f0 . The new file now looks like:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <event-file>/opt/OpenNMS/etc/events/3Com.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/APC.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Brocade.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/CIM.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Cisco.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Fore.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/HP.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Intel.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Microsoft.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Novell.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Oracle.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/SonicWall.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Xerox.events.xml</event-file>\
+<event-file>/opt/OpenNMS/etc/events/Standard.events.xml</event-file>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The included files must start with a 
+\f1 <events>
+\f0  tag and end with an 
+\f1 </events>
+\f0  tag. In between will be 
+\f1 <event>
+\f0  definitions just like in the original 
+\f1 eventconf.xml
+\f0  file.\
+All of the events have been broken out by vendor. When OpenNMS starts, each file will be loaded in order, so again the order in which the files are listed is important. There are also still some events in 
+\f1 eventconf.xml
+\f0 . These will be loaded before any included files, and best practice states to only list the internal OpenNMS events in that file directly.\
+At the very bottom of the file is 
+\f1 <event-file>/opt/OpenNMS/etc/events/default.events.xml</event-file>
+\f0 . This contains the generic default events and should always be listed last.\
+A few tips:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls3\ilvl0\cf0 {\listtext	\'95	}Since the system has to scan through all of the events to find a match, it is best to remove event files you are not using.\
+{\listtext	\'95	}If you customize a file, such as Cisco events, you may want to simply copy it to "my.Cisco.events.xml" and list your file first. This way you will have less work should the default file be changed in a future release.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=17"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Sample: Discard rtc login events\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To avoid getting the rtc login events displayed and persisted in the database add the following definition in 
+\f1 eventconf.xml
+\f0  above the existing event for uei 
+\f1 uei.opennms.org/internal/authentication/successfulLogin
+\f0 :\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0   <event>\
+    <mask>\
+      <maskelement>\
+        <mename>uei</mename>\
+        <mevalue>uei.opennms.org/internal/authentication/successfulLogin</mevalue>\
+      </maskelement>\
+      <varbind>\
+        <vbnumber>1</vbnumber>\
+        <vbvalue>rtc</vbvalue>\
+      </varbind>\
+    </mask>\
+    <uei>uei.opennms.org/internal/authentication/successfulLogin</uei>\
+    <event-label>OpenNMS-defined internal event: a user has successfully authentication to the WebUI</event-label>\
+    <descr>\
+      This event is sent by the WebUI when user rtc has successfully authenticated\
+    </descr>\
+    <logmsg dest='donotpersist'>\
+      OpenNMS user\'a0%parm[user]% has logged in from\'a0%parm[ip]%.\
+    </logmsg>\
+    <severity>Normal</severity>\
+  </event>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=18"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Activate changes in event configurations\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 After changing the event configurations use
+\f3 \line 
+\f1 $OPENNMS_HOME/bin/send-event.pl uei.opennms.org/internal/eventsConfigChange
+\f3 \line 
+\f0 to inform opennms that the event configuration has been changed and needs to be reloaded. See also {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Configuration_Files"}}{\fldrslt \cf2 \ul \ulc2 Configuration Files }}for more details about reloading changes.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=19"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Test event configuration\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 There are two very useful tools to test event configurations: 
+\f3 \line 
+\f1 $OPENNMS_HOME/bin/send-event.pl
+\f3 \line 
+\f0 and 
+\f3 \line 
+\f1 $OPENNMS_HOME/bin/send-trap.pl
+\f3 \line 
+\f0 Just start the scripts without parameters to get an explanation how to use them\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=20"}}{\fldrslt \cf2 \ul \ulc2 edit}}] The Database\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Each event that occurs in OpenNMS is written to the database in the 
+\f1 events
+\f0  table. To see them, simply access the database with "
+\f1 psql -U opennms opennms
+\f0 " and then browse the events with "
+\f1 SELECT * FROM events;
+\f0 ".\
+One great troubleshooting tool is to look at the 
+\f1 eventparms
+\f0  that get sent with the event. For example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 SELECT eventparms FROM events WHERE eventid=204;\
+\
+                                                        eventparms\
+---------------------------------------------------------------------------------------------------------------------------\
+ ds=http(string,text);value=11.75(string,text);threshold=100.0(string,text);trigger=3(string,text);rearm=50.0(string,text)\
+(1 row)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Here are all of the parameters sent during a 
+\f1 highThresholdRearmed
+\f0  event, and they can be used in event filters if needed.\
+Finally, it is worth noting that the database can get very full, and it may be necessary to delete events from the events table that are no longer needed. If you know SQL, this is pretty simple, but since OpenNMS events are sometimes referenced in the outages table and in notifications, you may not want to delete those (the outage table is required for availability calculation). Here is a sample SQL to delete non-referenced events:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 DELETE FROM events WHERE eventid NOT IN (SELECT\
+svclosteventid FROM\
+outages) AND eventid NOT IN (SELECT\
+svcregainedeventid FROM outages);\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=21"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Debugging\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Edit 
+\f1 $OPENNMS_HOME/etc/log4j.properties
+\f0  and set the logging level for the eventd to DEBUG. Then check the </code>eventd.log</code> and you will see the parameters and their values for each incoming event like the following lines (date and time cut off for readability):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 353 DEBUG [Event TCP Receiver[5817][127.0.0.1:14115]] TcpStreamHandler: Event record converted\
+353 DEBUG [Event TCP Receiver[5817][127.0.0.1:14115]] TcpStreamHandler: handling event, uei = uei.opennms.org/internal/rtc/subscribe\
+404 DEBUG [Event TCP Server[5817]] TcpServer: New connection accepted from 127.0.0.1:14117\
+404 DEBUG [Event TCP Receiver[5817][127.0.0.1:14115]] RunnableConsumerThreadPool$SizingFifoQueue: adjust: started fiber EventHandlerPool-fiber0 ratio = 1.0, alive = 0\
+404 DEBUG [Event TCP Receiver[5817][127.0.0.1:14115]] TcpStreamHandler: stopping record handler\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl: Event \{\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   uuid  = <not-set>\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   uei   = uei.opennms.org/internal/rtc/subscribe\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   src   = RTCPostSubscriber\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   iface = null\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   time  = Monday, February 22, 2010 4:26:29 PM GMT\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   parms \{\
+404 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:     (url, http://localhost:8980/opennms/rtc/post/Infrastructure+CentralSide)\
+405 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:     (user, rtc)\
+405 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:     (passwd, rtc)\
+405 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:     (catlabel, Infrastructure CentralSide)\
+405 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl:   \}\
+405 DEBUG [EventHandlerPool-fiber0] DefaultEventHandlerImpl: \}\
+405 DEBUG [EventHandlerPool-fiber0] EventConfData: Match found using key: EventKey\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Event_Configuration_How-To&action=edit&section=22"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Conclusion\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The Event management system is pretty straightforward once it is understood. While time consuming to set up, once configured it is pretty automatic.\
+It is hoped that this How-To has proved useful. Please direct corrections and comments to the author.\
+}

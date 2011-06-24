@@ -1,0 +1,296 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr16\min52\sec22\timesinceref330385942}
+{\revtim\yr2011\mo6\dy21\hr16\min52\sec41\timesinceref330385961}}\deftab720
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Remote polling allows you to poll devices from disparate locations, allowing you to get an aggregate of availability across sites. The remote polling architecture utilizes the same interfaces and services that OpenNMS's traditional centralized polling uses, but has it's own availability data tuned towards keeping track of multiple pollers originating from the same site, as well as combining that data with other site data for an overall view of your monitored devices. This data can be viewed either through a tabular report page, or a GUI map.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Architecture\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The OpenNMS remote polling facility uses a client-server model, with clients checking in at regular intervals with updated poll data and a heartbeat, and the server considering a remote poller down if that client doesn't "check in" in a certain amount of time.\
+The remote poller client is designed to be a standalone jar file which can be run from the command-line, or through Java webstart.\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Getting Started\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Server-Side (Your Central OpenNMS Server)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Before You Start\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Make sure OpenNMS is working first! Before you work on trying to add remote pollers to the make, be sure that the central OpenNMS server is doing what you want. Able to poll, send notifications, get graphs, etc. You don't want to be debugging server issues 
+\i\b while
+\i0\b0  trying to figure out why a remote poller might not be reporting in.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] poller-configuration.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The first step is to decide what interfaces and services you wish to poll remotely. The default $OPENNMS_HOME/etc/poller-configuration.xml comes with an "example1" <package> section, which is used by the central OpenNMS server for polling. You will now want to add another package to define which services should be polled remotely.\
+Define a new <package>, giving it a unique name, and making sure that it contains the attribute remote="true". Then, include any services you wish to poll remotely. Note that some services (like ICMP and SNMP) are not distributable because they rely on configuration outside of the <service> definition, or on native code.\
+Here is an example that matches all IP addresses, and enables polling HTTP remotely:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <package name="raleigh" remote="true">\
+  <filter>IPADDR IPLIKE *.*.*.*</filter>\
+  <include-range begin="1.1.1.1" end="254.254.254.254"/>\
+  <rrd step = "300">\
+    <rra>RRA:AVERAGE:0.5:1:2016</rra>\
+    <rra>RRA:AVERAGE:0.5:12:4464</rra>\
+    <rra>RRA:MIN:0.5:12:4464</rra>\
+    <rra>RRA:MAX:0.5:12:4464</rra>\
+  </rrd>\
+  <service name="HTTP" interval="30000" user-defined="false" status="on">\
+    <parameter key="retry" value="1"/>\
+    <parameter key="timeout" value="3000"/>\
+    <parameter key="port" value="80"/>\
+    <parameter key="url" value="/"/>\
+    <parameter key="rrd-repository" value="/var/log/opennms/rrd/response"/>\
+    <parameter key="ds-name" value="http"/>\
+  </service>\
+  <outage-calendar>zzz from poll-outages.xml zzz</outage-calendar>\
+\
+  <!-- 30s, 0, 5m -->\
+  <downtime interval="30000" begin="0" end="300000"/>\
+  <!-- 5m, 5m, 12h -->\
+  <downtime interval="300000" begin="300000" end="43200000"/>\
+  <!-- 10m, 12h, 5d -->\
+  <downtime interval="600000" begin="43200000" end="432000000"/>\
+  <!-- anything after 5 days delete -->\
+  <downtime begin="432000000" delete="true"/>\
+</package>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] monitoring-locations.xml\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The next step is to decide what locations your remote pollers will be able to check in from. These will generally be site-specific, and will have a GPS location associated with them (so they can be displayed on the maps).\
+The 
+\f1 $OPENNMS_HOME/etc/monitoring-locations.xml
+\f0  file defines the different locations from which remote poller monitoring instances will be running. Inside the 
+\f1 <locations>
+\f0  tag, create one or more 
+\f1 <location>
+\f0  entries with a set of attributes that uniquely identify it:\
+\pard\pardeftab720\ql\qnatural
+\cf0 location-name\'a0\
+The short name of the location, used on the remote-poller startup command-line.\
+monitoring-area\'a0\
+Used to group multiple locations together.\
+polling-package-name\'a0\
+The package in 
+\f1 poller-configuration.xml
+\f0  that the monitor will use to determine the services to poll.\
+geolocation\'a0\
+(As of OpenNMS 1.7.11) The geographical location of the monitor. This should be a street address or similar. If none is specified or Google can't resolve the address to a latitude and longitude, the marker will be placed on the map at OpenNMS World HQ in Pittsboro, NC. \'a0:)\
+coordinates\'a0\
+(As of OpenNMS 1.7.11) The geographical location of the monitor in the format "latitude,longitude".\
+priority\'a0\
+(As of OpenNMS 1.7.11) The sort priority of this location for the UI (1 is lowest, 100 is highest).\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 It can also be optionally associated with 0 or more tags that identify a location. Generally these will be arbitrary metadata associated with that monitoring location.\
+For example, here's a monitoring-locations.xml that defines a location for The OpenNMS Group, Inc. headquarters in Pittsboro, NC:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <?xml version="1.0" encoding="UTF-8"?>\
+<monitoring-locations-configuration\
+  xmlns="http://www.opennms.org/xsd/config/monitoring-locations"\
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\
+  xsi:schemaLocation="http://xmlns.opennms.org/xsd/config/monitoring-locations\
+    http://www.opennms.org/xsd/config/monitoring-locations.xsd ">\
+  <locations>\
+    <location-def location-name="RDU" \
+        monitoring-area="raleigh" polling-package-name="raleigh"\
+        geolocation="The OpenNMS Group, Pittsboro, NC"\
+        coordinates="35.7174,-79.1619" priority="50">\
+      <tags>\
+        <tag name="store" />\
+        <tag name="production" />\
+      </tags>\
+    </location-def>\
+  </locations>\
+</monitoring-locations-configuration>\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] users.xml and magic-users.properties\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 By default, only administrators have the rights to send remote poller data to the central server, so you will want to create a user, or users, with remote polling rights to avoid using an admin username and password.\
+The easiest way to do so is to go to the OpenNMS admin UI, and add a new user there:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms/admin/userGroupView/users/list.jsp"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms/admin/userGroupView/users/list.jsp}}\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Once you've created the user, edit $OPENNMS_HOME/etc/magic-users.properties and add that user's ID to the 
+\f1 role.remoting.users
+\f0  property.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Restart OpenNMS\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Now that you've finished the server-side configuration, restart OpenNMS.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Client Side (The Remote Pollers)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Installing the Remote Poller\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you are on an RPM or Debian-based install, you should be able to just install the "opennms-remote-poller" package through yum or apt.\
+If not, you can download the latest remote poller standalone distribution at the {\field{\*\fldinst{HYPERLINK "http://sourceforge.net/projects/opennms/files/Remote-Poller"}}{\fldrslt \cf2 \ul \ulc2 OpenNMS SourceForge project page}}.\
+These instructions will assume you are using one of the pre-packaged remote pollers, which provides the shell wrapper script in $OPENNMS_HOME/bin/remote-poller.sh.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=12"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Running the Remote Poller\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To run the remote poller and make sure everything's working, the easiest way to do so is just to start it on the command-line. No real configuration is necessary, but you will need to know the following information:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}the location you wish to use (the "location-name" tag in monitoring-locations.xml)\
+{\listtext	\'95	}how to reach your OpenNMS server from the remote poller system\
+{\listtext	\'95	}the username and password you created above\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 If you run it without options, it gives examples on what options are available:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $ $OPENNMS_HOME/bin/remote-poller.sh \
+usage:\
+ -d,--debug            write debug messages to the log\
+ -g,--gui              start a GUI (default: false)\
+ -h,--help             this help\
+ -l,--location <arg>   the location name of this remote poller\
+ -n,--name <arg>       the name of the user to connect as\
+ -p,--password <arg>   the password to use when connecting\
+ -u,--url <arg>        the URL for OpenNMS (default: rmi://server-name/)\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 If your OpenNMS server is reachable at {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms}}, then you will want to use the following command:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  $OPENNMS_HOME/bin/remote-poller.sh -l RDU -n remoteuser -p remotepass \\\
+   -u {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms-remoting"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms-remoting}}\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 You should start to see data in the distributed status page within your polling interval (usually 5 minutes).\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms/distributedStatusSummary.htm"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms/distributedStatusSummary.htm}}\
+\pard\pardeftab720\sa320\ql\qnatural
+
+\f0\b\fs48 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=13"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Advanced Topics\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=14"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuring Applications\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Applications allow you to create a collection of arbitrary services and treat them as a single unit with its own availability calculation. This is useful for creating an overall "service" that represents a number of different things.\
+For example, if you have a public-facing web application which uses tomcat, retrieves files from a SAN, and reads data from a database on another machine, you could create a single application which contains the HTTP service from the tomcat system and the SAN machine, and a JDBCStoredProcedureMonitor service from the database machine.\
+Applications can be configured in the applications UI:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms/admin/applications.htm"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms/admin/applications.htm}}\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=15"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configuring Maps\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 As of OpenNMS 1.7.11, support for distributed maps was added, which lets you visualize locations and applications on a world map, based on the geolocation data in your monitoring-locations.xml.\
+All distributed map configuration is done in the $OPENNMS_HOME/etc/opennms.properties file on the central server.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=16"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configure Map Type\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 First, configure the type of map API you wish to use. If you have a Google Maps API key, or a MapQuest API key, you can choose "GoogleMaps" or "Mapquest" as the implementation, otherwise, OpenLayers uses OpenStreetMaps, an open-data project for providing map data in an open source manner, and should work for any user.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=17"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Configure Geocoding\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Geocoding is what converts addresses into coordinates, and can be necessary to look up your addresses in monitoring-locations.xml if you did not provide exact coordinates. If you choose the Google or MapQuest geocoders, they will use the API key you configured earlier in opennms.properties. If you choose the Nominatim geocoder, you will have to configure your email address by setting:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  gwt.geocoder.email=<your-address>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 It is a requirement from the OpenStreetMaps geocoder that you provide a contact address so they can contact you if you are making too many queries, since their server is run by a volunteer organization.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=18"}}{\fldrslt \cf2 \ul \ulc2 edit}}] About Using OpenStreetMaps\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 As of 1.8.7, our default OpenStreetMaps implementation uses MapQuest's servers for data. MapQuest has contributed a large amount of resources to the OpenStreetMaps community, including servers which are free for all to use. If you see references to MapQuest relating to OpenLayers in our configuration, it is because we are using the open MapQuest resources, not the paid enterprise ones.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=19"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Accessing the Maps\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Just click on the "Distributed Maps" link in the menu bar in your OpenNMS server's web UI.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=20"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Starting the Remote Poller\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 While the most common way to run the remote poller is as a console-only, command-line tool, it also provides a GUI version which you can start either from the command-line, or through Java webstart.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=21"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Command-Line GUI\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To start the GUI from the command-line, add the "-g" option to your remote-poller command, like so:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  $OPENNMS_HOME/bin/remote-poller.sh -g -l RDU \\\
+   -n remoteuser -p remotepass \\\
+   -u {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms-remoting"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms-remoting}}\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=22"}}{\fldrslt \cf2 \ul \ulc2 edit}}] HTTP Proxies\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you need to use an HTTP proxy to communicate with the OpenNMS server, add the 
+\f1 http.proxyHost
+\f0  and 
+\f1 http.proxyPort
+\f0  options to the java command-line:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0  $OPENNMS_HOME/bin/remote-poller.sh \\\
+   -Dhttp.proxyHost=proxy.mydomain.net  \\\
+   -Dhttp.proxyPort=8080 -g -l RDU \\\
+   -u {\field{\*\fldinst{HYPERLINK "http://192.168.0.1:8980/opennms-remoting"}}{\fldrslt \cf2 \ul \ulc2 http://192.168.0.1:8980/opennms-remoting}}\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Remote_Polling&action=edit&section=23"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Design Overview\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 For a complete overview of the remote poller architecture, see the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Remote_Poller_Design_Overview"}}{\fldrslt \cf2 \ul \ulc2 Remote Poller Design Overview}} page.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Template:New_Feature_In&action=edit&section=T-1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Version History/Availability\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}This feature was added in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.2"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.2}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.5.94"}}{\fldrslt \cf2 \ul \ulc2 version 1.5.94}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.7.11"}}{\fldrslt \cf2 \ul \ulc2 version 1.7.11}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.8.7"}}{\fldrslt \cf2 \ul \ulc2 version 1.8.7}}\
+}

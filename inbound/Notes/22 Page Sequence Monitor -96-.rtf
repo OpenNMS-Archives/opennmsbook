@@ -1,0 +1,363 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+\stshfdbch0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 Courier-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red4\green0\blue240;}
+{\stylesheet {\s0 Normal;}}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid102\'02\'01.;}{\levelnumbers\'01;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+{\info
+{\author Alexander Finger}
+{\creatim\yr2011\mo6\dy21\hr16\min49\sec15\timesinceref330385755}
+{\revtim\yr2011\mo6\dy21\hr16\min49\sec26\timesinceref330385766}}\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 PSM\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 PSM stands for "Page Sequence Monitor". The PSM allows to monitor beyond the complexity of only requesting a single url.\
+A typical use case for this is:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}You want to login to a certain application\
+{\listtext	\'95	}Execute an action while being logged in\
+{\listtext	\'95	}Log off again\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 If this is all working ok, your application works. If there's an error somewhere, your application will need attention.\
+Before the PSM, it was necessary to implement this using a Plugin. By the means of the GPPlugin you had to call a script to execute the queries and give feedback to OpenNMS about the result. Webinject is to be mentioned here.\
+With the PSM you can now run "simple" sequences from within OpenNMS without calling an external script. This has some advantages (better resource allocation, higher reliability, configuration for the full process in one place).\
+"Simple" sequences because they must be programmable in a sequence. A forward (30x Response) for example is right now not supported.\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=2"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Capability Scan\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 You can use the regular HttpPlugin or HttpsPlugin to detect a webapp.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     <protocol-plugin protocol="OpenNMSLogin"\
+        class-name="org.opennms.netmgt.capsd.plugins.HttpPlugin"\
+        scan="on" user-defined="false">\
+        <!-- this needs to be configured to detect the opennms webapp on port 8980.\
+             I don't remember if capsd will let you do a match for opennms or something\
+             it would probably be sufficent to just check /opennms returning a valid return code at port 8080\
+        -->\
+        <property key="timeout" value="5000"/>\
+        <property key="retry" value="1"/>\
+        <property key="port" value="8980"/>\
+    </protocol-plugin>\
+\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=3"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Poller\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To configure a service using the PSM, the poller must be configured to know what page sequence it should use. With this monitor, the page sequence is defined as an XML element within a parameter! The parameter key attribute is required to be "page-sequence" and the value attribute is not specified. The value is actually an XML page-sequence element itself and is embedded within the definition of this special parameter.\
+
+\i (Note: this was done so that the page-sequence monitor could be used in the distributed monitor for the distributed monitor doesn't have access to the configuration files on the filesystem of the server. With the page-sequence configuration in-lined, it can be serialized and passed to the remote poller through the RMI interface)"
+\i0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0         <service name="OpenNMSLogin" interval="300000" user-defined="true" status="off">\
+            <parameter key="retry" value="1"/>\
+            <parameter key="timeout" value="5000"/>\
+            <parameter key="rrd-repository" value="/opt/opennms/share/rrd/response"/>\
+            <parameter key="ds-name" value="opennmslogin"/>\
+            <parameter key="page-sequence">\
+              <!-- this uses a newly implemented feature of poller-configuration.xml\
+                   (it has not yet been added to other daemons like capsd, collected, etc)\
+                   this feature allows you to insert xml content inside of the parameter tags\
+                   rather than as a string in the value attribute -->\
+              <page-sequence>\
+                <page path="/opennms" port="8980" successMatch="Password" />\
+                <page path="/opennms/j_spring_security_check"  port="8980" method="POST" \
+                      failureMatch="(?s)Your log-in attempt failed.*Reason: ([^<]*)" \
+                      failureMessage="Login Failed: $\{1\}" \
+                      successMatch="Log out">\
+                  <parameter key="j_username" value="admin"/>\
+                  <parameter key="j_password" value="admin"/>\
+                </page>\
+                <page path="/opennms/event/index.jsp" port="8980" successMatch="Event Queries" />\
+                <page path="/opennms/j_spring_security_logout" port="8980" successMatch="logged out" />\
+              </page-sequence>\
+            </parameter>\
+        </service>\
+\
+\
+        ...\
+\
+\
+        <monitor service="OpenNMSLogin" class-name="org.opennms.netmgt.poller.monitors.PageSequenceMonitor"/>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\i \cf0 (Note: The XML definition of a page follows the same design as the HTTP Collector's URL in that it has the same attributes and child elements. See the {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/HTTP_Collector#URLs"}}{\fldrslt \cf2 \ul \ulc2 HTTP Collector URL page fragment}} to learn about all these attributes)
+\i0 \
+
+\i (Note: In 1.8.7+, changes were made to how redirect behavior is handled. See {\field{\*\fldinst{HYPERLINK "http://issues.opennms.org/browse/NMS-3827"}}{\fldrslt \cf2 \ul \ulc2 NMS-3827 Page Sequence Monitor uses configured method instead of GET when following redirects}} for more detail.)
+\i0 \
+Page sequences work by attempting to retrieve each page defined in the sequence and verifying that it meets the specified expectations. If any page fails, then the entire sequence fails and the monitor returns 'UNAVAILABLE' with a reason code indicating the reason for failure. If all of the pages succeed, then the monitor returns 'AVAILABLE' with a response time indicating the time it takes to run the entire sequence.\
+The above page sequence works as follows:\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	1.	}First do an HTTP GET of $\{ipaddr\}/opennms (following redirects as a browser would) and then checks to ensure that the resulting page has the phrase 'Password' on it. Each page is checked to ensure it HTTP response code fits into the response-range which defaults 100-399. This is done before any sucess or failure matches occur and out of range indicated a failing page.\
+{\listtext	2.	}Next a login is attempted.\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-500\ql\qnatural
+\ls2\ilvl1\cf0 {\listtext	1.	}The URL specified in the path attribute, is the relative URL used for submitting form data. The parameters for the page indicate the form's data and values to be submitted. In this example, the monitor will be sending the user and password as values for the form's j_username and j_password parameters.\
+{\listtext	2.	}After getting the resulting page, first the expression specified in the page's failureMatch attribute is verified. If the failure match expression is found anywhere on the page, then page has failed. In this example, it indicates that the login failed. The failureMessage is then used to construct the reason code. $\{n\} values are used to pull information from matching groups in the failureMatch regular expression.\
+{\listtext	3.	}If the failureMatch expression is not found in the resulting page, then the expression specified in the page's successMatch attribute is next checked to ensure it matches the resulting page. If successMatch expression is not found on the page, then the page fails. Both the failureMatch and the successMatch attributes are optional.\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	3.	}If the monitor was able to successfully login, then the next page is processed. In this example, the monitor navicates to Event page to ensure that the text "Event Queries" is found on the page.\
+{\listtext	4.	}The final page in the sequence is a logout page.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=4"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Another Example Using HTTP and HTTPS mixed\
+\pard\pardeftab720\ql\qnatural
+
+\f1\b0\fs24 \cf0                 <page-sequence>\
+                    <page scheme="http" host="ecomm.example.com" port="80"\
+                        path="/ecomm/jsp/Login.jsp"\
+                        virtual-host="ecomm.example.com"\
+                        successMatch="eComm Login" timeout="10000" http-version="1.1"/>\
+                    <page scheme="https" method="POST"\
+                        host="ecomm.example.com" port="443"\
+                        path="/ecomm/controller"\
+                        virtual-host="ecomm.example.com"\
+                        successMatch="requesttab_select.gif"\
+                        failureMessage="Login failed: $\{1\}"\
+                        timeout="10000" http-version="1.1">\
+                        <parameter key="action_name" value="XbtnLogin"/>\
+                        <parameter key="session_timeout" value=""/>\
+                        <parameter key="userid" value="EXAMPLE"/>                        \
+                        <parameter key="password" value="econ"/>\
+                    </page>                    \
+                    <page scheme="http" host="ecomm.example.com" port="80"\
+                        path="/econsult/controller"                        \
+                        virtual-host="ecomm.example.com"\
+                        successMatch="You have successfully logged out of eComm"\
+                        timeout="10000" http-version="1.1">\
+                        <parameter key="action_name" value="XbtnLogout"/>\
+                    </page>\
+                </page-sequence>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=5"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Session Variables\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 From OpenNMS 1.6.10 onward, the PSM supports 
+\i session variables
+\i0 . This facility allows the assignment of strings from a retrieved page to variables that can be used in page parameters later in the same sequence. This example shows how to log in to the web UI of 
+\i demo.opennms.org
+\i0  without knowing ahead of time what username and password to use.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     <page-sequence name="opennms-login-seq-dynamic-credentials">\
+      <page path="/opennms" port="80" virtual-host="demo.opennms.org"\
+            successMatch="(?s)User:.*<strong>(.*?)</strong>.*?Password:.*?<strong>(.*?)</strong>">\
+        <session-variable name="username" match-group="1" />\
+        <session-variable name="password" match-group="2" />\
+      </page>      <page path="/opennms/j_acegi_security_check"  port="80" virtual-host="demo.opennms.org" method="POST"\
+            failureMatch="(?s)Your log-in attempt failed.*Reason: ([^<]*)" failureMessage="Login Failed: $\{1\}"\
+            successMatch="Log out">"\
+        <parameter key="j_username" value="$\{username\}" />\
+        <parameter key="j_password" value="$\{password\}" />\
+      </page>\
+      <page path="/opennms/event/index.jsp" port="80" virtual-host="demo.opennms.org" successMatch="Event Queries" />\
+      <page path="/opennms/j_acegi_logout" port="80" virtual-host="demo.opennms.org" successMatch="logged off" />\
+    </page-sequence>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The 
+\b <session-variable>
+\b0  tags tell the PSM to assign match groups 1 and 2 from the 
+\i successMatch
+\i0  regular expression of the first page to the variables 
+\i username
+\i0  and 
+\i password
+\i0 , respectively. The match groups correspond to the parenthesized sub-expressions in the expression, highlighted here:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 (?s)User:.*&lt;strong&gt;
+\f2\b (.*?)
+\f1\b0 &lt;/strong&gt;.*?Password:.*?&lt;strong&gt;
+\f2\b (.*?)
+\f1\b0 &lt;/strong&gt;\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 (Note that the 
+\i (?s)
+\i0  at the beginning of the regular expression is a modifier and not a subexpression.)\
+The variables are referenced in 
+\b <parameter>
+\b0  child tags of the second page using the 
+\i $\{varName\}
+\i0  convention:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <parameter key="j_username" value="
+\f2\b $\{username\}
+\f1\b0 " />\
+<parameter key="j_password" value="
+\f2\b $\{password\}
+\f1\b0 " />\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=6"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Per-Page Response Times\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 From OpenNMS 1.6.10 onwards, the PSM can store the response times for individual pages in a sequence. To use this functionality, just add a 
+\i ds-name
+\i0  attribute to each page whose load time you want to record. For example:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 <page path="/opennms/event/index.jsp" 
+\f2\b ds-name="event-page"
+\f1\b0  successMatch="Event Queries" />\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 The response time for each such page will be stored in the same RRD file specified for the service via the 
+\i rrd-base-name
+\i0  parameter under the specified datasource name. Note that you will need to delete existing RRD files and let them be recreated with the new list of datasources when you add a 
+\i ds-name
+\i0  attribute to a page in a sequence that is already storing response time data.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=7"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Per-Page Response Graph Configuration\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Graph configuration for per-page response collection isn't entirely intuitive. RRD data of total session and each page is stored within a single file. Given the following poller configuration (removed unrelated bits):\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0     <service name="OpenNMSLogin" interval="300000" user-defined="false" status="on">\
+       <parameter key="rrd-repository" value="/opt/opennms/share/rrd/response"/>\
+       <parameter key=
+\f2\b "rrd-base-name" value="opennmslogin"
+\f1\b0 />\
+       <parameter key=
+\f2\b "ds-name" value="opennmslogin"
+\f1\b0 />\
+       <parameter key="page-sequence">\
+           <page path="/opennms/acegilogin.jsp" port="8980" 
+\f2\b ds-name="login-page"
+\f1\b0  successMatch="Login" />\
+           <page path="/opennms/event/index.jsp" port="8980" 
+\f2\b ds-name="event-page"
+\f1\b0  successMatch="Event Queries" />\
+         </page-sequence>\
+       </parameter>\
+   </service>\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Graph definition (response-graph.properties) would end up as:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 report.opennmslogin.name=OpenNMS Login\
+report.opennmslogin.columns=
+\f2\b opennmslogin
+\f1\b0 \
+report.opennmslogin.type=responseTime, distributedStatus\
+report.opennmslogin.command=--title="OpenNMS Login Response" \\\
+ --vertical-label="Seconds" \\\
+ DEF:totalrtMills=
+\f2\b \{rrd1\}:opennmslogin
+\f1\b0 :AVERAGE \\\
+ DEF:totalminRtMills=\{rrd1\}:opennmslogin:MIN \\\
+ DEF:totalmaxRtMills=\{rrd1\}:opennmslogin:MAX \\\
+ DEF:page1rtMills=
+\f2\b \{rrd1\}:login-page
+\f1\b0 :AVERAGE \\\
+ DEF:page1minRtMills=\{rrd1\}:login-page:MIN \\\
+ DEF:page1maxRtMills=\{rrd1\}:login-page:MAX \\\
+ DEF:page2rtMills=
+\f2\b \{rrd1\}:event-page
+\f1\b0 :AVERAGE \\\
+ DEF:page2minRtMills=\{rrd1\}:event-page:MIN \\\
+ DEF:page2maxRtMills=\{rrd1\}:event-page:MAX \\\
+ CDEF:totalrt=totalrtMills,1000,/ \\\
+ CDEF:totalminRt=totalminRtMills,1000,/ \\\
+ CDEF:totalmaxRt=totalmaxRtMills,1000,/ \\\
+ CDEF:page1rt=page1rtMills,1000,/ \\\
+ CDEF:page1minRt=page1minRtMills,1000,/ \\\
+ CDEF:page1maxRt=page1maxRtMills,1000,/ \\\
+ CDEF:page2rt=page2rtMills,1000,/ \\\
+ CDEF:page2minRt=page2minRtMills,1000,/ \\\
+ CDEF:page2maxRt=page2maxRtMills,1000,/ \\\
+ LINE2:totalrt#00ff00:"Total Session" \\\
+ GPRINT:totalrt:AVERAGE:" Avg\\\\:\'a0%6.2lf\'a0%s" \\\
+ GPRINT:totalrt:MIN:"Min\\\\:\'a0%6.2lf\'a0%s" \\\
+ GPRINT:totalrt:MAX:"Max\\\\:\'a0%6.2lf\'a0%s\\\\n" \\\
+ AREA:page1rt#0000ff:"Login Page   " \\\
+ GPRINT:page1rt:AVERAGE:" Avg\\\\:\'a0%6.2lf\'a0%s" \\\
+ GPRINT:page1rt:MIN:"Min\\\\:\'a0%6.2lf\'a0%s" \\\
+ GPRINT:page1rt:MAX:"Max\\\\:\'a0%6.2lf\'a0%s\\\\n" \\\
+ STACK:page2rt#ff00ff:"Event Page   " \\\
+ GPRINT:page2rt:AVERAGE:" Avg\\\\:\'a0%6.2lf\'a0%s" \\\
+ GPRINT:page2rt:MIN:"Min\\\\:\'a0%6.2lf\'a0%s" \\\
+ GPRINT:page2rt:MAX:"Max\\\\:\'a0%6.2lf\'a0%s\\\\n"\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=8"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Importing a custom SSL-certificate\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To import a SSL-certificate into the default keystore used by Java you should perform the following steps.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=9"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Obtain a Copy of the SSL Certificate\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 First, copy the SSL certificate to a file, preferably in PKCS#7 format. You can do this easily by using 
+\f1 openssl
+\f0 :\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $\'a0openssl s_client -connect www.opennms.com:443\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Then copy the certificate (the text in between 
+\f1 "-----BEGIN CERTIFICATE---"
+\f0  and 
+\f1 "-----END CERTIFICATE-----"
+\f0 , including those tags) into a text file. This block of text is the PKCS#7-formatted certificate data.\
+You can also save the certificate using Firefox. In Firefox, visit the desired URL. Click on the SSL lock icon on the status bar once you reach the page. Click "View Certificate", then go to the "Details" tab, then click "Export...". This will allow you to export the certificate (or the entire certificate chain) in PKCS#7 format.\
+Another option is to simply contact the administrator of the service and have them give you a copy of the certificate file.\
+Note that the certificate file does not contain confidential or cryptographically insecure data: it is the public portion of the encrypted content. You are not compromising the security of the server by copying its certificate file.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=10"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Import the Certificate into the Keystore Using Java Keytool\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Run the following command. If the 
+\f1 JAVA_HOME
+\f0  environment variable is undefined, replace it with the full path where your Java Developer Kit (JDK) is installed.\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 $JAVA_HOME/bin/keytool -import -keystore $JAVA_HOME/jre/lib/security/cacerts -file <pkcs7_filename>\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Page_Sequence_Monitor_%28PSM%29_Setup&action=edit&section=11"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Debugging\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Logs are kept in a couple files. There are some standard poller-type entries and a verbose http page log. They are enabled by setting appropriate DEBUG levels in the logging properties file. A restart is NOT needed.\
+
+\b etc/log4j.properties
+\b0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 # Pollers\
+log4j.category.OpenNMS.Poller=DEBUG, POLLERS\
+# Miscellaneous\
+...\
+log4j.category.httpclient=DEBUG, MISC\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 [{\field{\*\fldinst{HYPERLINK "http://www.opennms.org/w/index.php?title=Template:New_Feature_In&action=edit&section=T-1"}}{\fldrslt \cf2 \ul \ulc2 edit}}] Version History/Availability\
+\pard\tx220\tx720\pardeftab720\li720\fi-500\ql\qnatural
+\ls3\ilvl0
+\b0\fs24 \cf0 {\listtext	\'95	}This feature was added in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.2"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.2}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.3.7"}}{\fldrslt \cf2 \ul \ulc2 version 1.3.7}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.6.1"}}{\fldrslt \cf2 \ul \ulc2 version 1.6.1}}\
+{\listtext	\'95	}This feature was enhanced or modified in {\field{\*\fldinst{HYPERLINK "http://www.opennms.org/wiki/Releases#OpenNMS_1.6.10"}}{\fldrslt \cf2 \ul \ulc2 version 1.6.10}}\
+}
